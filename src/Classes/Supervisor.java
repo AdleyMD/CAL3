@@ -7,7 +7,7 @@ package Classes;
  */
 public class Supervisor {
 
-    private int id;
+    private final int id;
 
     public Supervisor(int id) {
         this.id = id;

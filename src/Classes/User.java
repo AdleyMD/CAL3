@@ -59,6 +59,10 @@ public class User extends Thread {
         return companion;
     }
     
+    public boolean hasCompanion() {
+        return age <= 10;
+    }
+    
     @Override
     public String toString() {
         String comp = "";

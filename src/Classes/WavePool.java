@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class WavePool extends Activity {   
     
     public WavePool(){
-
+        
     }
     
     

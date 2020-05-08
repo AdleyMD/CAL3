@@ -17,10 +17,10 @@ public class WaterPark {
     
     public void startSimulation() {
         for (int i = 0; i < usersToEnter; i++) {
-            int actsCounter = (int) (5 + (10 * Math.random()));
-            int age = (int) (5 + (10 * Math.random()));
             User user = new User(i);
-            queue.enqueue(user);
+            if (user.hasCompanion())
+                i++;
+            user.start();
         }
     }
 }
