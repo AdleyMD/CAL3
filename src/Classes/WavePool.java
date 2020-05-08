@@ -11,7 +11,5 @@ public class WavePool extends Activity {
 
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
+	
 }//end WavePool

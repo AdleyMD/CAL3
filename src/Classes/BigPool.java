@@ -11,7 +11,5 @@ public class BigPool extends Activity {
 
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
+
 }//end BigPool
