@@ -6,12 +6,9 @@ package Classes;
  * @created 08-may.-2020 12:16:08
  */
 public class SunBeds extends Activity {
+    
+    public SunBeds(){
+        
+    }
 
-	public SunBeds(){
-
-	}
-
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
 }//end SunBeds
