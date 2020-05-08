@@ -11,17 +11,22 @@ public class User extends Thread {
     private int actsCounter;
     private int age;
     private int id;
-    private int idCompanion;
+    private User companion;
 
     public User(int id) {
         this.id = id;
         actsCounter = (int) (5 + (10 * Math.random()));
-        age = (int) (5 + (10 * Math.random()));
+        age = (int) (1 + (49 * Math.random()));
+        if (age <= 10)
+            companion = new User(id+1, (int) (18 + (32 * Math.random())), this);
+        else
+            companion = null;
     }
     
-    public User(int id, int age){
+    public User(int id, int age, User companion){
         this.id = id;
         this.age = age;
+        this.companion = companion;
         actsCounter = (int) (5 + (10 * Math.random()));
     }
     
@@ -46,20 +51,16 @@ public class User extends Thread {
         return id;
     }
 
-    public int getIdCompanion() {
-        return idCompanion;
+    public User getCompanion() {
+        return companion;
     }
     
-    public void setIdCompanion(int idCompanion) {
-        this.idCompanion = idCompanion;
-    }
-    
+    @Override
     public String toString() {
         String comp = "";
-        if (idCompanion != 0)
-            comp += idCompanion;
+        if (companion != null)
+            comp += companion.getUserId();
+        
         return "ID" + id + "-" + comp;
-    }
-        
-        
+    }   
 }//end User
