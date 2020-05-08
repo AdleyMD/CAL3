@@ -10,12 +10,10 @@ import java.util.concurrent.Executors;
  */
 public class Supervisor extends Thread {
 
-<<<<<<< HEAD
+
     private int id;
     private ExecutorService executor = Executors.newFixedThreadPool(8); 
-=======
-    private final int id;
->>>>>>> 3b7dc919bf7cff44260cbcb8a1539ab5a777bc1f
+
 
     public Supervisor(int id) {
         this.id = id;
