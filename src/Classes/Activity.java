@@ -23,4 +23,8 @@ public abstract class Activity {
     
     public abstract void enter();
     
+    public abstract void leave();
+    
+    public abstract void use();
+    
 }//end Activity

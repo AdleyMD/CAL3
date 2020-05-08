@@ -1,6 +1,8 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
@@ -27,6 +29,11 @@ public class ChildrenPool extends Activity {
             } else if (supervisor.checkAge(6, 10, visitorAge)) {
                 needsCompanion = false;
             }
+            try {
+                supervisor.sleep((long) (1000 + Math.random() * 500));
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (needsCompanion) {
                 capacity += 1;
             }
@@ -34,9 +41,18 @@ public class ChildrenPool extends Activity {
         }
     }
     
-    
+    @Override
     public void leave() {
         
+    }
+
+    @Override
+    public void use() {
+        try {
+            Thread.sleep((long) (1000 + Math.random() * 2000));
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }//end ChildrenPool
