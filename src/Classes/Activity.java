@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.ArrayList;
+
 /**
  * @author andro
  * @version 1.0
@@ -9,8 +11,8 @@ public class Activity {
 
 	private int maxUsers;
 	private Supervisor supervisor;
-	public Queue m_Queue;
-	public Supervisor m_Supervisor;
+        private Queue queue;
+        private ArrayList<User> inside;
 
 	public Activity(){
 
