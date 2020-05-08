@@ -7,14 +7,14 @@ package Classes;
  */
 public class Activity {
 
-	private int maxUsers;
-	private Supervisor supervisor;
-	public Queue m_Queue;
-	public Supervisor m_Supervisor;
+private int maxUsers;
+private Supervisor supervisor;
+public Queue m_Queue;
+public Supervisor m_Supervisor;
 
-	public Activity(){
-
-	}
+public Activity(int maxUsers){
+    this.maxUsers = maxUsers;
+}
 
 	
 }//end Activity
