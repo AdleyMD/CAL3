@@ -27,12 +27,12 @@ public class ChangingRoom {
             ChildrenCapacity--;
             queue.dequeue();
 
-            try {
-                user.sleep(3000);
-                supervisor.sleep(1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
-            }           
+            //user doing its thing
+            customSleep(3000);
+
+            //signal, despierta al supervisor.
+            supervisor.sleep(1000);
+            // ademas sincronizar al usuario para que se espere el tambien.
 
         } else if (supervisor.checkCompanion(user) && ChildrenCapacity != 0 && AdultCapacity != 0) {
             ChildrenCapacity--;
@@ -40,15 +40,9 @@ public class ChangingRoom {
             queue.dequeue();
             queue.dequeue();
 
-            try {
-                user.sleep(3000); 
-                user.getCompanion().sleep(3000);  
-                // se cambiarán a la vez?.... porq es secuencial
-                // no quiero que lo bloquee, sino que vaya a otro lado
-                supervisor.sleep(2000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            user.sleep(3000);
+            //signal, despierta al supervisor.
+            supervisor.sleep(2000);
 
         } else {
             // toca hacerle queue de nuevo al principio? que feo... retoco queue
@@ -56,14 +50,22 @@ public class ChangingRoom {
     }
 
     public void leave() {
+
+        customSleep(3000);
+
+    }
+
+    /**
+     * Function required to be in ChangingRoom since it's not part of activity.
+     *
+     * @param time
+     */
+    public void customSleep(int time) {
         try {
-            // necesito saber cuanta gente sale
-            Thread.sleep(3000);
-            // estoy haciendo Thread.sleep, no el hilo como tal, las cosas apuntan
-            // a que voy a necesitar como parametro los hilos que quieren salir...
+            Thread.sleep(time);
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }//end ChangingRoom
