@@ -1,6 +1,8 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,12 +17,14 @@ public abstract class Activity {
     public Supervisor supervisor;
     public Queue queue;
     public ArrayList<User> inside;
+    public ExecutorService executor;
 
     public Activity(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
         this.maxUsers = maxUsers;
         this.supervisor = supervisor;
         this.queue = queue;
         this.inside = inside;
+        executor = Executors.newFixedThreadPool(1);
     }
 
     public abstract void enter();
@@ -29,10 +33,6 @@ public abstract class Activity {
 
     public abstract void use();
 
-    /**
-     *
-     * @param time
-     */
     public void customSleep(int time) {
         try {
             Thread.sleep(time);
@@ -41,10 +41,6 @@ public abstract class Activity {
         }
     }
     
-    /**
-     *
-     * @param time
-     */
     public void customSleep(int min, int max) {
         try {
             Thread.sleep((long) (min + Math.random() * max));
