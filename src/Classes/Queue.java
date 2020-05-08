@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.ArrayList;
 import javax.swing.JTextField;
 
 /**
@@ -9,33 +10,35 @@ import javax.swing.JTextField;
  */
 public class Queue {
 
-	private int curSize;
-	private int maxSize;
-	private int ptr;
-	private int[] queue;
+	private ArrayList<User> queue;
 	private JTextField text;
 
-	public Queue(){
-
+	public Queue(int maxSize) {
+            queue = new ArrayList<>();
 	}
 
-	public void dequeue(){
-
+	public User dequeue() {
+            return queue.remove(0);
 	}
 
-	public void enqueue(){
-
+	public void enqueue(User user) {
+            queue.add(user);
 	}
 
-	public void isEmpty(){
-
+	public boolean isEmpty() {
+            return queue.isEmpty();
 	}
-
-	public void isFull(){
-
+        
+	public User peek() {
+            return queue.get(0);
 	}
-
-	public void peek(){
-
-	}
+        
+        @Override
+        public String toString() {
+            String text = "";
+            for (User u : queue)
+                text += u.getUserId() + ", ";
+            
+            return text;
+        }
 }//end Queue
