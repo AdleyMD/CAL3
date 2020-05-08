@@ -1,6 +1,8 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
@@ -18,13 +20,37 @@ public abstract class Activity {
         this.maxUsers = maxUsers;
         this.supervisor = supervisor;
         this.queue = queue;
-        this.inside = inside;        
+        this.inside = inside;
+    }
+
+    public abstract void enter();
+
+    public abstract void leave();
+
+    public abstract void use();
+
+    /**
+     *
+     * @param time
+     */
+    public void customSleep(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public abstract void enter();
-    
-    public abstract void leave();
-    
-    public abstract void use();
-    
+    /**
+     *
+     * @param time
+     */
+    public void customSleep(int min, int max) {
+        try {
+            Thread.sleep((long) (min + Math.random() * max));
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }//end Activity
