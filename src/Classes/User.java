@@ -13,11 +13,16 @@ public class User extends Thread {
     private int id;
     private int idCompanion;
 
-    public User(int id, int idCompanion, int age, int actsCounter){
+    public User(int id) {
         this.id = id;
-        this.idCompanion = idCompanion;
+        actsCounter = (int) (5 + (10 * Math.random()));
+        age = (int) (5 + (10 * Math.random()));
+    }
+    
+    public User(int id, int age){
+        this.id = id;
         this.age = age;
-        this.actsCounter = actsCounter;
+        actsCounter = (int) (5 + (10 * Math.random()));
     }
     
     @Override
