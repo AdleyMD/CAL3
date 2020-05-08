@@ -13,9 +13,6 @@ public class Supervisor {
 
 	}
 
-	public void finalize() throws Throwable {
-
-	}
 	/**
 	 * 
 	 * @param min

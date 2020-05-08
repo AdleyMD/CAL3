@@ -16,7 +16,5 @@ public class Activity {
 
 	}
 
-	public void finalize() throws Throwable {
-
-	}
+	
 }//end Activity

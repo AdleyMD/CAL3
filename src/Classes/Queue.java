@@ -19,9 +19,6 @@ public class Queue {
 
 	}
 
-	public void finalize() throws Throwable {
-
-	}
 	public void dequeue(){
 
 	}

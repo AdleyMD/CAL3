@@ -11,7 +11,4 @@ public class SunBeds extends Activity {
 
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
 }//end SunBeds

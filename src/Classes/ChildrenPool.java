@@ -11,7 +11,4 @@ public class ChildrenPool extends Activity {
 
 	}
 
-	public void finalize() throws Throwable {
-		super.finalize();
-	}
 }//end ChildrenPool

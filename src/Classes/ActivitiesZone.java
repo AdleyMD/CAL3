@@ -19,7 +19,4 @@ public class ActivitiesZone {
 
 	}
 
-	public void finalize() throws Throwable {
-
-	}
 }//end ActivitiesZone

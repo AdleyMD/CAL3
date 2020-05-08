@@ -16,9 +16,6 @@ public class User {
 
 	}
 
-	public void finalize() throws Throwable {
-
-	}
 	public void subActCounter(){
 
 	}
