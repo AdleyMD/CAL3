@@ -1,20 +1,26 @@
 package Classes;
 
-/**
- * @author andro
- * @version 1.0
- * @created 08-may.-2020 12:16:11
- */
 public class WaterPark {
-
-	private int maxUsers;
-
-	public WaterPark(){
-
-	}
-
-	
-	public void startSimulation(){
-
-	}
-}//end WaterPark
+    
+    private final int maxUsers;
+    private final int usersToEnter;
+    private int currentUsers;
+    private final Queue queue;
+    private final ActivitiesZone zone;
+    
+    public WaterPark() {
+        maxUsers = 100;
+        usersToEnter = 5000;
+        queue = new Queue(usersToEnter);
+        zone = new ActivitiesZone();
+    }
+    
+    public void startSimulation() {
+        for (int i = 0; i < usersToEnter; i++) {
+            int actsCounter = (int) (5 + (10 * Math.random()));
+            int age = (int) (5 + (10 * Math.random()));
+            User user = new User(i);
+            queue.enqueue(user);
+        }
+    }
+}

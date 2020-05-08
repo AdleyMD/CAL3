@@ -8,15 +8,16 @@ package Classes;
 public class User extends Thread {
     
     private WaterPark park;
-    private int actCounter;
+    private int actsCounter;
     private int age;
     private int id;
     private int idCompanion;
 
-    public User(int id){
+    public User(int id, int idCompanion, int age, int actsCounter){
         this.id = id;
-        actCounter = (int) (5 + (10 * Math.random()));
-        age = (int) (5 + (10 * Math.random()));
+        this.idCompanion = idCompanion;
+        this.age = age;
+        this.actsCounter = actsCounter;
     }
     
     @Override
@@ -52,7 +53,7 @@ public class User extends Thread {
         String comp = "";
         if (idCompanion != null)
             comp = idCompanion;
-        return "ID" + id + "-" + comp + ", ";
+        return "ID" + id + "-" + comp;
     }
         
         
