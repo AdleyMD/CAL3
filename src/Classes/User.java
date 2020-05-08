@@ -13,7 +13,8 @@ public class User extends Thread {
     private int id;
     private int idCompanion;
 
-    public User(){
+    public User(int id){
+        this.id = id;
         actCounter = (int) (5 + (10 * Math.random()));
         age = (int) (5 + (10 * Math.random()));
     }
@@ -41,6 +42,10 @@ public class User extends Thread {
 
     public int getIdCompanion() {
         return idCompanion;
+    }
+    
+    public void setIdCompanion(int idCompanion) {
+        this.idCompanion = idCompanion;
     }
     
     public String toString() {
