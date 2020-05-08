@@ -23,11 +23,15 @@ public class User extends Thread {
             companion = null;
     }
     
+    /**
+     * This constructor is used for the parent companions.
+     * A parent companion won't need an activities counter
+     * because it will follow the child anywhere it wants.
+     */
     public User(int id, int age, User companion){
         this.id = id;
         this.age = age;
         this.companion = companion;
-        actsCounter = (int) (5 + (10 * Math.random()));
     }
     
     @Override
