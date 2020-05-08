@@ -30,8 +30,8 @@ public class User extends Thread {
         
     }
     
-    public void subActCounter(){
-        actCounter--;
+    public void subActsCounter(){
+        actsCounter--;
     }
 
     public int getAge() {
@@ -56,8 +56,8 @@ public class User extends Thread {
     
     public String toString() {
         String comp = "";
-        if (idCompanion != null)
-            comp = idCompanion;
+        if (idCompanion != 0)
+            comp += idCompanion;
         return "ID" + id + "-" + comp;
     }
         
