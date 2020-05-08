@@ -42,6 +42,13 @@ public class User extends Thread {
     public int getIdCompanion() {
         return idCompanion;
     }
+    
+    public String toString() {
+        String comp = "";
+        if (idCompanion != null)
+            comp = idCompanion;
+        return "ID" + id + "-" + comp + ", ";
+    }
         
         
 }//end User
