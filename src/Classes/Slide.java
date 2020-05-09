@@ -8,19 +8,19 @@ package Classes;
 public class Slide extends Activity {
 
     public Slide() {
-        super(1, new Supervisor(), new UserList(), null);
+        super(1, "Slide", new Supervisor(), new UserList(), null);
     }
 
     @Override
-    public void enter() {
+    public void enter(User user) {
     }
 
     @Override
-    public void use() {
+    public void use(User user) {
     }
 
     @Override
-    public void leave() {
+    public void leave(User user) {
     }
 
 }//end Slide

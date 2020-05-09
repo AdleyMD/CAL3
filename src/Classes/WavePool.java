@@ -7,10 +7,10 @@ package Classes;
  */
 public class WavePool extends Activity {
 
-    public WavePool(int maxUsers, Supervisor supervisor, UserList queue, UserList inside) {
-        super(maxUsers, "Wave Pool", supervisor, queue, inside);
+    public WavePool() {
+        super(maxUsers, "Wave Pool", new Supervisor(), new UserList(), new UserList());
         curCapacity = 0;
-        supervisor.setActivity(name);
+        supervisor.setActivity(this);
     }
 
     @Override

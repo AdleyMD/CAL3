@@ -14,9 +14,9 @@ public class BigPool extends Activity {
     private Slide slideB;
     private Slide slideC;
     
-    public BigPool(ActivitiesZone zone){
-        super(50, "Big Pool", new Supervisor(zone), new UserList(), new UserList());
-        supervisor.setActName(name);
+    public BigPool(){
+        super(50, "Big Pool", new Supervisor(), new UserList(), new UserList());
+        supervisor.setActivity(this);
     }
 
     @Override
@@ -25,6 +25,7 @@ public class BigPool extends Activity {
         lock.lock();
         try {
             while (user.hasCompanion() && curCapacity >= maxUsers - 1 || curCapacity == maxUsers) {
+                executor.execute(supervisor);
                 actFull.await();
             }
         } catch (InterruptedException ex) {
@@ -55,13 +56,14 @@ public class BigPool extends Activity {
     public void leave(User user) {
         lock.lock();
         try {
+            inside.remove(user);
+            
             if (user.hasCompanion())
                 curCapacity -= 2;
             else
                 curCapacity--;
-            
-            inside.remove(user);
             actFull.signal();
+            
         } catch (Exception ex) {
             Logger.getLogger(BigPool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

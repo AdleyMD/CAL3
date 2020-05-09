@@ -10,13 +10,23 @@ public class ActivitiesZone {
     private WaterPark park;
     private ChangingRoom cr;
     private BigPool bp;
-    private Slide s;
+    private Slide sA;
+    private Slide sB;
+    private Slide sC;
     private WavePool wp;
     private SunBeds sb;
     private ChildrenPool cp;
 
     public ActivitiesZone(){
-
+        cr = new ChangingRoom();
+        bp = new BigPool();
+        sA = new Slide();
+        sB = new Slide();
+        sC = new Slide();
+        wp = new WavePool();
+        sb = new SunBeds();
+        cp = new ChildrenPool();
+        
     }
         
     public Activity getActivity(String name) {

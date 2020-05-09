@@ -15,18 +15,16 @@ public class Supervisor implements Runnable {
     private static int counter = 0; 
     private final int id;
     private User userToCheck;
-    private ActivitiesZone zone;
-    private String actName;
+    private Activity activity;
 
-    public Supervisor(ActivitiesZone zone) {
+    public Supervisor() {
         id = counter + 5001;
         counter++;
-        this.zone = zone;
     }
 
     @Override
     public void run() {
-        switch (actName) {
+        switch (activity.getName()) {
             case ("Changing Room"):
                 changingRoom();
                 break;
@@ -52,15 +50,19 @@ public class Supervisor implements Runnable {
         userToCheck = user;
     }
     
-    public void setActName(String actName) {
-        this.actName = actName;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
     
     public void bigPool() {
-        BigPool bp = (BigPool) zone.getActivity(actName);
-        customSleep(500);
-        if (bp.isFull())
-            bp.kickRandom();
+        BigPool bp = (BigPool) activity;
+        while (bp.isFull()) {
+            customSleep(500);
+            if (bp.isFull()) {
+                customSleep(500, 1000);
+                bp.kickRandom();
+            }
+        }
     }
     
     public void slide() {
