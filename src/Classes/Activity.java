@@ -26,8 +26,9 @@ public abstract class Activity {
     public Lock lock;
     public Condition actFull;
 
-    public Activity(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
+    public Activity(int maxUsers, String name, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
         this.maxUsers = maxUsers;
+        this.name = name;
         this.supervisor = supervisor;
         this.queue = queue;
         this.inside = inside;

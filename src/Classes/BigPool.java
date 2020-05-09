@@ -16,7 +16,8 @@ public class BigPool extends Activity {
     private Slide slideC;
     
     public BigPool(){
-        super(50, new Supervisor(), new Queue(), new ArrayList<>());
+        super(50, "Big Pool", new Supervisor(), new Queue(), new ArrayList<>());
+        supervisor.setActivity(name);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class BigPool extends Activity {
         else
             curCapacity++;
         
-        supervisor.setUser(user);
+        supervisor.setUserToCheck(user);
         executor.execute(supervisor);
     }
     
@@ -49,7 +50,7 @@ public class BigPool extends Activity {
     }
     
     @Override
-    public void leave() {
+    public void leave(User user) {
         
     }
 }//end BigPool

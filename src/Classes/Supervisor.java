@@ -17,21 +17,39 @@ public class Supervisor implements Runnable {
     public Supervisor() {
         id = counter + 5001;
         counter++;
-        this.userToCheck = userToCheck;
     }
 
     @Override
     public void run() {
         switch (activity) {
-            case("Changing Room"):
-                
+            case ("Changing Room"):
+                changingRoom();
+                break;
+            case ("Wave Pool"):
+                wavePool();
+                break;
+            case ("Children Pool"):
+                childrenPool();
+                break;
+            case ("Sun Beds"):
+                sunBeds();
+                break;
+            case ("Big Pool"):
+                bigPool();
+                break;
+            case ("Slide"):
+                slide();
+                break;
         }
     }
     
-    public void setUser(User user) {
+    public void setUserToCheck(User user) {
         userToCheck = user;
     }
     
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
     /**
      *
      * @param min
