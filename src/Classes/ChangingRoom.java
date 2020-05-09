@@ -15,11 +15,12 @@ public class ChangingRoom extends Activity {
     private int childrenCapacity;
     private int currentChild;
 
-    public ChangingRoom(Supervisor supervisor, UserList queue, UserList inside) {
-        super(0, "Changing Room", supervisor, queue, inside);
-        supervisor.setActName(name);
+    public ChangingRoom() {
+        super(0, "Changing Room", new Supervisor(), new UserList(), new UserList());
+
         adultCapacity = 20;
         childrenCapacity = 10;
+        supervisor.setActivity(this);
     }
 
     @Override
