@@ -3,21 +3,24 @@ package Classes;
 public class WaterPark {
     
     private final int maxUsers;
-    private final int usersToEnter;
     private int currentUsers;
     private final Queue queue;
     private final ActivitiesZone zone;
     
     public WaterPark() {
         maxUsers = 100;
-        usersToEnter = 5000;
-        queue = new Queue(usersToEnter);
+        queue = new Queue();
         zone = new ActivitiesZone();
     }
     
     public void startSimulation() {
-        for (int i = 0; i < usersToEnter; i++) {
-            User user = new User(i);
+        int usersToCreate = 5000;
+        User user;
+        for (int i = 1; i <= usersToCreate; i++) {
+            if (i == usersToCreate)
+                user = new User(i, 11, 50, this);
+            else
+                user = new User(i, 1, 50, this);
             if (user.hasCompanion())
                 i++;
             user.start();

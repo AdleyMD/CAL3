@@ -9,8 +9,12 @@ import java.util.ArrayList;
  */
 public class BigPool extends Activity {
     
+    private Slide slideA;
+    private Slide slideB;
+    private Slide slideC;
+    
     public BigPool(){
-        super(50, new Queue(), new ArrayList<>());
+        super(50, new Supervisor(), new Queue(), new ArrayList<>());
     }
 
     @Override

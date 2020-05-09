@@ -13,10 +13,12 @@ public class User extends Thread {
     private int id;
     private User companion;
 
-    public User(int id) {
+    public User(int id, int minAge, int maxAge, WaterPark park) {
         this.id = id;
+        this.park = park;
         actsCounter = (int) (5 + (10 * Math.random()));
-        age = (int) (1 + (49 * Math.random()));
+        age = (int) (minAge + ((maxAge - minAge) * Math.random()));
+        
         if (age <= 10)
             companion = new User(id+1, (int) (18 + (32 * Math.random())), this);
         else
@@ -24,8 +26,8 @@ public class User extends Thread {
     }
     
     /**
-     * This constructor is used for the parent companions.
-     * A parent companion won't need an activities counter
+     * This constructor is used for the adult companions.
+     * An adult companion won't need an activities counter
      * because it will follow the child anywhere it wants.
      */
     public User(int id, int age, User companion){

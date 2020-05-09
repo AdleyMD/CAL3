@@ -3,6 +3,8 @@ package Classes;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +20,8 @@ public abstract class Activity {
     public Queue queue;
     public ArrayList<User> inside;
     public ExecutorService executor;
+    public Lock capacityLock;
+    public Condition capacityFull;
 
     public Activity(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
         this.maxUsers = maxUsers;
@@ -29,9 +33,9 @@ public abstract class Activity {
 
     public abstract void enter();
 
-    public abstract void leave();
-
     public abstract void use();
+    
+    public abstract void leave();
 
     public void customSleep(int time) {
         try {

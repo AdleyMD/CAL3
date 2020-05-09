@@ -7,8 +7,20 @@ package Classes;
  */
 public class Slide extends Activity {
 
-	public Slide(){
+    public Slide() {
+        super(1, new Supervisor(), new Queue(), null);
+    }
 
-	}
+    @Override
+    public void enter() {
+    }
+
+    @Override
+    public void use() {
+    }
+
+    @Override
+    public void leave() {
+    }
 
 }//end Slide

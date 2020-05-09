@@ -13,7 +13,7 @@ public class Queue {
 	private ArrayList<User> queue;
 	private JTextField text;
 
-	public Queue(int maxSize) {
+	public Queue() {
             queue = new ArrayList<>();
 	}
 
