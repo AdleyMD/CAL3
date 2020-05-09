@@ -12,7 +12,7 @@ public class WavePool extends Activity {
 
     Condition waitingPair;
 
-    public WavePool(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
+    public WavePool(int maxUsers, Supervisor supervisor, UserList queue, ArrayList<User> inside) {
         super(maxUsers, supervisor, queue, inside);
         curCapacity = 0;
     }

@@ -14,7 +14,7 @@ public class ChangingRoom extends Activity {
     private int AdultCapacity;
     private int ChildrenCapacity;
 
-    public ChangingRoom(Supervisor supervisor, Queue queue, ArrayList<User> inside) {
+    public ChangingRoom(Supervisor supervisor, UserList queue, ArrayList<User> inside) {
         super(0, supervisor, queue, inside);
         AdultCapacity = 20;
         ChildrenCapacity = 10;

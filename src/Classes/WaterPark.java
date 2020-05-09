@@ -4,12 +4,12 @@ public class WaterPark {
     
     private final int maxUsers;
     private int currentUsers;
-    private final Queue queue;
+    private final UserList queue;
     private final ActivitiesZone zone;
     
     public WaterPark() {
         maxUsers = 100;
-        queue = new Queue();
+        queue = new UserList();
         zone = new ActivitiesZone();
     }
     

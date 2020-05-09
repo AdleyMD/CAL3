@@ -12,7 +12,7 @@ public class ChildrenPool extends Activity {
     private boolean needsCompanion;
     private int capacity;
 
-    public ChildrenPool(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
+    public ChildrenPool(int maxUsers, Supervisor supervisor, UserList queue, ArrayList<User> inside) {
         super(maxUsers, supervisor, queue, inside);
     }
 

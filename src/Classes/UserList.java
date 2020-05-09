@@ -8,12 +8,12 @@ import javax.swing.JTextField;
  * @version 1.0
  * @created 08-may.-2020 12:16:07
  */
-public class Queue {
+public class UserList {
 
 	private ArrayList<User> queue;
 	private JTextField textField;
 
-	public Queue() {
+	public UserList() {
             queue = new ArrayList<>();
 	}
 
@@ -51,4 +51,4 @@ public class Queue {
             }
             textField.setText(text);
         }
-}//end Queue
+}//end UserList
