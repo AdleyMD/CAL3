@@ -40,8 +40,9 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void leave(User user) {
-        if(user.hasCompanion()){
+        if (user.hasCompanion()) {
             curCapacity--;
+            actFull.signal();
         }
         curCapacity--;
         actFull.signal();

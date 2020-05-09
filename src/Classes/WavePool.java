@@ -32,7 +32,6 @@ public class WavePool extends Activity {
             }
             queue.dequeue();
             queue.dequeue();
-            use();
         } catch (InterruptedException ie) {
         } finally {
             lock.unlock();

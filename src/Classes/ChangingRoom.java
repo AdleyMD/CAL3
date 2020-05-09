@@ -36,8 +36,6 @@ public class ChangingRoom extends Activity {
                     Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            use();
-
             // aqui estoy comprobando la edad, eso feo.
             /*while ((currentAdult == 20 && user.getAge() > 18)
                     || user.getAge() <= 10 && currentChild == 10 || currentAdult == 20
@@ -46,7 +44,6 @@ public class ChangingRoom extends Activity {
             }
              */
             //supervisor.sleep(1000);
-            
         } finally {
             lock.unlock();
         }
@@ -59,22 +56,11 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void leave(User user) {
-        //if 2 ppl leave, then signal twice, else, signal once.
-
-    }
-
-    /**
-     * Function required to be in ChangingRoom since it's not part of activity.
-     *
-     * @param time
-     */
-    public void customSleep(int time) {
-        try {
-            Thread.sleep(time);
-
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+        customSleep(3000);
+        if (user.hasCompanion()) {
+            actFull.signal();
         }
+        actFull.signal();
     }
 
 }//end ChangingRoom
