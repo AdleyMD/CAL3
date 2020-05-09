@@ -14,15 +14,21 @@ public class Supervisor implements Runnable {
     private static int counter = 0; 
     private final int id;
     private boolean occupied = false;
+    private User userToCheck;
 
     public Supervisor() {
         id = counter + 5001;
         counter++;
+        this.userToCheck = userToCheck;
     }
 
     @Override
     public void run() {
         
+    }
+    
+    public void setUser(User user) {
+        userToCheck = user;
     }
 
     /**

@@ -3,7 +3,9 @@ package Classes;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +22,8 @@ public abstract class Activity {
     public Queue queue;
     public ArrayList<User> inside;
     public ExecutorService executor;
-    public Semaphore semaphore;
+    public Lock lock;
+    public Condition actFull;
 
     public Activity(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
         this.maxUsers = maxUsers;
@@ -29,7 +32,8 @@ public abstract class Activity {
         this.inside = inside;
         executor = Executors.newFixedThreadPool(1);
         curCapacity = 0;
-        semaphore = new Semaphore(maxUsers, true);
+        lock = new ReentrantLock();
+        actFull = lock.newCondition();
     }
 
     public abstract void enter(User user);

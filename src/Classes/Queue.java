@@ -17,7 +17,7 @@ public class Queue {
             queue = new ArrayList<>();
 	}
 
-	public User dequeue(User user) {
+	public User dequeue() {
             return queue.remove(0);
 	}
 

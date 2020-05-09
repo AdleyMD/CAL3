@@ -23,12 +23,19 @@ public class BigPool extends Activity {
     @Override
     public void enter(User user) {
         queue.enqueue(user);
+        lock.lock();
         try {
-            semaphore.acquire();
+            while (curCapacity == maxUsers) {
+                actFull.await();
+            }
         } catch (InterruptedException ex) {
             Logger.getLogger(BigPool.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            
         }
-        queue.dequeue(user);
+        user = queue.dequeue();
+        supervisor.setUser(user);
+        executor.execute(supervisor);
     }
     
     @Override
@@ -40,5 +47,4 @@ public class BigPool extends Activity {
     public void leave() {
         
     }
-
 }//end BigPool
