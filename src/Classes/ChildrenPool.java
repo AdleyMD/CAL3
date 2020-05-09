@@ -1,6 +1,7 @@
 package Classes;
 
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
@@ -10,48 +11,46 @@ import java.util.ArrayList;
 public class ChildrenPool extends Activity {
 
     private boolean needsCompanion;
-     
 
     public ChildrenPool(int maxUsers, Supervisor supervisor, UserList queue, UserList inside) {
-        super(maxUsers,"Children Pool" ,supervisor, queue, inside);
+        super(maxUsers, "Children Pool", supervisor, queue, inside);
         curCapacity = 0;
     }
-    
+
     @Override
     public void enter(User user) {
         queue.enqueue(user);
-        while (curCapacity != maxUsers){
-            
+        executor.execute(supervisor);
+        try {
+            lock.lock();
+            while (curCapacity == maxUsers) {
+                actFull.await();
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            lock.unlock();
         }
-        
-        
-        if (curCapacity != maxUsers) {
-            User visitor = queue.dequeue();
-            int visitorAge = visitor.getAge();
-            if (supervisor.checkAge(1, 5, visitorAge)) {
-                needsCompanion = true;
-            } else if (supervisor.checkAge(6, 10, visitorAge)) {
-                needsCompanion = false;
-            }
-            customSleep(1000, 1500);
-            if (needsCompanion) {
-                curCapacity += 1;
-            }
+
+        if (needsCompanion) {
             curCapacity += 1;
         }
+        curCapacity += 1;
     }
 
     @Override
     public void leave(User user) {
-        
+        if (user.hasCompanion()) {
+            curCapacity--;
+            actFull.signal();
+        }
+        curCapacity--;
+        actFull.signal();
     }
 
     @Override
     public void use() {
-
-        customSleep(1000,3000);
-
+        customSleep(1000, 3000);
     }
 
-    
 }//end ChildrenPool

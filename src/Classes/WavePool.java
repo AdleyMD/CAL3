@@ -1,7 +1,5 @@
 package Classes;
 
-import java.util.ArrayList;
-
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
  * @version 1.0
@@ -9,48 +7,41 @@ import java.util.ArrayList;
  */
 public class WavePool extends Activity {
 
-
     public WavePool(int maxUsers, Supervisor supervisor, UserList queue, UserList inside) {
-        
-        super(maxUsers, "Wave Pool" ,supervisor, queue, inside);
-
+        super(maxUsers, "Wave Pool", supervisor, queue, inside);
         curCapacity = 0;
         supervisor.setActivity(name);
     }
 
     @Override
     public void enter(User user) {
-        
         queue.enqueue(user);
+        executor.execute(supervisor);
         try {
             lock.lock();
-            while ((user.hasCompanion() && curCapacity == maxUsers - 1
-                    || (!user.hasCompanion() && !queue.peek().hasCompanion())) && curCapacity == maxUsers - 1) {
+            while ((user.hasCompanion() || (!user.hasCompanion() && !queue.checkPos(1).hasCompanion()))
+                    && curCapacity == maxUsers - 1) {
                 actFull.await();
             }
             if (user.hasCompanion()) {
-                inside.add(user);
+                inside.enqueue(user);
                 curCapacity += 2;
             } else if (!queue.checkPos(2).hasCompanion()) {
-                inside.add(user);
-                inside.add(queue.checkPos(2));
+                inside.enqueue(user);
                 curCapacity += 2;
             }
             queue.dequeue();
             queue.dequeue();
-            use();
         } catch (InterruptedException ie) {
         } finally {
             lock.unlock();
         }
-
-        // en teoria para ejecutarlo en supervisor.java
-        supervisor.checkAge(6, 10, user.getAge());
     }
 
     @Override
     public void leave(User user) {
         inside.remove(user);
+        actFull.signal();
     }
 
     @Override
