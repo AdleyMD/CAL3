@@ -33,6 +33,10 @@ public class Queue {
             return queue.get(0);
 	}
         
+        public User checkPos(int n){
+            return queue.get(n);
+        }
+        
         @Override
         public String toString() {
             String text = "";
