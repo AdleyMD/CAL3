@@ -39,10 +39,18 @@ public abstract class Activity {
 
     public abstract void enter(User user);
 
-    public abstract void use();
+    public abstract void use(User user);
     
     public abstract void leave(User user);
 
+    public String getName() {
+        return name;
+    }
+    
+    public boolean isFull() {
+        return curCapacity == maxUsers;
+    }
+    
     public void customSleep(int time) {
         try {
             Thread.sleep(time);

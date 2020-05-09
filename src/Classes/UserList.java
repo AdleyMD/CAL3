@@ -10,41 +10,48 @@ import javax.swing.JTextField;
  */
 public class UserList {
 
-	private ArrayList<User> queue;
+	private ArrayList<User> list;
 	private JTextField textField;
 
 	public UserList() {
-            queue = new ArrayList<>();
+            list = new ArrayList<>();
 	}
 
 	public User dequeue() {
-            return queue.remove(0);
+            return list.remove(0);
 	}
 
 	public void enqueue(User user) {
-            queue.add(user);
+            list.add(user);
 	}
 
         public void remove(User user) {
-            queue.remove(user);
+            list.remove(user);
+        }
+        
+        public User extractRandom() {
+            int randIndex = (int) (list.size() * Math.random()); // Puede dar error index out of bounds?
+            User user = list.get(randIndex);
+            list.remove(randIndex);
+            return user;
         }
         
 	public boolean isEmpty() {
-            return queue.isEmpty();
+            return list.isEmpty();
 	}
         
 	public User peek() {
-            return queue.get(0);
+            return list.get(0);
 	}
         
         public User checkPos(int n){
-            return queue.get(n);
+            return list.get(n);
         }
         
         public void setText() {
             String text = "";
             String comp = "";
-            for (User u : queue) {
+            for (User u : list) {
                 if (u.hasCompanion())   // Prints the companion too, if any
                     comp = u.getCompanion().toString() + ", ";
                 text += u.toString() + ", " + comp;

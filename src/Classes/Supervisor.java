@@ -1,5 +1,8 @@
 package Classes;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
  * @version 1.0
@@ -12,16 +15,18 @@ public class Supervisor implements Runnable {
     private static int counter = 0; 
     private final int id;
     private User userToCheck;
-    private String activity;
+    private ActivitiesZone zone;
+    private String actName;
 
-    public Supervisor() {
+    public Supervisor(ActivitiesZone zone) {
         id = counter + 5001;
         counter++;
+        this.zone = zone;
     }
 
     @Override
     public void run() {
-        switch (activity) {
+        switch (actName) {
             case ("Changing Room"):
                 changingRoom();
                 break;
@@ -47,12 +52,15 @@ public class Supervisor implements Runnable {
         userToCheck = user;
     }
     
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public void setActName(String actName) {
+        this.actName = actName;
     }
     
     public void bigPool() {
-        
+        BigPool bp = (BigPool) zone.getActivity(actName);
+        customSleep(500);
+        if (bp.isFull())
+            bp.kickRandom();
     }
     
     public void slide() {
@@ -73,5 +81,21 @@ public class Supervisor implements Runnable {
     
     public void childrenPool() {
         
+    }
+    
+    public void customSleep(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void customSleep(int min, int max) {
+        try {
+            Thread.sleep((long) (min + (max - min) * Math.random()));
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }//end Supervisor

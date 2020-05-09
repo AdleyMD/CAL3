@@ -1,6 +1,5 @@
 package Classes;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,9 +14,9 @@ public class BigPool extends Activity {
     private Slide slideB;
     private Slide slideC;
     
-    public BigPool(){
-        super(50, "Big Pool", new Supervisor(), new UserList(), new UserList());
-        supervisor.setActivity(name);
+    public BigPool(ActivitiesZone zone){
+        super(50, "Big Pool", new Supervisor(zone), new UserList(), new UserList());
+        supervisor.setActName(name);
     }
 
     @Override
@@ -40,16 +39,38 @@ public class BigPool extends Activity {
         else
             curCapacity++;
         
-       inside.add(user);
+       inside.enqueue(user);
     }
     
     @Override
-    public void use() {
-        customSleep(3000, 5000);
+    public void use(User user) {
+        try {
+            Thread.sleep((long) (3000 + (2000 * Math.random())));
+        } catch (InterruptedException e) {
+            leave(user);
+        }
     }
     
     @Override
     public void leave(User user) {
-        
+        lock.lock();
+        try {
+            if (user.hasCompanion())
+                curCapacity -= 2;
+            else
+                curCapacity--;
+            
+            inside.remove(user);
+            actFull.signal();
+        } catch (Exception ex) {
+            Logger.getLogger(BigPool.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            lock.unlock();
+        }
+    }
+    
+    public void kickRandom() {
+        User kickedUser = inside.extractRandom();
+        kickedUser.interrupt();
     }
 }//end BigPool
