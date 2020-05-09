@@ -1,6 +1,9 @@
 package Classes;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author andro
@@ -18,8 +21,13 @@ public class BigPool extends Activity {
     }
 
     @Override
-    public void enter() {
-        
+    public void enter(User user) {
+        queue.enqueue(user);
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(BigPool.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

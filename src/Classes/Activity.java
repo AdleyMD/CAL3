@@ -3,8 +3,7 @@ package Classes;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,12 +15,12 @@ import java.util.logging.Logger;
 public abstract class Activity {
 
     public int maxUsers;
+    public int curCapacity;
     public Supervisor supervisor;
     public Queue queue;
     public ArrayList<User> inside;
     public ExecutorService executor;
-    public Lock capacityLock;
-    public Condition capacityFull;
+    public Semaphore semaphore;
 
     public Activity(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
         this.maxUsers = maxUsers;
@@ -29,9 +28,11 @@ public abstract class Activity {
         this.queue = queue;
         this.inside = inside;
         executor = Executors.newFixedThreadPool(1);
+        curCapacity = 0;
+        semaphore = new Semaphore(maxUsers, true);
     }
 
-    public abstract void enter();
+    public abstract void enter(User user);
 
     public abstract void use();
     

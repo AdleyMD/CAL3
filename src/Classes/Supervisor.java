@@ -7,12 +7,13 @@ package Classes;
  * @version 1.0
  * @created 08-may.-2020 12:16:09
  */
-public class Supervisor extends Thread {
+public class Supervisor implements Runnable {
     
     // counter Counts how many supervisors have been created. Only used to set
     // the id for each new supervisor.
     private static int counter = 0; 
     private final int id;
+    private boolean occupied = false;
 
     public Supervisor() {
         id = counter + 5001;
@@ -21,12 +22,7 @@ public class Supervisor extends Thread {
 
     @Override
     public void run() {
-
-        while (true) {
-            
-            
-            // crear una condicion que lo despierte si necesita levantar a alguien?
-        }
+        
     }
 
     /**
