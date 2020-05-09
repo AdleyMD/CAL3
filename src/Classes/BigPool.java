@@ -1,7 +1,6 @@
 package Classes;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +16,7 @@ public class BigPool extends Activity {
     private Slide slideC;
     
     public BigPool(){
-        super(50, new Supervisor(this), new Queue(), new ArrayList<>());
+        super(50, new Supervisor(), new Queue(), new ArrayList<>());
     }
 
     @Override

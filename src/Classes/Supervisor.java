@@ -1,7 +1,5 @@
 package Classes;
 
-
-
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
  * @version 1.0
@@ -13,11 +11,10 @@ public class Supervisor implements Runnable {
     // the id for each new supervisor.
     private static int counter = 0; 
     private final int id;
-    private boolean occupied = false;
     private User userToCheck;
-    private Activity act;
+    private String activity;
 
-    public Supervisor(Activity act) {
+    public Supervisor() {
         id = counter + 5001;
         counter++;
         this.userToCheck = userToCheck;
@@ -25,12 +22,16 @@ public class Supervisor implements Runnable {
 
     @Override
     public void run() {
+        switch (activity) {
+            case("Changing Room"):
+                
+        }
     }
     
     public void setUser(User user) {
         userToCheck = user;
     }
-
+    
     /**
      *
      * @param min

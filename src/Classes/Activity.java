@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  */
 public abstract class Activity {
 
+    public String name;
     public int maxUsers;
     public int curCapacity;
     public Supervisor supervisor;
@@ -40,7 +41,7 @@ public abstract class Activity {
 
     public abstract void use();
     
-    public abstract void leave();
+    public abstract void leave(User user);
 
     public void customSleep(int time) {
         try {
