@@ -40,8 +40,7 @@ public class BigPool extends Activity {
         else
             curCapacity++;
         
-        supervisor.setUserToCheck(user);
-        executor.execute(supervisor);
+       inside.add(user);
     }
     
     @Override

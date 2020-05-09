@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 public class Queue {
 
 	private ArrayList<User> queue;
-	private JTextField text;
+	private JTextField textField;
 
 	public Queue() {
             queue = new ArrayList<>();
@@ -25,6 +25,10 @@ public class Queue {
             queue.add(user);
 	}
 
+        public void remove(User user) {
+            queue.remove(user);
+        }
+        
 	public boolean isEmpty() {
             return queue.isEmpty();
 	}
@@ -37,8 +41,7 @@ public class Queue {
             return queue.get(n);
         }
         
-        @Override
-        public String toString() {
+        public void setText() {
             String text = "";
             String comp = "";
             for (User u : queue) {
@@ -46,7 +49,6 @@ public class Queue {
                     comp = u.getCompanion().toString() + ", ";
                 text += u.toString() + ", " + comp;
             }
-            
-            return text;
+            textField.setText(text);
         }
 }//end Queue

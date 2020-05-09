@@ -50,17 +50,6 @@ public class Supervisor implements Runnable {
     public void setActivity(String activity) {
         this.activity = activity;
     }
-    /**
-     *
-     * @param min
-     * @param max
-     * @param age
-     * @param user
-     * @return
-     */
-    public boolean checkAge(int min, int max, int age) {
-        return (min <= age && age <= max);
-    }
     
     public void bigPool() {
         
