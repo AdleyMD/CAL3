@@ -12,12 +12,22 @@ import java.util.logging.Logger;
 public class ChangingRoom extends Activity {
 
     private int AdultCapacity;
+    private int currentAdultCapac;
     private int ChildrenCapacity;
+    private int currentChildCapac;
 
     public ChangingRoom(Supervisor supervisor, Queue queue, ArrayList<User> inside) {
-        super(0, supervisor, queue, inside);
+        super(0,"Changing Room" ,supervisor, queue, inside);
         AdultCapacity = 20;
         ChildrenCapacity = 10;
+    }
+
+    @Override
+    public void enter(User user) {
+        while (){
+            
+        }
+
     }
 
     @Override
@@ -31,9 +41,7 @@ public class ChangingRoom extends Activity {
             //user doing its thing
             customSleep(3000);
 
-            //signal, despierta al supervisor.
             supervisor.sleep(1000);
-            // ademas sincronizar al usuario para que se espere el tambien.
 
         } else if (supervisor.checkCompanion(user) && ChildrenCapacity != 0 && AdultCapacity != 0) {
             ChildrenCapacity--;
@@ -67,6 +75,11 @@ public class ChangingRoom extends Activity {
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void enter(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }//end ChangingRoom

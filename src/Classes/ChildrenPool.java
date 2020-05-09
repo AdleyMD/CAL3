@@ -10,16 +10,21 @@ import java.util.ArrayList;
 public class ChildrenPool extends Activity {
 
     private boolean needsCompanion;
-    private int capacity;
 
     public ChildrenPool(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
-        super(maxUsers, supervisor, queue, inside);
+        super(maxUsers, "Children Pool" ,supervisor, queue, inside);
+        curCapacity = 0;
     }
-
+    
     @Override
-    public void enter() {
-
-        if (capacity != maxUsers) {
+    public void enter(User user) {
+        queue.enqueue(user);
+        while (curCapacity != maxUsers){
+            
+        }
+        
+        
+        if (curCapacity != maxUsers) {
             User visitor = queue.dequeue();
             int visitorAge = visitor.getAge();
             if (supervisor.checkAge(1, 5, visitorAge)) {
@@ -29,14 +34,14 @@ public class ChildrenPool extends Activity {
             }
             customSleep(1000, 1500);
             if (needsCompanion) {
-                capacity += 1;
+                curCapacity += 1;
             }
-            capacity += 1;
+            curCapacity += 1;
         }
     }
 
     @Override
-    public void leave() {
+    public void leave(User user) {
         
     }
 
@@ -47,4 +52,5 @@ public class ChildrenPool extends Activity {
 
     }
 
+    
 }//end ChildrenPool

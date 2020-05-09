@@ -13,13 +13,14 @@ public class WavePool extends Activity {
     Condition waitingPair;
 
     public WavePool(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
-        super(maxUsers, supervisor, queue, inside);
+        super(maxUsers, "Wave Pool" ,supervisor, queue, inside);
         curCapacity = 0;
+        supervisor.setActivity(name);
     }
 
     @Override
     public void enter(User user) {
-
+        
         queue.enqueue(user);
         try {
             lock.lock();
