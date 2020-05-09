@@ -8,13 +8,15 @@ package Classes;
  * @created 08-may.-2020 12:16:09
  */
 public class Supervisor extends Thread {
-
-
-    private int id;
     
+    // counter Counts how many supervisors have been created. Only used to set
+    // the id for each new supervisor.
+    private static int counter = 0; 
+    private final int id;
 
-    public Supervisor(int id) {
-        this.id = id;
+    public Supervisor() {
+        id = counter + 5001;
+        counter++;
     }
 
     @Override
