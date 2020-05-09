@@ -17,7 +17,7 @@ public class ChangingRoom extends Activity {
 
     public ChangingRoom(Supervisor supervisor, UserList queue, UserList inside) {
         super(0, "Changing Room", supervisor, queue, inside);
-
+        supervisor.setActName(name);
         adultCapacity = 20;
         childrenCapacity = 10;
     }
@@ -50,7 +50,7 @@ public class ChangingRoom extends Activity {
     }
 
     @Override
-    public void use() {
+    public void use(User user) {
         customSleep(3000);
     }
 

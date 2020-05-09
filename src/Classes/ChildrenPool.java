@@ -15,6 +15,7 @@ public class ChildrenPool extends Activity {
     public ChildrenPool(int maxUsers, Supervisor supervisor, UserList queue, UserList inside) {
         super(maxUsers, "Children Pool", supervisor, queue, inside);
         curCapacity = 0;
+        supervisor.setActName(name);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class ChildrenPool extends Activity {
     }
 
     @Override
-    public void use() {
+    public void use(User user) {
         customSleep(1000, 3000);
     }
 

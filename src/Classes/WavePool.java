@@ -10,7 +10,7 @@ public class WavePool extends Activity {
     public WavePool(int maxUsers, Supervisor supervisor, UserList queue, UserList inside) {
         super(maxUsers, "Wave Pool", supervisor, queue, inside);
         curCapacity = 0;
-        supervisor.setActivity(name);
+        supervisor.setActName(name);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class WavePool extends Activity {
     }
 
     @Override
-    public void use() {
+    public void use(User user) {
         customSleep(2000, 5000);
     }
 
