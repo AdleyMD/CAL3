@@ -40,8 +40,12 @@ public class Queue {
         @Override
         public String toString() {
             String text = "";
-            for (User u : queue)
-                text += u.getUserId() + ", ";
+            String comp = "";
+            for (User u : queue) {
+                if (u.hasCompanion())   // Prints the companion too, if any
+                    comp = u.getCompanion().toString() + ", ";
+                text += u.toString() + ", " + comp;
+            }
             
             return text;
         }

@@ -69,8 +69,8 @@ public class User extends Thread {
     public String toString() {
         String comp = "";
         if (companion != null)
-            comp += companion.getUserId();
+            comp += "-" + companion.getUserId();
         
-        return "ID" + id + "-" + comp;
+        return "ID" + id + "-" + age + comp;
     }   
 }//end User

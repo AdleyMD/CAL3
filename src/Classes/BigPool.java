@@ -1,7 +1,6 @@
 package Classes;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,15 +24,21 @@ public class BigPool extends Activity {
         queue.enqueue(user);
         lock.lock();
         try {
-            while (curCapacity == maxUsers) {
+            while (user.hasCompanion() && curCapacity >= maxUsers - 1 || curCapacity == maxUsers) {
                 actFull.await();
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(BigPool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            
+            lock.unlock();
         }
         user = queue.dequeue();
+        
+        if (user.hasCompanion())
+            curCapacity += 2;
+        else
+            curCapacity++;
+        
         supervisor.setUser(user);
         executor.execute(supervisor);
     }

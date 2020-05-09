@@ -1,7 +1,5 @@
 package Classes;
 
-
-
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
  * @version 1.0
@@ -13,8 +11,8 @@ public class Supervisor implements Runnable {
     // the id for each new supervisor.
     private static int counter = 0; 
     private final int id;
-    private boolean occupied = false;
     private User userToCheck;
+    private String activity;
 
     public Supervisor() {
         id = counter + 5001;
@@ -24,13 +22,16 @@ public class Supervisor implements Runnable {
 
     @Override
     public void run() {
-        
+        switch (activity) {
+            case("Changing Room"):
+                
+        }
     }
     
     public void setUser(User user) {
         userToCheck = user;
     }
-
+    
     /**
      *
      * @param min
@@ -42,14 +43,28 @@ public class Supervisor implements Runnable {
     public boolean checkAge(int min, int max, int age) {
         return (min <= age && age <= max);
     }
-
-    /**
-     *
-     * @param user
-     * @return
-     */
-    public boolean checkCompanion(User user) {
-        return (user.getCompanion() != null);
+    
+    public void bigPool() {
+        
     }
-
+    
+    public void slide() {
+        
+    }
+    
+    public void sunBeds() {
+        
+    }
+    
+    public void wavePool() {
+        
+    }
+    
+    public void changingRoom() {
+        
+    }
+    
+    public void childrenPool() {
+        
+    }
 }//end Supervisor
