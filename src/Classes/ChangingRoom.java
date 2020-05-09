@@ -16,8 +16,10 @@ public class ChangingRoom extends Activity {
     private int ChildrenCapacity;
     private int currentChildCapac;
 
-    public ChangingRoom(Supervisor supervisor, Queue queue, ArrayList<User> inside) {
+
+    public ChangingRoom(Supervisor supervisor, UserList queue, UserList inside) {
         super(0,"Changing Room" ,supervisor, queue, inside);
+
         AdultCapacity = 20;
         ChildrenCapacity = 10;
     }
@@ -57,8 +59,8 @@ public class ChangingRoom extends Activity {
             // toca hacerle queue de nuevo al principio? que feo... retoco queue
         }
     }
-
-    public void leave() {
+    @Override
+    public void leave(User user) {
 
         customSleep(3000);
 

@@ -10,9 +10,10 @@ import java.util.ArrayList;
 public class ChildrenPool extends Activity {
 
     private boolean needsCompanion;
+     
 
-    public ChildrenPool(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
-        super(maxUsers, "Children Pool" ,supervisor, queue, inside);
+    public ChildrenPool(int maxUsers, Supervisor supervisor, UserList queue, UserList inside) {
+        super(maxUsers,"Children Pool" ,supervisor, queue, inside);
         curCapacity = 0;
     }
     

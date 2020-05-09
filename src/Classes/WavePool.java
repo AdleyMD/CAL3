@@ -1,7 +1,6 @@
 package Classes;
 
 import java.util.ArrayList;
-import java.util.concurrent.locks.Condition;
 
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
@@ -10,10 +9,11 @@ import java.util.concurrent.locks.Condition;
  */
 public class WavePool extends Activity {
 
-    Condition waitingPair;
 
-    public WavePool(int maxUsers, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
+    public WavePool(int maxUsers, Supervisor supervisor, UserList queue, UserList inside) {
+        
         super(maxUsers, "Wave Pool" ,supervisor, queue, inside);
+
         curCapacity = 0;
         supervisor.setActivity(name);
     }

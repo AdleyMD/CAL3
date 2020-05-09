@@ -20,13 +20,13 @@ public abstract class Activity {
     public int maxUsers;
     public int curCapacity;
     public Supervisor supervisor;
-    public Queue queue;
-    public ArrayList<User> inside;
+    public UserList queue;
+    public UserList inside;
     public ExecutorService executor;
     public Lock lock;
     public Condition actFull;
 
-    public Activity(int maxUsers, String name, Supervisor supervisor, Queue queue, ArrayList<User> inside) {
+    public Activity(int maxUsers, String name, Supervisor supervisor, UserList queue, UserList inside) {
         this.maxUsers = maxUsers;
         this.name = name;
         this.supervisor = supervisor;

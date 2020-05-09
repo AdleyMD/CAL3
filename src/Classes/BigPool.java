@@ -16,7 +16,7 @@ public class BigPool extends Activity {
     private Slide slideC;
     
     public BigPool(){
-        super(50, "Big Pool", new Supervisor(), new Queue(), new ArrayList<>());
+        super(50, "Big Pool", new Supervisor(), new UserList(), new UserList());
         supervisor.setActivity(name);
     }
 

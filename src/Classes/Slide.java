@@ -8,7 +8,7 @@ package Classes;
 public class Slide extends Activity {
 
     public Slide() {
-        super(1, new Supervisor(), new Queue(), null);
+        super(1, new Supervisor(), new UserList(), null);
     }
 
     @Override
