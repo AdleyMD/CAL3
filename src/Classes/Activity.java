@@ -32,7 +32,7 @@ public abstract class Activity {
         this.supervisor = supervisor;
         this.queue = queue;
         this.inside = inside;
-        executor = Executors.newFixedThreadPool(1);
+        executor = Executors.newSingleThreadExecutor();
         curCapacity = 0;
         lock = new ReentrantLock();
         actFull = lock.newCondition();
