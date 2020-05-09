@@ -15,8 +15,9 @@ public class Supervisor implements Runnable {
     private final int id;
     private boolean occupied = false;
     private User userToCheck;
+    private Activity act;
 
-    public Supervisor() {
+    public Supervisor(Activity act) {
         id = counter + 5001;
         counter++;
         this.userToCheck = userToCheck;
@@ -24,7 +25,6 @@ public class Supervisor implements Runnable {
 
     @Override
     public void run() {
-        
     }
     
     public void setUser(User user) {
@@ -42,14 +42,28 @@ public class Supervisor implements Runnable {
     public boolean checkAge(int min, int max, int age) {
         return (min <= age && age <= max);
     }
-
-    /**
-     *
-     * @param user
-     * @return
-     */
-    public boolean checkCompanion(User user) {
-        return (user.getCompanion() != null);
+    
+    public void bigPool() {
+        
     }
-
+    
+    public void slide() {
+        
+    }
+    
+    public void sunBeds() {
+        
+    }
+    
+    public void wavePool() {
+        
+    }
+    
+    public void changingRoom() {
+        
+    }
+    
+    public void childrenPool() {
+        
+    }
 }//end Supervisor
