@@ -40,7 +40,7 @@ public abstract class Activity {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void customSleep(int min, int max) {
         try {
             Thread.sleep((long) (min + Math.random() * max));

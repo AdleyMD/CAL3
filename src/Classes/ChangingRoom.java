@@ -29,7 +29,7 @@ public class ChangingRoom {
 
             //user doing its thing
             customSleep(3000);
-
+            
             //signal, despierta al supervisor.
             supervisor.sleep(1000);
             // ademas sincronizar al usuario para que se espere el tambien.

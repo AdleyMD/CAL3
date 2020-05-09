@@ -1,7 +1,6 @@
 package Classes;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
 
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
@@ -12,8 +11,7 @@ public class Supervisor extends Thread {
 
 
     private int id;
-    private ExecutorService executor = Executors.newFixedThreadPool(8); 
-
+    
 
     public Supervisor(int id) {
         this.id = id;
@@ -23,7 +21,8 @@ public class Supervisor extends Thread {
     public void run() {
 
         while (true) {
-            executor.execute(this);
+            
+            
             // crear una condicion que lo despierte si necesita levantar a alguien?
         }
     }
