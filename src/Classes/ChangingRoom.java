@@ -1,6 +1,5 @@
 package Classes;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,58 +10,56 @@ import java.util.logging.Logger;
  */
 public class ChangingRoom extends Activity {
 
-    private int AdultCapacity;
-    private int currentAdultCapac;
-    private int ChildrenCapacity;
-    private int currentChildCapac;
-
+    private int adultCapacity;
+    private int currentAdult;
+    private int childrenCapacity;
+    private int currentChild;
 
     public ChangingRoom(Supervisor supervisor, UserList queue, UserList inside) {
-        super(0,"Changing Room" ,supervisor, queue, inside);
+        super(0, "Changing Room", supervisor, queue, inside);
 
-        AdultCapacity = 20;
-        ChildrenCapacity = 10;
+        adultCapacity = 20;
+        childrenCapacity = 10;
     }
 
     @Override
     public void enter(User user) {
-        while (){
-            
-        }
+        queue.enqueue(user);
+        executor.execute(supervisor);
+        try {
+            lock.lock();
 
+            while (currentAdult == adultCapacity || currentChild == childrenCapacity) {
+                try {
+                    actFull.await();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            use();
+
+            // aqui estoy comprobando la edad, eso feo.
+            /*while ((currentAdult == 20 && user.getAge() > 18)
+                    || user.getAge() <= 10 && currentChild == 10 || currentAdult == 20
+                    || (currentChild != 10 && user.getAge() < 18)) {
+
+            }
+             */
+            //supervisor.sleep(1000);
+            
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Override
     public void use() {
-        User user = queue.peek();
-        int age = user.getAge();
-        if (supervisor.checkAge(10, 17, age) && ChildrenCapacity != 0) {
-            ChildrenCapacity--;
-            queue.dequeue();
-
-            //user doing its thing
-            customSleep(3000);
-
-            supervisor.sleep(1000);
-
-        } else if (supervisor.checkCompanion(user) && ChildrenCapacity != 0 && AdultCapacity != 0) {
-            ChildrenCapacity--;
-            AdultCapacity--;
-            queue.dequeue();
-            queue.dequeue();
-
-            customSleep(3000);
-            //signal, despierta al supervisor.
-            supervisor.sleep(2000);
-
-        } else {
-            // toca hacerle queue de nuevo al principio? que feo... retoco queue
-        }
+        customSleep(3000);
     }
+
     @Override
     public void leave(User user) {
-
-        customSleep(3000);
+        //if 2 ppl leave, then signal twice, else, signal once.
 
     }
 
@@ -74,14 +71,10 @@ public class ChangingRoom extends Activity {
     public void customSleep(int time) {
         try {
             Thread.sleep(time);
+
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void enter(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }//end ChangingRoom
