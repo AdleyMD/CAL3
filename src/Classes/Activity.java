@@ -48,7 +48,7 @@ public abstract class Activity {
 
     public void customSleep(int min, int max) {
         try {
-            Thread.sleep((long) (min + Math.random() * max));
+            Thread.sleep((long) (min + (max - min) * Math.random()));
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         }

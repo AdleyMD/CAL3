@@ -28,17 +28,17 @@ public class BigPool extends Activity {
         } catch (InterruptedException ex) {
             Logger.getLogger(BigPool.class.getName()).log(Level.SEVERE, null, ex);
         }
+        queue.dequeue(user);
     }
-
+    
+    @Override
+    public void use() {
+        customSleep(3000, 5000);
+    }
+    
     @Override
     public void leave() {
         
     }
-
-    @Override
-    public void use() {
-        
-    }
-
 
 }//end BigPool
