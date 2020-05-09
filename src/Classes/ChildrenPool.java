@@ -37,7 +37,7 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void leave() {
-
+        
     }
 
     @Override

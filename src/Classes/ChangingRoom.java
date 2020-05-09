@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,19 +9,19 @@ import java.util.logging.Logger;
  * @version 1.0
  * @created 08-may.-2020 12:16:05
  */
-public class ChangingRoom {
+public class ChangingRoom extends Activity {
 
     private int AdultCapacity;
     private int ChildrenCapacity;
-    private Supervisor supervisor;
-    private Queue queue;
 
-    public ChangingRoom() {
+    public ChangingRoom(Supervisor supervisor, Queue queue, ArrayList<User> inside) {
+        super(0, supervisor, queue, inside);
         AdultCapacity = 20;
         ChildrenCapacity = 10;
     }
 
-    public void enter() {
+    @Override
+    public void use() {
         User user = queue.peek();
         int age = user.getAge();
         if (supervisor.checkAge(10, 17, age) && ChildrenCapacity != 0) {
@@ -29,7 +30,7 @@ public class ChangingRoom {
 
             //user doing its thing
             customSleep(3000);
-            
+
             //signal, despierta al supervisor.
             supervisor.sleep(1000);
             // ademas sincronizar al usuario para que se espere el tambien.
@@ -40,7 +41,7 @@ public class ChangingRoom {
             queue.dequeue();
             queue.dequeue();
 
-            user.sleep(3000);
+            customSleep(3000);
             //signal, despierta al supervisor.
             supervisor.sleep(2000);
 
