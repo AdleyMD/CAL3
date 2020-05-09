@@ -12,10 +12,10 @@ public class ChildrenPool extends Activity {
 
     private boolean needsCompanion;
 
-    public ChildrenPool(int maxUsers, Supervisor supervisor, UserList queue, UserList inside) {
-        super(maxUsers, "Children Pool", supervisor, queue, inside);
+    public ChildrenPool() {
+        super(15, "Children Pool",new Supervisor(), new UserList(),new UserList());
         curCapacity = 0;
-        supervisor.setActName(name);
+        supervisor.setActivity(this);
     }
 
     @Override
