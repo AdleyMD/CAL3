@@ -40,7 +40,9 @@ public class Supervisor implements Runnable {
             case ("Big Pool"):
                 bigPool();
                 break;
-            case ("Slide"):
+            case ("Slide A"):
+            case ("Slide B"):
+            case ("Slide C"):
                 slide();
                 break;
         }
@@ -55,12 +57,11 @@ public class Supervisor implements Runnable {
     }
     
     public void bigPool() {
-        BigPool bp = (BigPool) activity;
-        while (bp.isFull()) {
+        while (activity.isFull()) {
             customSleep(500);
-            if (bp.isFull()) {
+            if (activity.isFull()) {
                 customSleep(500, 1000);
-                bp.kickRandom();
+                ((BigPool) activity).kickRandom();
             }
         }
     }

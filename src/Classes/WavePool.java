@@ -11,7 +11,6 @@ public class WavePool extends Activity {
         super(20, "Wave Pool", new Supervisor(), new UserList(), new UserList());
         curCapacity = 0;
         supervisor.setActivity(this);
-
     }
 
     @Override

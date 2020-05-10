@@ -26,32 +26,5 @@ public class ActivitiesZone {
         wp = new WavePool();
         sb = new SunBeds();
         cp = new ChildrenPool();
-        
-    }
-        
-    public Activity getActivity(String name) {
-        Activity act = null;
-        switch (name) {
-            case ("Changing Room"):
-                act = cr;
-                break;
-            case ("Wave Pool"):
-                act = wp;
-                break;
-            case ("Children Pool"):
-                act = cp;
-                break;
-            case ("Sun Beds"):
-                act = sb;
-                break;
-            case ("Big Pool"):
-                act = bp;
-                break;
-            case ("Slide"):
-                act = s;
-                break;
-        }
-
-        return act;
     }
 }//end ActivitiesZone

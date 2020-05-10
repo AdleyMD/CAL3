@@ -24,6 +24,7 @@ public class WaterPark {
             if (user.hasCompanion())
                 i++;
             user.start();
+            Thread.sleep(((int) 400 + (300 * Math.random())));
         }
     }
 }
