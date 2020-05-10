@@ -39,7 +39,7 @@ public class WavePool extends Activity {
                 actFull.await();
                 barrier.await();
             }
-            if (!user.hasAppropiateAge()) {
+            if (!supervisorSaidYes(user)) {
                 return;
             }
             
@@ -77,10 +77,7 @@ public class WavePool extends Activity {
         actFull.signal();
     }
 
-    @Override
-    public boolean supervisorSaidYes(User user) {
-        return (user.hasAppropiateAge());
-    }
+    
 
     public boolean coupleReady() {
         User user = queue.peek();

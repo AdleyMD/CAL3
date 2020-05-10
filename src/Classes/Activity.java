@@ -37,25 +37,26 @@ public abstract class Activity {
         actFull = lock.newCondition();
     }
 
-
     public abstract boolean canEnter(User user);
-    
+
     public abstract void enter(User user);
 
     public abstract void use(User user);
-    
+
     public abstract void leave(User user);
 
-    public abstract boolean supervisorSaidYes(User user);
-    
+    public boolean supervisorSaidYes(User user) {
+        return (user.hasAppropiateAge());
+    }
+
     public String getName() {
         return name;
     }
-    
+
     public synchronized boolean isFull() {
         return curCapacity == maxUsers;
     }
-    
+
     public void customSleep(int time) {
         try {
             Thread.sleep(time);
