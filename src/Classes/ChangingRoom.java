@@ -42,6 +42,11 @@ public class ChangingRoom extends Activity {
                     Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
+            if (supervisorSaidNo(user)) {
+                return;
+            }
+
             customSleep(3000);
             if (!user.hasCompanion() && user.getAge() < 18) {
                 childrenCapacity++;
@@ -60,6 +65,9 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void use(User user) {
+        if (supervisorSaidNo(user)) {
+            return;
+        }
         customSleep(3000);
     }
 

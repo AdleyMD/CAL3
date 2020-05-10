@@ -35,6 +35,9 @@ public class ChildrenPool extends Activity {
             while (!canEnter(user)) {
                 actFull.await();
             }
+            if (supervisorSaidNo(user)) {
+                return;
+            }
 
             if (user.hasCompanion()) {
                 curCapacity += 1;
@@ -50,6 +53,9 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void use(User user) {
+        if (supervisorSaidNo(user)) {
+            return;
+        }
         customSleep(1000, 3000);
     }
 

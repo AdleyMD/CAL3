@@ -39,10 +39,9 @@ public class WavePool extends Activity {
                 actFull.await();
                 barrier.await();
             }
-            if (!supervisorSaidYes(user)) {
+            if (supervisorSaidNo(user)) {
                 return;
             }
-            
 
             if (user.hasCompanion()) {
                 inside.enqueue(user);
@@ -65,7 +64,7 @@ public class WavePool extends Activity {
 
     @Override
     public void use(User user) {
-        if (!user.hasAppropiateAge()) {
+        if (supervisorSaidNo(user)) {
             return;
         }
         customSleep(2000, 5000);
@@ -76,8 +75,6 @@ public class WavePool extends Activity {
         inside.remove(user);
         actFull.signal();
     }
-
-    
 
     public boolean coupleReady() {
         User user = queue.peek();
