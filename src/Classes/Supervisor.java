@@ -68,7 +68,7 @@ public class Supervisor implements Runnable {
     }
 
     public void slide() {
-
+        
     }
 
     public void sunBeds() {
