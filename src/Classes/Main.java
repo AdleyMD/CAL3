@@ -1,5 +1,8 @@
 package Classes;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import javax.swing.JTextField;
 
 /**
@@ -1034,6 +1037,16 @@ public class Main extends javax.swing.JFrame {
                 new Main().setVisible(true);
             }
         });
+        
+        try {
+            ServerSocket server = new ServerSocket(25565);
+            Socket connection;
+            
+            while (true) {
+                connection = server.accept();
+            }
+            
+        } catch (IOException e) {}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -37,6 +37,8 @@ public class Slide extends Activity {
         getQueue().remove(user);
         if (user.hasAppropiateAge())
             getInside().enqueue(user);
+        else
+            semaphore.release();
     }
 
     @Override
