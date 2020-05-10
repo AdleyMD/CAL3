@@ -2,6 +2,7 @@ package Classes;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
@@ -10,8 +11,8 @@ import java.util.logging.Logger;
  */
 public class ChildrenPool extends Activity {
 
-    public ChildrenPool() {
-        super(15, "Children Pool", new Supervisor(), new UserList(), new UserList());
+    public ChildrenPool(String name, JTextField queueText, JTextField insideText) {
+        super(15, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
         curCapacity = 0;
         supervisor.setActivity(this);
     }
