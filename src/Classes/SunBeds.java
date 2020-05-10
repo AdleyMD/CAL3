@@ -20,12 +20,12 @@ public class SunBeds extends Activity {
     }
 
     @Override
-    public void enqueue(User user) {
+    public void enter(User user) {
         
     }
 
     @Override
-    public void enter(User user) {
+    public void use(User user) {
         if (canEnter(user)) {
             return;
         }

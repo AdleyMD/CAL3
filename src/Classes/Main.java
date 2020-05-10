@@ -16,7 +16,7 @@ public class Main extends javax.swing.JFrame {
         park.addActivity(new ChildrenPool("Children Pool", cpQueueTF, cpInsideTF), 1);
         park.addActivity(new WavePool("Wave Pool", wpQueueTF, wpInsideTF), 2);
         park.addActivity(new BigPool("Big Pool", bpQueueTF, bpInsideTF), 3);
-        park.addActivity(new SunBeds("Sun Beds", sbsQueueTF, sbsInsideTF), 4);
+        park.addActivity(new SunBeds("Sun Beds", sbsInsideTF), 4);
         park.addActivity(new Slide("Slide A", saQueueTF, saInsideTF), 5);
         park.addActivity(new Slide("Slide B", sbQueueTF, sbInsideTF), 6);
         park.addActivity(new Slide("Slide C", scQueueTF, scInsideTF), 7);

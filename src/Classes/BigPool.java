@@ -21,10 +21,7 @@ public class BigPool extends Activity {
     }
 
     @Override
-    public void enqueue(User user) {
-        if (canEnter(user)) // If the user can enter directly, skip this method.
-            return;
-        
+    public void enter(User user) {
         executor.execute(supervisor);
         try {
             lock.lock();
@@ -32,24 +29,23 @@ public class BigPool extends Activity {
             while (!canEnter(user)) {
                 actFull.await();
             }
+            
+            if (user.hasCompanion())
+                curCapacity += 2;
+            else
+                curCapacity++;
+            
+            user = queue.dequeue();
+            inside.enqueue(user);
         } catch (InterruptedException ex) {
             Logger.getLogger(BigPool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             lock.unlock();
         }
-        
-        user = queue.dequeue();
     }
     
     @Override
-    public void enter(User user) {
-        if (user.hasCompanion())
-            curCapacity += 2;
-        else
-            curCapacity++;
-        
-        inside.enqueue(user);
-       
+    public void use(User user) {
         try {
             Thread.sleep((long) (3000 + (2000 * Math.random())));
         } catch (InterruptedException e) {

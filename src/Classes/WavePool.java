@@ -27,7 +27,7 @@ public class WavePool extends Activity {
     }
 
     @Override
-    public void enqueue(User user) {
+    public void enter(User user) {
         if (canEnter(user)) {
             return;
         }
@@ -40,6 +40,16 @@ public class WavePool extends Activity {
                 barrier.await();
             }
 
+            if (user.hasCompanion()) {
+                inside.enqueue(user);
+                curCapacity += 2;
+            } else if (!queue.checkPos(2).hasCompanion()) {
+                inside.enqueue(user);
+                curCapacity += 2;
+            }
+            queue.dequeue();
+            queue.dequeue();
+
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         } catch (BrokenBarrierException ex) {
@@ -50,16 +60,7 @@ public class WavePool extends Activity {
     }
 
     @Override
-    public void enter(User user) {
-        if (user.hasCompanion()) {
-            inside.enqueue(user);
-            curCapacity += 2;
-        } else if (!queue.checkPos(2).hasCompanion()) {
-            inside.enqueue(user);
-            curCapacity += 2;
-        }
-        queue.dequeue();
-        queue.dequeue();
+    public void use(User user) {
         customSleep(2000, 5000);
     }
 
@@ -73,6 +74,5 @@ public class WavePool extends Activity {
         User user = queue.peek();
         return (user.hasCompanion() || (!queue.checkPos(1).hasCompanion() && !user.hasCompanion()));
     }
-
 
 }//end WavePool

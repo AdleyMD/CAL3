@@ -30,7 +30,7 @@ public class ChangingRoom extends Activity {
     }
 
     @Override
-    public void enqueue(User user) {
+    public void enter(User user) {
         lock.lock();
         queue.enqueue(user);
         executor.execute(supervisor);
@@ -42,22 +42,24 @@ public class ChangingRoom extends Activity {
                     Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
+            if (!user.hasCompanion() && user.getAge() < 18) {
+                childrenCapacity++;
+            } else if (user.hasCompanion()) {
+                adultCapacity++;
+                childrenCapacity++;
+            } else {
+                adultCapacity++;
+            }
+            queue.enqueue(user);
+
         } finally {
             lock.unlock();
         }
     }
 
     @Override
-    public void enter(User user) {
-        if (!user.hasCompanion() && user.getAge() < 18) {
-            childrenCapacity++;
-        } else if (user.hasCompanion()) {
-            adultCapacity++;
-            childrenCapacity++;
-        } else {
-            adultCapacity++;
-        }
-        queue.enqueue(user);
+    public void use(User user) {
         customSleep(3000);
     }
 

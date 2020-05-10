@@ -23,7 +23,7 @@ public class ChildrenPool extends Activity {
     }
 
     @Override
-    public void enqueue(User user) {
+    public void enter(User user) {
         if (canEnter(user)) {
             return;
         }
@@ -35,6 +35,12 @@ public class ChildrenPool extends Activity {
             while (!canEnter(user)) {
                 actFull.await();
             }
+
+            if (user.hasCompanion()) {
+                curCapacity += 1;
+            }
+            curCapacity += 1;
+
         } catch (InterruptedException ex) {
             Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -43,11 +49,7 @@ public class ChildrenPool extends Activity {
     }
 
     @Override
-    public void enter(User user) {
-        if (user.hasCompanion()) {
-            curCapacity += 1;
-        }
-        curCapacity += 1;
+    public void use(User user) {
         customSleep(1000, 3000);
     }
 

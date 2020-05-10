@@ -40,9 +40,9 @@ public abstract class Activity {
 
     public abstract boolean canEnter(User user);
     
-    public abstract void enqueue(User user);
-
     public abstract void enter(User user);
+
+    public abstract void use(User user);
     
     public abstract void leave(User user);
 
