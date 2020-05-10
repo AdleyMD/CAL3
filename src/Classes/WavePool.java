@@ -75,9 +75,10 @@ public class WavePool extends Activity {
         try {
             getLock().lock();
             getInside().remove(user);
-            if (user.hasCompanion())
+            if (user.hasCompanion()) {
+                getActFull().signal();
                 addCurCapacity(-2);
-            else
+            } else
                 addCurCapacity(-1);
             getActFull().signal();
         } catch (Exception e) {

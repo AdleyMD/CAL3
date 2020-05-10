@@ -35,7 +35,7 @@ public class Slide extends Activity {
         getSupervisor().setUserToCheck(user);
         getExecutor().execute(getSupervisor());
         
-        getQueue().dequeue();
+        getQueue().remove(user);
         getInside().enqueue(user);
     }
 
@@ -46,6 +46,8 @@ public class Slide extends Activity {
 
     @Override
     public void leave(User user) {
+        getInside().remove(user);
+        semaphore.release();
     }
 
     

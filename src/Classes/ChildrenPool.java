@@ -46,7 +46,7 @@ public class ChildrenPool extends Activity {
         } finally {
             getLock().unlock();
         }
-        getQueue().dequeue();
+        getQueue().remove(user);
     }
 
     @Override
@@ -62,10 +62,12 @@ public class ChildrenPool extends Activity {
         try {
             getLock().lock();
             getInside().remove(user);
-            if (user.hasCompanion())
+            if (user.hasCompanion() && user.getAge() <= 5) {
                 addCurCapacity(-2);
-            else
+                getActFull().signal();
+            } else
                 addCurCapacity(-1);
+            
             getActFull().signal();
         } catch (Exception e) {
         } finally {
