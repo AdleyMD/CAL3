@@ -1,9 +1,8 @@
 package Classes;
 
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 import javax.swing.JTextField;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,13 +13,10 @@ import java.util.logging.Logger;
  */
 public class WavePool extends Activity {
 
-    private Lock pairLock = new ReentrantLock();
-    private Condition pairs = pairLock.newCondition();
-    // mira cyclic barriers. 
-    // http://chuwiki.chuidiang.org/index.php?title=Ejemplo_simple_con_CyclicBarrier
+    private CyclicBarrier barrier = new CyclicBarrier(2);
 
     public WavePool(String name, JTextField queueText, JTextField insideText) {
-        super(20, "Wave Pool", new Supervisor(), new UserList(queueText), new UserList(insideText));
+        super(20, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
         curCapacity = 0;
         supervisor.setActivity(this);
     }
@@ -41,22 +37,16 @@ public class WavePool extends Activity {
         try {
             while (!canEnter(user)) {
                 actFull.await();
-
+                barrier.await();
             }
 
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BrokenBarrierException ex) {
+            Logger.getLogger(WavePool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             lock.unlock();
         }
-        try {
-            while (!coupleReady()) {
-                pairs.await();
-            }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(WavePool.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     @Override
@@ -84,8 +74,5 @@ public class WavePool extends Activity {
         return (user.hasCompanion() || (!queue.checkPos(1).hasCompanion() && !user.hasCompanion()));
     }
 
-    public Condition getPairs() {
-        return this.pairs;
-    }
 
 }//end WavePool

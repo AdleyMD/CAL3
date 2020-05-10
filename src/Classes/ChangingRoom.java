@@ -2,6 +2,7 @@ package Classes;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
@@ -15,8 +16,8 @@ public class ChangingRoom extends Activity {
     private int childrenCapacity;
     private int currentChild;
 
-    public ChangingRoom() {
-        super(0, "Changing Room", new Supervisor(), new UserList(), new UserList());
+    public ChangingRoom(String name, JTextField queueText, JTextField insideText) {
+        super(0, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
 
         adultCapacity = 20;
         childrenCapacity = 10;
