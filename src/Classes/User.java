@@ -84,14 +84,6 @@ public class User extends Thread {
     public boolean hasAppropiateAge(){
         return this.appropiateAge;
     }
-
-    public void setFlag(boolean flag){
-        this.flag = flag;
-    }
-    
-    public boolean getFlag(){
-        return this.flag;
-    }
     
     @Override
     public String toString() {

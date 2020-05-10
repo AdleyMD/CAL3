@@ -96,12 +96,14 @@ public class Supervisor implements Runnable {
         if (userToCheck.getAge() < 14) {
             userToCheck.setAppropiateAge(false);
         }
+        else{
+            userToCheck.setAppropiateAge(true);
+        }
         customSleep(500, 900);
 
     }
 
     public void wavePool() {
-        // comprobamos con if su edad.
         userToCheck.setAppropiateAge(false);
         if (userToCheck.getAge() > 6) {
             userToCheck.setAppropiateAge(true);
