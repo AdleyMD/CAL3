@@ -40,7 +40,9 @@ public class Supervisor implements Runnable {
             case ("Big Pool"):
                 bigPool();
                 break;
-            case ("Slide"):
+            case ("Slide A"):
+            case ("Slide B"):
+            case ("Slide C"):
                 slide();
                 break;
         }

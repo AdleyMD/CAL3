@@ -20,12 +20,15 @@ public class BigPool extends Activity {
     }
 
     @Override
-    public void enter(User user) {
-        queue.enqueue(user);
-        lock.lock();
+    public void enqueue(User user) {
+        if (canEnter(user)) // If the user can enter directly, skip this method.
+            return;
+        
+        executor.execute(supervisor);
         try {
-            while (user.hasCompanion() && curCapacity >= maxUsers - 1 || curCapacity == maxUsers) {
-                executor.execute(supervisor);
+            lock.lock();
+            queue.enqueue(user);
+            while (!canEnter(user)) {
                 actFull.await();
             }
         } catch (InterruptedException ex) {
@@ -33,18 +36,19 @@ public class BigPool extends Activity {
         } finally {
             lock.unlock();
         }
-        user = queue.dequeue();
         
+        user = queue.dequeue();
+    }
+    
+    @Override
+    public void enter(User user) {
         if (user.hasCompanion())
             curCapacity += 2;
         else
             curCapacity++;
         
-       inside.enqueue(user);
-    }
-    
-    @Override
-    public void use(User user) {
+        inside.enqueue(user);
+       
         try {
             Thread.sleep((long) (3000 + (2000 * Math.random())));
         } catch (InterruptedException e) {
@@ -54,8 +58,8 @@ public class BigPool extends Activity {
     
     @Override
     public void leave(User user) {
-        lock.lock();
         try {
+            lock.lock();
             inside.remove(user);
             
             if (user.hasCompanion())
@@ -69,6 +73,11 @@ public class BigPool extends Activity {
         } finally {
             lock.unlock();
         }
+    }
+    
+    @Override
+    public boolean canEnter(User user) {
+        return user.hasCompanion() && curCapacity <= maxUsers - 1 || curCapacity < maxUsers;
     }
     
     public void kickRandom() {
