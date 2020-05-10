@@ -57,7 +57,6 @@ public class Supervisor implements Runnable {
     }
 
     public void bigPool() {
-
         while (activity.isFull()) {
             customSleep(500);
             if (activity.isFull()) {
@@ -68,6 +67,14 @@ public class Supervisor implements Runnable {
     }
 
     public void slide() {
+        switch (activity.getName()) {
+            case ("Slide A"):
+                break;
+            case ("Slide B"):
+                break;
+            case ("Slide C"):
+                break;
+        }
 
     }
 
