@@ -15,8 +15,8 @@ public class WavePool extends Activity {
 
     private CyclicBarrier barrier = new CyclicBarrier(2);
 
-    public WavePool(String name, JTextField queueText, JTextField insideText) {
-        super(20, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+    public WavePool(String name, JTextField queueText, JTextField insideText, JTextField supervisorText) {
+        super(20, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         getSupervisor().setActivity(this);
     }
 

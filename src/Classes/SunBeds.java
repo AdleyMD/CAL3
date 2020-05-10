@@ -11,8 +11,8 @@ public class SunBeds extends Activity {
     
     private User first;
 
-    public SunBeds(String name, JTextField insideText) {
-        super(20, name, new Supervisor(), null, new UserList(insideText));
+    public SunBeds(String name, JTextField insideText, JTextField supervisorText) {
+        super(20, name, new Supervisor(supervisorText), null, new UserList(insideText));
         getSupervisor().setActivity(this);
     }
 

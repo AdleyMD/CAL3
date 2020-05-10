@@ -2,6 +2,7 @@ package Classes;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
@@ -16,14 +17,17 @@ public class Supervisor implements Runnable {
     private final int id;
     private User userToCheck;
     private Activity activity;
+    private JTextField textField;
 
-    public Supervisor() {
+    public Supervisor(JTextField textField) {
         id = counter + 5001;
         counter++;
+        this.textField = textField;
     }
 
     @Override
     public void run() {
+        setText();
         switch (activity.getName()) {
             case ("Changing Room"):
                 changingRoom();
@@ -173,4 +177,9 @@ public class Supervisor implements Runnable {
         }
     }
 
+    public void setText() {
+        String text = "";
+        text += "ID-" + id;
+        textField.setText(text);
+    }
 }//end Supervisor
