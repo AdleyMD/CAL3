@@ -79,20 +79,19 @@ public class Supervisor implements Runnable {
     }
 
     public void sunBeds() {
-        User user = ((SunBeds) activity).firstUser();
-        user.setFlag(true);
-        if (user.getAge() < 14) {
-            user.setAppropiateAge(false);
+
+        if (userToCheck.getAge() < 14) {
+            userToCheck.setAppropiateAge(false);
         }
         customSleep(500, 900);
+
     }
 
     public void wavePool() {
-        User user = activity.queue.peek();
         // comprobamos con if su edad.
-        user.setAppropiateAge(false);
-        if (user.getAge() > 6) {
-            user.setAppropiateAge(true);
+        userToCheck.setAppropiateAge(false);
+        if (userToCheck.getAge() > 6) {
+            userToCheck.setAppropiateAge(true);
             customSleep(1000);
         }
         if (((WavePool) activity).coupleReady()) {
@@ -104,16 +103,15 @@ public class Supervisor implements Runnable {
     }
 
     public void childrenPool() {
-        User user = activity.queue.peek();
         customSleep(1000, 1500); // time to check the age
 
-        if (user.getAge() < 6) {
-            user.setAppropiateAge(true);
-            user.getCompanion().setAppropiateAge(true);
-        } else if (user.getAge() < 11) {
-            user.setAppropiateAge(true);
-        } else if (user.getAge() > 10 && !user.hasAppropiateAge()) {
-            user.setAppropiateAge(false);
+        if (userToCheck.getAge() < 6) {
+            userToCheck.setAppropiateAge(true);
+            userToCheck.getCompanion().setAppropiateAge(true);
+        } else if (userToCheck.getAge() < 11) {
+            userToCheck.setAppropiateAge(true);
+        } else if (userToCheck.getAge() > 10 && !userToCheck.hasAppropiateAge()) {
+            userToCheck.setAppropiateAge(false);
         }
     }
 
