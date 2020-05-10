@@ -13,8 +13,9 @@ public class UserList {
 	private ArrayList<User> list;
 	private JTextField textField;
 
-	public UserList() {
+	public UserList(JTextField textField) {
             list = new ArrayList<>();
+            this.textField = textField;
 	}
 
 	public User dequeue() {
