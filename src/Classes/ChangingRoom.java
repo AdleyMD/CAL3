@@ -1,5 +1,9 @@
 package Classes;
 
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executor;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -10,6 +14,13 @@ import javax.swing.JTextField;
  * @created 08-may.-2020 12:16:05
  */
 public class ChangingRoom extends Activity {
+
+    private Supervisor supervisor = getSupervisor();
+    private Lock lock = getLock();
+    private Executor executor = getExecutor();
+    private UserList queue = getQueue();
+    private UserList inside = getInside();
+    private Condition actFull = getActFull();
 
     private int adultCapacity;
     private int currentAdult;
@@ -33,6 +44,7 @@ public class ChangingRoom extends Activity {
     public void enter(User user) {
         lock.lock();
         queue.enqueue(user);
+        supervisor.setUserToCheck(user);
         executor.execute(supervisor);
         try {
             while (!(canEnter(user))) {
@@ -56,8 +68,7 @@ public class ChangingRoom extends Activity {
             } else {
                 adultCapacity++;
             }
-            queue.enqueue(user);
-
+            inside.enqueue(user);
         } finally {
             lock.unlock();
         }
@@ -73,7 +84,7 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void leave(User user) {
-
+        inside.remove(user);
         if (user.hasCompanion()) {
             actFull.signal();
         }

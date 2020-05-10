@@ -1,5 +1,8 @@
 package Classes;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -10,6 +13,15 @@ import javax.swing.JTextField;
  * @created 08-may.-2020 12:16:06
  */
 public class ChildrenPool extends Activity {
+
+    private int curCapacity = getCurCapacity();
+    private Supervisor supervisor = getSupervisor();
+    private int maxUsers = getMaxUsers();
+    private Lock lock = getLock();
+    private Executor executor = getExecutor();
+    private UserList queue = getQueue();
+    private UserList inside = getInside();
+    private Condition actFull = getActFull();
 
     public ChildrenPool(String name, JTextField queueText, JTextField insideText) {
         super(15, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
@@ -24,10 +36,6 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void enter(User user) {
-        if (canEnter(user)) {
-            return;
-        }
-
         lock.lock();
         executor.execute(supervisor);
         queue.enqueue(user);
@@ -49,6 +57,7 @@ public class ChildrenPool extends Activity {
         } finally {
             lock.unlock();
         }
+        queue.dequeue();
     }
 
     @Override
@@ -61,6 +70,7 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void leave(User user) {
+        inside.remove(user);
         if (user.hasCompanion()) {
             curCapacity--;
             actFull.signal();

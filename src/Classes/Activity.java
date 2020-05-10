@@ -15,15 +15,15 @@ import java.util.logging.Logger;
  */
 public abstract class Activity {
 
-    public String name;
-    public int maxUsers;
-    public int curCapacity;
-    public Supervisor supervisor;
-    public UserList queue;
-    public UserList inside;
-    public ExecutorService executor;
-    public Lock lock;
-    public Condition actFull;
+    private String name;
+    private int maxUsers;
+    private int curCapacity;
+    private Supervisor supervisor;
+    private UserList queue;
+    private UserList inside;
+    private ExecutorService executor;
+    private Lock lock;
+    private Condition actFull;
 
     public Activity(int maxUsers, String name, Supervisor supervisor, UserList queue, UserList inside) {
         this.maxUsers = maxUsers;
@@ -72,5 +72,74 @@ public abstract class Activity {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public int getMaxUsers() {
+        return maxUsers;
+    }
+
+    public void setMaxUsers(int maxUsers) {
+        this.maxUsers = maxUsers;
+    }
+
+    public int getCurCapacity() {
+        return curCapacity;
+    }
+
+    public void setCurCapacity(int curCapacity) {
+        this.curCapacity = curCapacity;
+    }
+
+    public Supervisor getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Supervisor supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public UserList getQueue() {
+        return queue;
+    }
+
+    public void setQueue(UserList queue) {
+        this.queue = queue;
+    }
+
+    public UserList getInside() {
+        return inside;
+    }
+
+    public void setInside(UserList inside) {
+        this.inside = inside;
+    }
+
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public void setExecutor(ExecutorService executor) {
+        this.executor = executor;
+    }
+
+    public Lock getLock() {
+        return lock;
+    }
+
+    public void setLock(Lock lock) {
+        this.lock = lock;
+    }
+
+    public Condition getActFull() {
+        return actFull;
+    }
+
+    public void setActFull(Condition actFull) {
+        this.actFull = actFull;
+    }
+    
+    
+    
+    
+    
 
 }//end Activity

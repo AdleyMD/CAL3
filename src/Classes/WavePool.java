@@ -2,6 +2,9 @@ package Classes;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executor;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 import javax.swing.JTextField;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +15,15 @@ import java.util.logging.Logger;
  * @created 08-may.-2020 12:16:12
  */
 public class WavePool extends Activity {
+
+    private int curCapacity = getCurCapacity();
+    private Supervisor supervisor = getSupervisor();
+    private int maxUsers = getMaxUsers();
+    private Lock lock = getLock();
+    private Executor executor = getExecutor();
+    private UserList queue = getQueue();
+    private UserList inside = getInside();
+    private Condition actFull = getActFull();
 
     private CyclicBarrier barrier = new CyclicBarrier(2);
 
@@ -28,20 +40,18 @@ public class WavePool extends Activity {
 
     @Override
     public void enter(User user) {
-        if (canEnter(user)) {
-            return;
-        }
         lock.lock();
         executor.execute(supervisor);
         queue.enqueue(user);
         try {
             while (!canEnter(user)) {
                 actFull.await();
-                barrier.await();
             }
             if (supervisorSaidNo(user)) {
                 return;
             }
+            // waiting 2 users to enter/signal.
+            barrier.await();
 
             if (user.hasCompanion()) {
                 inside.enqueue(user);
