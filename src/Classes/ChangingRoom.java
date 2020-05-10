@@ -1,9 +1,5 @@
 package Classes;
 
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Executor;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -15,13 +11,6 @@ import javax.swing.JTextField;
  */
 public class ChangingRoom extends Activity {
 
-    private Supervisor supervisor = getSupervisor();
-    private Lock lock = getLock();
-    private Executor executor = getExecutor();
-    private UserList queue = getQueue();
-    private UserList inside = getInside();
-    private Condition actFull = getActFull();
-
     private int adultCapacity;
     private int currentAdult;
     private int childrenCapacity;
@@ -32,7 +21,7 @@ public class ChangingRoom extends Activity {
 
         adultCapacity = 20;
         childrenCapacity = 10;
-        supervisor.setActivity(this);
+        getSupervisor().setActivity(this);
     }
 
     @Override
@@ -42,14 +31,14 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void enter(User user) {
-        lock.lock();
-        queue.enqueue(user);
-        supervisor.setUserToCheck(user);
-        executor.execute(supervisor);
+        getLock().lock();
+        getQueue().enqueue(user);
+        getSupervisor().setUserToCheck(user);
+        getExecutor().execute(getSupervisor());
         try {
             while (!(canEnter(user))) {
                 try {
-                    actFull.await();
+                    getActFull().await();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -68,9 +57,9 @@ public class ChangingRoom extends Activity {
             } else {
                 adultCapacity++;
             }
-            inside.enqueue(user);
+            getInside().enqueue(user);
         } finally {
-            lock.unlock();
+            getLock().unlock();
         }
     }
 
@@ -84,11 +73,11 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void leave(User user) {
-        inside.remove(user);
+        getInside().remove(user);
         if (user.hasCompanion()) {
-            actFull.signal();
+            getActFull().signal();
         }
-        actFull.signal();
+        getActFull().signal();
     }
 
 }//end ChangingRoom

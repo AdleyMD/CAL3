@@ -1,8 +1,5 @@
 package Classes;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -14,50 +11,42 @@ import javax.swing.JTextField;
  */
 public class ChildrenPool extends Activity {
 
-    private int curCapacity = getCurCapacity();
-    private Supervisor supervisor = getSupervisor();
-    private int maxUsers = getMaxUsers();
-    private Lock lock = getLock();
-    private Executor executor = getExecutor();
-    private UserList queue = getQueue();
-    private UserList inside = getInside();
-    private Condition actFull = getActFull();
 
     public ChildrenPool(String name, JTextField queueText, JTextField insideText) {
         super(15, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
-        curCapacity = 0;
-        supervisor.setActivity(this);
+        
+        getSupervisor().setActivity(this);
     }
 
     @Override
     public boolean canEnter(User user) {
-        return ((curCapacity < maxUsers - 1 && user.getAge() < 5) || (curCapacity < maxUsers) && user.hasCompanion());
+        return ((getCurCapacity() < getMaxUsers() - 1 && user.getAge() < 5) || (getCurCapacity() < getMaxUsers()) && user.hasCompanion());
     }
 
     @Override
     public void enter(User user) {
-        lock.lock();
-        executor.execute(supervisor);
-        queue.enqueue(user);
+        getLock().lock();
+        getExecutor().execute(getSupervisor());
+        getQueue().enqueue(user);
         try {
             while (!canEnter(user)) {
-                actFull.await();
+                getActFull().await();
             }
             if (supervisorSaidNo(user)) {
                 return;
             }
 
             if (user.hasCompanion()) {
-                curCapacity += 1;
+                addCurCapacity(1);
             }
-            curCapacity += 1;
+            addCurCapacity(1);
 
         } catch (InterruptedException ex) {
             Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            lock.unlock();
+            getLock().unlock();
         }
-        queue.dequeue();
+        getQueue().dequeue();
     }
 
     @Override
@@ -70,13 +59,13 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void leave(User user) {
-        inside.remove(user);
+        getInside().remove(user);
         if (user.hasCompanion()) {
-            curCapacity--;
-            actFull.signal();
+            addCurCapacity(-1);
+            getActFull().signal();
         }
-        curCapacity--;
-        actFull.signal();
+        addCurCapacity(-1);
+        getActFull().signal();
     }
 
 }//end ChildrenPool
