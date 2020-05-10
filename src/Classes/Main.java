@@ -1,8 +1,5 @@
 package Classes;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author andro
@@ -15,8 +12,8 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         WaterPark park = new WaterPark(entrQueueTF);
-        park.addActivity(new ChangingRoom(), 0);
-        park.addActivity(new ChildrenPool(), 1);
+        park.addActivity(new ChangingRoom("Changing Room", crQueueTF, crInsideTF), 0);
+        park.addActivity(new ChildrenPool("Children Pool", cpQueueTF, cpInsideTF), 1);
         park.addActivity(new WavePool("Wave Pool", wpQueueTF, wpInsideTF), 2);
         park.addActivity(new BigPool("Big Pool", bpQueueTF, bpInsideTF), 3);
         park.addActivity(new SunBeds("Sun Beds", sbsQueueTF, sbsInsideTF), 4);

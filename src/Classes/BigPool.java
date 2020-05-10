@@ -78,7 +78,7 @@ public class BigPool extends Activity {
     
     @Override
     public boolean canEnter(User user) {
-        return user.hasCompanion() && curCapacity <= maxUsers - 1 || curCapacity < maxUsers;
+        return user.hasCompanion() && curCapacity <= maxUsers - 1 || user.hasCompanion() && curCapacity < maxUsers;
     }
     
     public void kickRandom() {

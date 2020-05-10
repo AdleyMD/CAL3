@@ -52,7 +52,7 @@ public abstract class Activity {
         return name;
     }
     
-    public boolean isFull() {
+    public synchronized boolean isFull() {
         return curCapacity == maxUsers;
     }
     
