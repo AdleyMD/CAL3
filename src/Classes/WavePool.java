@@ -1,5 +1,7 @@
 package Classes;
 
+import javax.swing.JTextField;
+
 /**
  * @author CHAD (Copper Heroes Andrei & Darius)
  * @version 1.0
@@ -7,8 +9,8 @@ package Classes;
  */
 public class WavePool extends Activity {
 
-    public WavePool() {
-        super(20, "Wave Pool", new Supervisor(), new UserList(), new UserList());
+    public WavePool(String name, JTextField queueText, JTextField insideText) {
+        super(20, "Wave Pool", new Supervisor(), new UserList(queueText), new UserList(insideText));
         curCapacity = 0;
         supervisor.setActivity(this);
     }
