@@ -28,6 +28,7 @@ public class WavePool extends Activity {
     @Override
     public void enter(User user) {
         getLock().lock();
+        getSupervisor().setUserToCheck(user);
         getExecutor().execute(getSupervisor());
         getQueue().enqueue(user);
         try {
@@ -69,13 +70,28 @@ public class WavePool extends Activity {
 
     @Override
     public void leave(User user) {
-        getInside().remove(user);
-        getActFull().signal();
+        try {
+            getLock().lock();
+            getInside().remove(user);
+            if (user.hasCompanion())
+                addCurCapacity(-2);
+            else
+                addCurCapacity(-1);
+            getActFull().signal();
+        } catch (Exception e) {
+            
+        } finally {
+            getLock().unlock();
+        }
+        
     }
 
     public boolean coupleReady() {
         User user = getQueue().peek();
-        return (user.hasCompanion() || (!getQueue().checkPos(1).hasCompanion() && !user.hasCompanion()));
+        if (getQueue().checkPos(1) == null)
+            return false;
+        else
+            return (user.hasCompanion() || (!getQueue().checkPos(1).hasCompanion() && !user.hasCompanion()));
     }
 
 }//end WavePool

@@ -14,7 +14,6 @@ public class ChildrenPool extends Activity {
 
     public ChildrenPool(String name, JTextField queueText, JTextField insideText) {
         super(15, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
-        
         getSupervisor().setActivity(this);
     }
 
@@ -26,6 +25,7 @@ public class ChildrenPool extends Activity {
     @Override
     public void enter(User user) {
         getLock().lock();
+        getSupervisor().setUserToCheck(user);
         getExecutor().execute(getSupervisor());
         getQueue().enqueue(user);
         try {
@@ -59,13 +59,18 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void leave(User user) {
-        getInside().remove(user);
-        if (user.hasCompanion()) {
-            addCurCapacity(-1);
+        try {
+            getLock().lock();
+            getInside().remove(user);
+            if (user.hasCompanion())
+                addCurCapacity(-2);
+            else
+                addCurCapacity(-1);
             getActFull().signal();
+        } catch (Exception e) {
+        } finally {
+            getLock().unlock();
         }
-        addCurCapacity(-1);
-        getActFull().signal();
     }
 
 }//end ChildrenPool

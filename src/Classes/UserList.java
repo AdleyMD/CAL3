@@ -50,7 +50,12 @@ public class UserList {
 	}
         
         public User checkPos(int n){
-            return list.get(n);
+            User u;
+            if (list.size() > n)
+                u = list.get(n);
+            else
+                u = null;
+            return u;
         }
         
         public boolean twoInQueue(){

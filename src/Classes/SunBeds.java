@@ -1,6 +1,5 @@
 package Classes;
 
-import java.util.concurrent.Executor;
 import javax.swing.JTextField;
 
 /**
@@ -12,8 +11,9 @@ public class SunBeds extends Activity {
     
     private User first;
 
-    public SunBeds(String name, JTextField queueText, JTextField insideText) {
+    public SunBeds(String name, JTextField insideText) {
         super(20, name, new Supervisor(), null, new UserList(insideText));
+        getSupervisor().setActivity(this);
     }
 
     @Override

@@ -18,7 +18,6 @@ public class ChangingRoom extends Activity {
 
     public ChangingRoom(String name, JTextField queueText, JTextField insideText) {
         super(0, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
-
         adultCapacity = 20;
         childrenCapacity = 10;
         getSupervisor().setActivity(this);

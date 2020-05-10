@@ -15,6 +15,7 @@ public class Slide extends Activity {
     
     public Slide(String name, BigPool bigPool, JTextField queueText, JTextField insideText) {
         super(1, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+        getSupervisor().setActivity(this);
         semaphore = new Semaphore(getMaxUsers(), true);
         this.bigPool = bigPool;
     }
@@ -31,6 +32,7 @@ public class Slide extends Activity {
             semaphore.acquire();
         } catch (InterruptedException e) {
         }
+        getSupervisor().setUserToCheck(user);
         getExecutor().execute(getSupervisor());
         
         getQueue().dequeue();

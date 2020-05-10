@@ -11,6 +11,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        
         WaterPark park = new WaterPark(entrQueueTF);
         BigPool bigPool = new BigPool("Big Pool", bpQueueTF, bpInsideTF);
         park.addActivity(new ChangingRoom("Changing Room", crQueueTF, crInsideTF), 0);
@@ -22,7 +23,7 @@ public class Main extends javax.swing.JFrame {
         park.addActivity(new Slide("Slide B", bigPool, sbQueueTF, sbInsideTF), 6);
         park.addActivity(new Slide("Slide C", bigPool, scQueueTF, scInsideTF), 7);
         
-        int usersToCreate = 5000;
+        int usersToCreate = 20;
         User user;
         for (int i = 1; i <= usersToCreate; i++) {
             if (i == usersToCreate)

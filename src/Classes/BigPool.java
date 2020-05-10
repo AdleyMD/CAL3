@@ -19,6 +19,7 @@ public class BigPool extends Activity {
 
     @Override
     public void enter(User user) {
+        getSupervisor().setUserToCheck(user);
         getExecutor().execute(getSupervisor());
         try {
             getLock().lock();
@@ -58,9 +59,9 @@ public class BigPool extends Activity {
             getInside().remove(user);
 
             if (user.hasCompanion()) {
-                addCurCapacity(2);
+                addCurCapacity(-2);
             } else {
-                addCurCapacity(1);
+                addCurCapacity(-1);
             }
             getActFull().signal();
 
