@@ -16,8 +16,8 @@ public class ChangingRoom extends Activity {
     private int childrenCapacity;
     private int currentChild;
 
-    public ChangingRoom(String name, JTextField queueText, JTextField insideText) {
-        super(0, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+    public ChangingRoom(String name, JTextField queueText, JTextField insideText, JTextField supervisorText) {
+        super(0, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         adultCapacity = 20;
         childrenCapacity = 10;
         getSupervisor().setActivity(this);
@@ -25,7 +25,7 @@ public class ChangingRoom extends Activity {
 
     @Override
     public boolean canEnter(User user) {
-        return (adultCapacity < currentAdult && childrenCapacity < currentChild);
+        return (adultCapacity > currentAdult && childrenCapacity > currentChild);
     }
 
     @Override

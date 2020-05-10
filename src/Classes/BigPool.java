@@ -12,8 +12,8 @@ import javax.swing.JTextField;
 public class BigPool extends Activity {
 
     
-    public BigPool(String name, JTextField queueText, JTextField insideText) {
-        super(50, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+    public BigPool(String name, JTextField queueText, JTextField insideText, JTextField supervisorText) {
+        super(50, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         getSupervisor().setActivity(this);
     }
 
@@ -75,7 +75,7 @@ public class BigPool extends Activity {
 
     @Override
     public boolean canEnter(User user) {
-        return user.hasCompanion() && getCurCapacity() <= getMaxUsers() - 1 || user.hasCompanion() && getCurCapacity() < getMaxUsers();
+        return user.hasCompanion() && getCurCapacity() <= getMaxUsers() - 1 || !user.hasCompanion() && getCurCapacity() < getMaxUsers();
     }
 
     public void kickRandom() {

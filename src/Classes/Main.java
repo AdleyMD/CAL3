@@ -208,7 +208,7 @@ public class Main extends javax.swing.JFrame {
         titleLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         titleLabel.setText("AQUATIC PARK");
 
-        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
         entranceQueueLabel.setText("Waiting Queue");
 
@@ -240,7 +240,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel2.setBackground(new java.awt.Color(153, 204, 255));
 
         crTitleLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         crTitleLabel.setText("Changing Room");
@@ -311,7 +311,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel3.setBackground(new java.awt.Color(153, 204, 255));
 
         crTitleLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         crTitleLabel1.setText("Children's Pool");
@@ -382,7 +382,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel4.setBackground(new java.awt.Color(153, 204, 255));
 
         crTitleLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         crTitleLabel2.setText("Wave Pool");
@@ -453,7 +453,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel5.setBackground(new java.awt.Color(153, 204, 255));
 
         crTitleLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         crTitleLabel3.setText("Sun Beds");
@@ -524,7 +524,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel6.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel6.setBackground(new java.awt.Color(153, 204, 255));
 
         crTitleLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         crTitleLabel4.setText("Big Pool");
@@ -595,10 +595,12 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
+        jPanel7.setBackground(new java.awt.Color(153, 204, 255));
+
         crTitleLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         crTitleLabel5.setText("Slides");
 
-        jPanel8.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel8.setBackground(new java.awt.Color(255, 102, 0));
 
         JLabel13.setText("Supervisor");
 
@@ -672,7 +674,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
         );
 
-        jPanel9.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel9.setBackground(new java.awt.Color(255, 102, 0));
 
         sbInsideTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -746,7 +748,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        jPanel10.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel10.setBackground(new java.awt.Color(255, 102, 0));
 
         scSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

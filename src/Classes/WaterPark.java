@@ -28,15 +28,15 @@ public class WaterPark extends Thread {
     
     @Override
     public void run() {
-        BigPool bigPool = new BigPool("Big Pool", window.getBpQueueTF(), window.getBpInsideTF());
-        this.addActivity(new ChangingRoom("Changing Room", window.getCrQueueTF(), window.getCrInsideTF()), 0);
-        this.addActivity(new ChildrenPool("Children Pool", window.getCpQueueTF(), window.getCpInsideTF()), 1);
-        this.addActivity(new WavePool("Wave Pool", window.getWpQueueTF(), window.getWpInsideTF()), 2);
+        BigPool bigPool = new BigPool("Big Pool", window.getBpQueueTF(), window.getBpInsideTF(), window.getBpSupervisorTF());
+        this.addActivity(new ChangingRoom("Changing Room", window.getCrQueueTF(), window.getCrInsideTF(), window.getCrSupervisorTF()), 0);
+        this.addActivity(new ChildrenPool("Children Pool", window.getCpQueueTF(), window.getCpInsideTF(), window.getCpSupervisorTF()), 1);
+        this.addActivity(new WavePool("Wave Pool", window.getWpQueueTF(), window.getWpInsideTF(), window.getWpSupervisorTF()), 2);
         this.addActivity(bigPool, 3);
-        this.addActivity(new SunBeds("Sun Beds", window.getSbsInsideTF()), 4);
-        this.addActivity(new Slide("Slide A", bigPool, window.getSaQueueTF(), window.getSaInsideTF()), 5);
-        this.addActivity(new Slide("Slide B", bigPool, window.getSbQueueTF(), window.getSbInsideTF()), 6);
-        this.addActivity(new Slide("Slide C", bigPool, window.getScQueueTF(), window.getScInsideTF()), 7);
+        this.addActivity(new SunBeds("Sun Beds", window.getSbsInsideTF(), window.getSbsSupervisorTF()), 4);
+        this.addActivity(new Slide("Slide A", bigPool, window.getSaQueueTF(), window.getSaInsideTF(), window.getSaSupervisorTF()), 5);
+        this.addActivity(new Slide("Slide B", bigPool, window.getSbQueueTF(), window.getSbInsideTF(), window.getSbSupervisorTF()), 6);
+        this.addActivity(new Slide("Slide C", bigPool, window.getScQueueTF(), window.getScInsideTF(), window.getScSupervisorTF()), 7);
         
         int usersToCreate = 500;
         User user;
@@ -105,8 +105,10 @@ public class WaterPark extends Thread {
             activities[0].enter(user);
             inside.dequeue();
             
-            if (user.hasCompanion())
+            if (user.hasCompanion()) {
                 curCapacity -= 2;
+                isFullCondition.signal();
+            }
             else
                 curCapacity--;
             

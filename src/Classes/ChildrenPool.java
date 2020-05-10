@@ -11,8 +11,8 @@ import javax.swing.JTextField;
  */
 public class ChildrenPool extends Activity {
 
-    public ChildrenPool(String name, JTextField queueText, JTextField insideText) {
-        super(15, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+    public ChildrenPool(String name, JTextField queueText, JTextField insideText, JTextField supervisorText) {
+        super(15, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         getSupervisor().setActivity(this);
     }
 

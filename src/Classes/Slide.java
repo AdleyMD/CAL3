@@ -13,8 +13,8 @@ public class Slide extends Activity {
     private final Semaphore semaphore;
     private BigPool bigPool;
     
-    public Slide(String name, BigPool bigPool, JTextField queueText, JTextField insideText) {
-        super(1, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+    public Slide(String name, BigPool bigPool, JTextField queueText, JTextField insideText, JTextField supervisorText) {
+        super(1, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         getSupervisor().setActivity(this);
         semaphore = new Semaphore(getMaxUsers(), true);
         this.bigPool = bigPool;
