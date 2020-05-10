@@ -15,15 +15,20 @@ public class Slide extends Activity {
     }
 
     @Override
+    public void enqueue(User user) {
+    }
+
+    @Override
     public void enter(User user) {
     }
 
     @Override
-    public void use(User user) {
-    }
-
-    @Override
     public void leave(User user) {
+    }
+    
+    @Override
+    public boolean canEnter(User user) {
+        return true;
     }
 
 }//end Slide
