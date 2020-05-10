@@ -16,26 +16,67 @@ public class Client {
     }
     
     public String getIdUser() throws IOException {
-        createConection();
         output.writeInt(0);
         return input.readUTF();
     }
     
     public String getLocation() throws IOException {
-        createConection();
         output.writeInt(1);
         return input.readUTF();
     }
     
     public String getActivities() throws IOException {
-        createConection();
         output.writeInt(2);
         return input.readUTF();
     }
     
     public String getMinorsNum() throws IOException {
-        createConection();
         output.writeInt(3);
+        return input.readUTF();
+    }
+    
+    public String getSlideA() throws IOException {
+        output.writeInt(4);
+        return input.readUTF();
+    }
+    
+    public String getSlideB() throws IOException {
+        output.writeInt(5);
+        return input.readUTF();
+    }
+    
+    public String getSlideC() throws IOException {
+        output.writeInt(6);
+        return input.readUTF();
+    }
+    
+    public String getCR() throws IOException {
+        output.writeInt(7);
+        return input.readUTF();
+    }
+    
+    public String getWP() throws IOException {
+        output.writeInt(8);
+        return input.readUTF();
+    }
+    
+    public String getCP() throws IOException {
+        output.writeInt(9);
+        return input.readUTF();
+    }
+    
+    public String getSB() throws IOException {
+        output.writeInt(10);
+        return input.readUTF();
+    }
+    
+    public String getS() throws IOException {
+        output.writeInt(11);
+        return input.readUTF();
+    }
+    
+    public String getBP() throws IOException {
+        output.writeInt(12);
         return input.readUTF();
     }
     

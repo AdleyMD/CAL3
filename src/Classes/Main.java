@@ -1,5 +1,7 @@
 package Classes;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -1044,6 +1046,11 @@ public class Main extends javax.swing.JFrame {
             
             while (true) {
                 connection = server.accept();
+                DataOutputStream output = new DataOutputStream(connection.getOutputStream());
+                DataInputStream input = new DataInputStream(connection.getInputStream());
+                
+                input.readInt();
+                output.writeInt(0);
             }
             
         } catch (IOException e) {}
