@@ -41,6 +41,8 @@ public class WavePool extends Activity {
             // waiting 2 users to enter/signal.
             barrier.await();
 
+            
+            //cambiar esto tmbn... ?
             if (user.hasCompanion()) {
                 getInside().enqueue(user);
                 addCurCapacity(2);
@@ -87,11 +89,21 @@ public class WavePool extends Activity {
     }
 
     public boolean coupleReady() {
+        boolean sol;
         User user = getQueue().peek();
+        // there are not 2 in the queue
         if (getQueue().checkPos(1) == null)
-            return false;
-        else
-            return (user.hasCompanion() || (!getQueue().checkPos(1).hasCompanion() && !user.hasCompanion()));
+            sol = false;
+        else if (user.hasCompanion()) {
+            sol = true;
+        } else if (!user.hasCompanion() && getQueue().checkPos(1).hasCompanion()){
+            sol = true; // but user is the 2nd
+        } else if (!user.hasCompanion() && !getQueue().checkPos(1).hasCompanion())
+            sol = true;
+        else{
+            sol = false;
+        }
+            return sol;
     }
 
 }//end WavePool

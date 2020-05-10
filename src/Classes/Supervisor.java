@@ -105,11 +105,14 @@ public class Supervisor implements Runnable {
 
     public void wavePool() {
         userToCheck.setAppropiateAge(false);
+        UserList queue = activity.getQueue();
         if (userToCheck.getAge() > 6) {
             userToCheck.setAppropiateAge(true);
             customSleep(1000);
         }
+        
         if (((WavePool) activity).coupleReady()) {
+            
         }
     }
 
