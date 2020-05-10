@@ -9,8 +9,8 @@ import javax.swing.JTextField;
  */
 public class SunBeds extends Activity {
     
-    public SunBeds(String name, JTextField queueText, JTextField insideText) {
-        super(20, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+    public SunBeds(String name, JTextField insideText) {
+        super(20, name, new Supervisor(), null, new UserList(insideText));
     }
 
     @Override

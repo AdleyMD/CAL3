@@ -34,7 +34,7 @@ public class WaterPark {
         return activities[actIndex];
     }
     
-    public void enter(User user) {
+    public void enqueue(User user) {
         if (canEnter(user))
             return;
         
@@ -45,16 +45,28 @@ public class WaterPark {
                 isFullCondition.await();
             }
             
-            if (user.hasCompanion())
-                curCapacity += 2;
-            else
-                curCapacity++;
+            queue.dequeue();
             
         } catch (Exception e) {
             
         } finally {
             lock.unlock();
         }
+    }
+    
+    public void enter(User user) {
+        if (user.hasCompanion())
+            curCapacity += 2;
+        else
+            curCapacity++;
+        
+        inside.enqueue(user);
+        
+        
+    }
+    
+    public void leave(User user) {
+        
     }
     
     public boolean canEnter(User user) {
