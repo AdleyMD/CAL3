@@ -106,29 +106,38 @@ public class Supervisor implements Runnable {
     }
 
     public void wavePool() {
+        /*
         userToCheck.setAppropiateAge(false);
         UserList queue = activity.getQueue();
-        // asegurarse de que no esten vacios
-        User first = queue.peek();
-        User second = queue.checkPos(2);
+
+        customSleep(1000);
         if (userToCheck.getAge() > 6) {
             userToCheck.setAppropiateAge(true);
-            customSleep(1000);
         }
+        User first = queue.peek();
+        User second;
 
-        if (first.hasCompanion()) {
-            first.setFlag(true);
-            first.getCompanion().setFlag(true);
-        } else if (!first.hasCompanion() && second.hasCompanion()) {
-            second.setFlag(true);
-            second.getCompanion().setFlag(true);
-        } else if (!first.hasCompanion() && !second.hasCompanion()) {
-            first.setFlag(true);
-            second.setFlag(true);
+        if (queue.checkPos(2) == null) {
+            if (first.hasCompanion()) {
+                first.setFlag(true);
+                first.getCompanion().setFlag(true);
+            } else {
+                first.setFlag(false);
+            }
         } else {
-            
-        }
-        
+            second = queue.checkPos(2);
+            if (!first.hasCompanion() && second.hasCompanion()) {
+                second.setFlag(true);
+                second.getCompanion().setFlag(true);
+            } else if (!first.hasCompanion() && !second.hasCompanion()) {
+                first.setFlag(true);
+                second.setFlag(true);
+                //consigue esa wea y dale off we go. ? el cyclic barrier.
+            } else {
+
+            }
+        }*/
+
     }
 
     public void changingRoom() {

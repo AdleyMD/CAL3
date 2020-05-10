@@ -57,13 +57,13 @@ public class ChangingRoom extends Activity {
             getLock().unlock();
         }
     }
-
+    
     @Override
     public void use(User user) {
-        if (supervisorSaidNo(user)) {
-            return;
+        if (!supervisorSaidNo(user)) {
+            customSleep(3000);
         }
-        customSleep(3000);
+        return;
     }
 
     @Override
@@ -74,9 +74,10 @@ public class ChangingRoom extends Activity {
             if (user.hasCompanion()) {
                 getActFull().signal();
                 addCurCapacity(-2);
-            } else
+            } else {
                 addCurCapacity(-1);
-            
+            }
+
             getActFull().signal();
         } catch (Exception e) {
         } finally {

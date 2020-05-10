@@ -35,9 +35,10 @@ public class WavePool extends Activity {
             while (!canEnter(user)) {
                 getActFull().await();
             }
+            
             while (!user.getFlag()) {
                 barrier.await();
-            }
+            } // not implemented in the other side yet.
 
             if (user.hasCompanion()) {
                 getInside().enqueue(user);
@@ -59,10 +60,10 @@ public class WavePool extends Activity {
 
     @Override
     public void use(User user) {
-        if (supervisorSaidNo(user)) {
-            return;
+        if (!supervisorSaidNo(user)) {
+            customSleep(2000, 5000);
         }
-        customSleep(2000, 5000);
+        return;
     }
 
     @Override

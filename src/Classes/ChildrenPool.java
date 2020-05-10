@@ -11,7 +11,6 @@ import javax.swing.JTextField;
  */
 public class ChildrenPool extends Activity {
 
-
     public ChildrenPool(String name, JTextField queueText, JTextField insideText) {
         super(15, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
         getSupervisor().setActivity(this);
@@ -40,13 +39,13 @@ public class ChildrenPool extends Activity {
                 addCurCapacity(1);
             }
             addCurCapacity(1);
-
+            getQueue().dequeue();
         } catch (InterruptedException ex) {
             Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             getLock().unlock();
         }
-        getQueue().remove(user);
+
     }
 
     @Override
@@ -65,9 +64,10 @@ public class ChildrenPool extends Activity {
             if (user.hasCompanion() && user.getAge() <= 5) {
                 addCurCapacity(-2);
                 getActFull().signal();
-            } else
+            } else {
                 addCurCapacity(-1);
-            
+            }
+
             getActFull().signal();
         } catch (Exception e) {
         } finally {
