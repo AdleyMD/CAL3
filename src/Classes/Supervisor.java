@@ -68,7 +68,7 @@ public class Supervisor implements Runnable {
     }
 
     public void slide() {
-        
+
     }
 
     public void sunBeds() {
@@ -76,22 +76,38 @@ public class Supervisor implements Runnable {
     }
 
     public void wavePool() {
-        while(!activity.queue.twoInQueue()){
+        User user = activity.queue.peek();
+        // comprobamos con if su edad.
+        user.setAppropiatedAge(false);
+        if (user.getAge() > 6) {
+            user.setAppropiatedAge(true);
             customSleep(1000);
-            if (activity.queue.peek().hasCompanion()){
-                
-            }
+        }
+        if (((WavePool) activity).coupleReady()) {
+            user.setPass(true);
+            
+            ((WavePool)activity).getPairs().signal();
+            // necesito el setpass? o simplemente que se esperen...? 
+            // voy a hacer otra a aclararme.
         }
     }
 
     public void changingRoom() {
-        
-        
-
+        customSleep(1000); // checking age
     }
 
     public void childrenPool() {
+        User user = activity.queue.peek();
+        customSleep(1000, 1500); // time to check the age
         
+        if (user.getAge() < 6) {
+            user.setAppropiatedAge(true);
+            user.getCompanion().setAppropiatedAge(true);
+        } else if (user.getAge() < 11) {
+            user.setAppropiatedAge(true);
+        } else if (user.getAge() > 10 && !user.getAppropiatedAge()) {
+            user.setAppropiatedAge(false);
+        }
     }
 
     public void customSleep(int time) {

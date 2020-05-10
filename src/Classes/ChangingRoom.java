@@ -34,19 +34,13 @@ public class ChangingRoom extends Activity {
         queue.enqueue(user);
         executor.execute(supervisor);
         try {
-            while (!(canEnter(user))) { //currentAdult == adultCapacity || currentChild == childrenCapacity) {
+            while (!(canEnter(user))) {
                 try {
                     actFull.await();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            // aqui estoy comprobando la edad, eso feo.
-            /*while ((currentAdult == 20 && user.getAge() > 18)
-                    || user.getAge() <= 10 && currentChild == 10 || currentAdult == 20
-                    || (currentChild != 10 && user.getAge() < 18)) {
-            }
-             */
         } finally {
             lock.unlock();
         }
