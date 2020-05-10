@@ -37,7 +37,9 @@ public abstract class Activity {
         actFull = lock.newCondition();
     }
 
-    public abstract void enter(User user);
+    public abstract boolean canEnter(User user);
+    
+    public abstract void enqueue(User user);
 
     public abstract void use(User user);
     

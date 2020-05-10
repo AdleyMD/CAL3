@@ -9,10 +9,10 @@ import java.util.logging.Logger;
  * @created 08-may.-2020 12:16:09
  */
 public class Supervisor implements Runnable {
-    
+
     // counter Counts how many supervisors have been created. Only used to set
     // the id for each new supervisor.
-    private static int counter = 0; 
+    private static int counter = 0;
     private final int id;
     private User userToCheck;
     private Activity activity;
@@ -45,46 +45,53 @@ public class Supervisor implements Runnable {
                 break;
         }
     }
-    
+
     public void setUserToCheck(User user) {
         userToCheck = user;
     }
-    
+
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
-    
+
     public void bigPool() {
-        BigPool bp = (BigPool) activity;
-        while (bp.isFull()) {
+
+        while (activity.isFull()) {
             customSleep(500);
-            if (bp.isFull()) {
+            if (activity.isFull()) {
                 customSleep(500, 1000);
-                bp.kickRandom();
+                ((BigPool) activity).kickRandom();
             }
         }
     }
-    
+
     public void slide() {
         
     }
-    
+
     public void sunBeds() {
-        
+
     }
-    
+
     public void wavePool() {
-        
+        while(!activity.queue.twoInQueue()){
+            customSleep(1000);
+            if (activity.queue.peek().hasCompanion()){
+                
+            }
+        }
     }
-    
+
     public void changingRoom() {
         
+        
+
     }
-    
+
     public void childrenPool() {
         
     }
-    
+
     public void customSleep(int time) {
         try {
             Thread.sleep(time);

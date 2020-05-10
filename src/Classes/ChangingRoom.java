@@ -24,13 +24,17 @@ public class ChangingRoom extends Activity {
     }
 
     @Override
-    public void enter(User user) {
+    public boolean canEnter(User user) {
+        return (adultCapacity < currentAdult && childrenCapacity < currentChild);
+    }
+
+    @Override
+    public void enqueue(User user) {
+        lock.lock();
         queue.enqueue(user);
         executor.execute(supervisor);
         try {
-            lock.lock();
-
-            while (currentAdult == adultCapacity || currentChild == childrenCapacity) {
+            while (!(canEnter(user))) { //currentAdult == adultCapacity || currentChild == childrenCapacity) {
                 try {
                     actFull.await();
                 } catch (InterruptedException ex) {
@@ -41,10 +45,8 @@ public class ChangingRoom extends Activity {
             /*while ((currentAdult == 20 && user.getAge() > 18)
                     || user.getAge() <= 10 && currentChild == 10 || currentAdult == 20
                     || (currentChild != 10 && user.getAge() < 18)) {
-
             }
              */
-            //supervisor.sleep(1000);
         } finally {
             lock.unlock();
         }
@@ -52,6 +54,15 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void use(User user) {
+        if (!user.hasCompanion() && user.getAge() < 18) {
+            childrenCapacity++;
+        } else if (user.hasCompanion()) {
+            adultCapacity++;
+            childrenCapacity++;
+        } else {
+            adultCapacity++;
+        }
+        queue.enqueue(user);
         customSleep(3000);
     }
 
