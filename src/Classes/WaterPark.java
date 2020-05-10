@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JTextField;
 
-public class WaterPark {
+public class WaterPark extends Thread {
 
     private final int maxUsers;
     private int curCapacity;
@@ -14,17 +14,50 @@ public class WaterPark {
     private final Activity[] activities;
     private final Lock lock;
     private final Condition isFullCondition;
+    private Main window;
 
-    public WaterPark(JTextField entranceQueue) {
+    public WaterPark(Main window) {
         maxUsers = 100;
         curCapacity = 0;
-        queue = new UserList(entranceQueue);
+        queue = new UserList(window.getEntrQueueTF());
         inside = new UserList(null);
         activities = new Activity[8];
         lock = new ReentrantLock();
         isFullCondition = lock.newCondition();
+        this.window = window;
     }
-
+    
+    @Override
+    public void run() {
+        BigPool bigPool = new BigPool("Big Pool", window.getBpQueueTF(), window.getBpInsideTF());
+        this.addActivity(new ChangingRoom("Changing Room", window.getCrQueueTF(), window.getCrInsideTF()), 0);
+        this.addActivity(new ChildrenPool("Children Pool", window.getCpQueueTF(), window.getCpInsideTF()), 1);
+        this.addActivity(new WavePool("Wave Pool", window.getWpQueueTF(), window.getWpInsideTF()), 2);
+        this.addActivity(bigPool, 3);
+        this.addActivity(new SunBeds("Sun Beds", window.getSbsInsideTF()), 4);
+        this.addActivity(new Slide("Slide A", bigPool, window.getSaQueueTF(), window.getSaInsideTF()), 5);
+        this.addActivity(new Slide("Slide B", bigPool, window.getSbQueueTF(), window.getSbInsideTF()), 6);
+        this.addActivity(new Slide("Slide C", bigPool, window.getScQueueTF(), window.getScInsideTF()), 7);
+        
+        int usersToCreate = 20;
+        User user;
+        for (int i = 1; i <= usersToCreate; i++) {
+            if (i == usersToCreate)
+                user = new User(i, 11, 50, this);
+            else
+                user = new User(i, 1, 50, this);
+            
+            if (user.hasCompanion())
+                i++;
+            
+            user.start();
+            
+            try {
+                Thread.sleep((long) (400 + 300 * Math.random()));
+            } catch (InterruptedException ex) {}
+        }
+    }
+    
     public void addActivity(Activity act, int index) {
         activities[index] = act;
     }

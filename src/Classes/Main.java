@@ -1,5 +1,7 @@
 package Classes;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author andro
@@ -11,35 +13,108 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        
-        WaterPark park = new WaterPark(entrQueueTF);
-        BigPool bigPool = new BigPool("Big Pool", bpQueueTF, bpInsideTF);
-        park.addActivity(new ChangingRoom("Changing Room", crQueueTF, crInsideTF), 0);
-        park.addActivity(new ChildrenPool("Children Pool", cpQueueTF, cpInsideTF), 1);
-        park.addActivity(new WavePool("Wave Pool", wpQueueTF, wpInsideTF), 2);
-        park.addActivity(bigPool, 3);
-        park.addActivity(new SunBeds("Sun Beds", sbsInsideTF), 4);
-        park.addActivity(new Slide("Slide A", bigPool, saQueueTF, saInsideTF), 5);
-        park.addActivity(new Slide("Slide B", bigPool, sbQueueTF, sbInsideTF), 6);
-        park.addActivity(new Slide("Slide C", bigPool, scQueueTF, scInsideTF), 7);
-        
-        int usersToCreate = 20;
-        User user;
-        for (int i = 1; i <= usersToCreate; i++) {
-            if (i == usersToCreate)
-                user = new User(i, 11, 50, park);
-            else
-                user = new User(i, 1, 50, park);
-            
-            if (user.hasCompanion())
-                i++;
-            
-            user.start();
-            
-            try {
-                Thread.sleep((long) (400 + 300 * Math.random()));
-            } catch (InterruptedException ex) {}
-        }
+        WaterPark park = new WaterPark(this);
+        park.start();
+    }
+
+    public JTextField getBpInsideTF() {
+        return bpInsideTF;
+    }
+
+    public JTextField getBpQueueTF() {
+        return bpQueueTF;
+    }
+
+    public JTextField getBpSupervisorTF() {
+        return bpSupervisorTF;
+    }
+
+    public JTextField getCpInsideTF() {
+        return cpInsideTF;
+    }
+
+    public JTextField getCpQueueTF() {
+        return cpQueueTF;
+    }
+
+    public JTextField getCpSupervisorTF() {
+        return cpSupervisorTF;
+    }
+
+    public JTextField getCrInsideTF() {
+        return crInsideTF;
+    }
+
+    public JTextField getCrQueueTF() {
+        return crQueueTF;
+    }
+
+    public JTextField getCrSupervisorTF() {
+        return crSupervisorTF;
+    }
+
+    public JTextField getEntrQueueTF() {
+        return entrQueueTF;
+    }
+
+    public JTextField getSaInsideTF() {
+        return saInsideTF;
+    }
+
+    public JTextField getSaQueueTF() {
+        return saQueueTF;
+    }
+
+    public JTextField getSaSupervisorTF() {
+        return saSupervisorTF;
+    }
+
+    public JTextField getSbInsideTF() {
+        return sbInsideTF;
+    }
+
+    public JTextField getSbQueueTF() {
+        return sbQueueTF;
+    }
+
+    public JTextField getSbSupervisorTF() {
+        return sbSupervisorTF;
+    }
+
+    public JTextField getSbsInsideTF() {
+        return sbsInsideTF;
+    }
+
+    public JTextField getSbsQueueTF() {
+        return sbsQueueTF;
+    }
+
+    public JTextField getSbsSupervisorTF() {
+        return sbsSupervisorTF;
+    }
+
+    public JTextField getScInsideTF() {
+        return scInsideTF;
+    }
+
+    public JTextField getScQueueTF() {
+        return scQueueTF;
+    }
+
+    public JTextField getScSupervisorTF() {
+        return scSupervisorTF;
+    }
+
+    public JTextField getWpInsideTF() {
+        return wpInsideTF;
+    }
+
+    public JTextField getWpQueueTF() {
+        return wpQueueTF;
+    }
+
+    public JTextField getWpSupervisorTF() {
+        return wpSupervisorTF;
     }
 
     /**

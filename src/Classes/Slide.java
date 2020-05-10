@@ -36,12 +36,14 @@ public class Slide extends Activity {
         getExecutor().execute(getSupervisor());
         
         getQueue().remove(user);
-        getInside().enqueue(user);
+        if (user.hasAppropiateAge())
+            getInside().enqueue(user);
     }
 
     @Override
     public void use(User user) {
-        customSleep(2000, 3000);
+        if (user.hasAppropiateAge())
+            customSleep(2000, 3000);
     }
 
     @Override
