@@ -53,7 +53,7 @@ public class ChangingRoom extends Activity {
     }
 
     @Override
-    public void use(User user) {
+    public void enter(User user) {
         if (!user.hasCompanion() && user.getAge() < 18) {
             childrenCapacity++;
         } else if (user.hasCompanion()) {

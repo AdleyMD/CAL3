@@ -42,7 +42,7 @@ public class ChildrenPool extends Activity {
     }
 
     @Override
-    public void use(User user) {
+    public void enter(User user) {
         if (user.hasCompanion()) {
             curCapacity += 1;
         }

@@ -41,7 +41,7 @@ public class WavePool extends Activity {
 
     
     @Override
-    public void use(User user) {
+    public void enter(User user) {
         if (user.hasCompanion()) {
             inside.enqueue(user);
             curCapacity += 2;
