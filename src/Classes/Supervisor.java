@@ -71,22 +71,25 @@ public class Supervisor implements Runnable {
         customSleep(400, 500);
         switch (activity.getName()) {
             case ("Slide A"):
-                if (userAge>= 11 && userAge <= 14)
+                if (userAge >= 11 && userAge <= 14) {
                     userToCheck.setAppropiateAge(true);
-                else
+                } else {
                     userToCheck.setAppropiateAge(false);
+                }
                 break;
             case ("Slide B"):
-                if (userAge>= 15 && userAge <= 17)
+                if (userAge >= 15 && userAge <= 17) {
                     userToCheck.setAppropiateAge(true);
-                else
+                } else {
                     userToCheck.setAppropiateAge(false);
+                }
                 break;
             case ("Slide C"):
-                if (userAge > 18)
+                if (userAge > 18) {
                     userToCheck.setAppropiateAge(true);
-                else
+                } else {
                     userToCheck.setAppropiateAge(false);
+                }
                 break;
         }
     }
@@ -95,8 +98,7 @@ public class Supervisor implements Runnable {
 
         if (userToCheck.getAge() < 14) {
             userToCheck.setAppropiateAge(false);
-        }
-        else{
+        } else {
             userToCheck.setAppropiateAge(true);
         }
         customSleep(500, 900);
@@ -106,14 +108,27 @@ public class Supervisor implements Runnable {
     public void wavePool() {
         userToCheck.setAppropiateAge(false);
         UserList queue = activity.getQueue();
+        // asegurarse de que no esten vacios
+        User first = queue.peek();
+        User second = queue.checkPos(2);
         if (userToCheck.getAge() > 6) {
             userToCheck.setAppropiateAge(true);
             customSleep(1000);
         }
-        
-        if (((WavePool) activity).coupleReady()) {
+
+        if (first.hasCompanion()) {
+            first.setFlag(true);
+            first.getCompanion().setFlag(true);
+        } else if (!first.hasCompanion() && second.hasCompanion()) {
+            second.setFlag(true);
+            second.getCompanion().setFlag(true);
+        } else if (!first.hasCompanion() && !second.hasCompanion()) {
+            first.setFlag(true);
+            second.setFlag(true);
+        } else {
             
         }
+        
     }
 
     public void changingRoom() {
