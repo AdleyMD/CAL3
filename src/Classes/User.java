@@ -40,7 +40,7 @@ public class User extends Thread {
 
     @Override
     public void run() {
-        // seleccionamos actividad random.
+        
         
         
         if (appropiateAge){
