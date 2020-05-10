@@ -67,15 +67,28 @@ public class Supervisor implements Runnable {
     }
 
     public void slide() {
+        int userAge = userToCheck.getAge();
+        customSleep(400, 500);
         switch (activity.getName()) {
             case ("Slide A"):
+                if (userAge>= 11 && userAge <= 14)
+                    userToCheck.setAppropiateAge(true);
+                else
+                    userToCheck.setAppropiateAge(false);
                 break;
             case ("Slide B"):
+                if (userAge>= 15 && userAge <= 17)
+                    userToCheck.setAppropiateAge(true);
+                else
+                    userToCheck.setAppropiateAge(false);
                 break;
             case ("Slide C"):
+                if (userAge > 18)
+                    userToCheck.setAppropiateAge(true);
+                else
+                    userToCheck.setAppropiateAge(false);
                 break;
         }
-
     }
 
     public void sunBeds() {

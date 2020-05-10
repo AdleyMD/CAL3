@@ -12,14 +12,15 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         WaterPark park = new WaterPark(entrQueueTF);
+        BigPool bigPool = new BigPool("Big Pool", bpQueueTF, bpInsideTF);
         park.addActivity(new ChangingRoom("Changing Room", crQueueTF, crInsideTF), 0);
         park.addActivity(new ChildrenPool("Children Pool", cpQueueTF, cpInsideTF), 1);
         park.addActivity(new WavePool("Wave Pool", wpQueueTF, wpInsideTF), 2);
-        park.addActivity(new BigPool("Big Pool", bpQueueTF, bpInsideTF), 3);
+        park.addActivity(bigPool, 3);
         park.addActivity(new SunBeds("Sun Beds", sbsInsideTF), 4);
-        park.addActivity(new Slide("Slide A", saQueueTF, saInsideTF), 5);
-        park.addActivity(new Slide("Slide B", sbQueueTF, sbInsideTF), 6);
-        park.addActivity(new Slide("Slide C", scQueueTF, scInsideTF), 7);
+        park.addActivity(new Slide("Slide A", bigPool, saQueueTF, saInsideTF), 5);
+        park.addActivity(new Slide("Slide B", bigPool, sbQueueTF, sbInsideTF), 6);
+        park.addActivity(new Slide("Slide C", bigPool, scQueueTF, scInsideTF), 7);
         
         int usersToCreate = 5000;
         User user;

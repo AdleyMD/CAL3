@@ -11,8 +11,9 @@ import javax.swing.JTextField;
 public class Slide extends Activity {
 
     private Semaphore semaphore;
+    private BigPool bigPool;
     
-    public Slide(String name, JTextField queueText, JTextField insideText) {
+    public Slide(String name, BigPool bigPool, JTextField queueText, JTextField insideText) {
         super(1, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
         semaphore = new Semaphore(maxUsers, true);
     }
@@ -29,17 +30,24 @@ public class Slide extends Activity {
             semaphore.acquire();
         } catch(InterruptedException e){}
         executor.execute(user);
-        queue.dequeue();
-        inside.enqueue(user);
+        
+        if (user.hasAppropiateAge()) {
+            queue.dequeue();
+            bigPool.curCapacity = 5;
+            inside.enqueue(user);
+        }
     }
 
     @Override
     public void use(User user) {
-
+        if (user.hasAppropiateAge()) {
+            customSleep(2000, 3000);
+        }
     }
 
     @Override
     public void leave(User user) {
+        inside.remove(user);
     }
 
     

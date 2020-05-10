@@ -15,15 +15,15 @@ import java.util.logging.Logger;
  */
 public abstract class Activity {
 
-    public String name;
-    public int maxUsers;
-    public int curCapacity;
-    public Supervisor supervisor;
-    public UserList queue;
-    public UserList inside;
-    public ExecutorService executor;
-    public Lock lock;
-    public Condition actFull;
+    private String name;
+    private int maxUsers;
+    private int curCapacity;
+    private Supervisor supervisor;
+    private UserList queue;
+    private UserList inside;
+    private ExecutorService executor;
+    private Lock lock;
+    private Condition actFull;
 
     public Activity(int maxUsers, String name, Supervisor supervisor, UserList queue, UserList inside) {
         this.maxUsers = maxUsers;

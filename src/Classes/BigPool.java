@@ -11,10 +11,6 @@ import javax.swing.JTextField;
  */
 public class BigPool extends Activity {
     
-    private Slide slideA;
-    private Slide slideB;
-    private Slide slideC;
-    
     public BigPool(String name, JTextField queueText, JTextField insideText){
         super(50, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
         supervisor.setActivity(this);
