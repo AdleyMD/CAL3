@@ -50,7 +50,6 @@ public class WaterPark {
                 curCapacity++;
 
             inside.enqueue(user);
-            
         } catch (Exception e) {
 
         } finally {
