@@ -45,6 +45,7 @@ public class SunBeds extends Activity {
     @Override
     public void leave(User user) {
         addCurCapacity(-1);
+        getInside().remove(user);
     }
 
     // not quite yet.....

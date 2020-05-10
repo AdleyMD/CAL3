@@ -34,7 +34,7 @@ public class BigPool extends Activity {
                 addCurCapacity(1);
             }
 
-            user = getQueue().dequeue();
+            getQueue().remove(user);
             getInside().enqueue(user);
         } catch (InterruptedException ex) {
             Logger.getLogger(BigPool.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,9 +60,10 @@ public class BigPool extends Activity {
 
             if (user.hasCompanion()) {
                 addCurCapacity(-2);
-            } else {
+                getActFull().signal();
+            } else
                 addCurCapacity(-1);
-            }
+            
             getActFull().signal();
 
         } catch (Exception ex) {

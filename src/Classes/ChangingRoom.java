@@ -30,11 +30,11 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void enter(User user) {
-        getLock().lock();
-        getQueue().enqueue(user);
-        getSupervisor().setUserToCheck(user);
-        getExecutor().execute(getSupervisor());
         try {
+            getLock().lock();
+            getQueue().enqueue(user);
+            getSupervisor().setUserToCheck(user);
+            getExecutor().execute(getSupervisor());
             while (!(canEnter(user))) {
                 try {
                     getActFull().await();
@@ -42,11 +42,6 @@ public class ChangingRoom extends Activity {
                     Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
-            if (supervisorSaidNo(user)) {
-                return;
-            }
-
             customSleep(3000);
             if (!user.hasCompanion() && user.getAge() < 18) {
                 childrenCapacity++;
@@ -56,6 +51,7 @@ public class ChangingRoom extends Activity {
             } else {
                 adultCapacity++;
             }
+            getQueue().remove(user);
             getInside().enqueue(user);
         } finally {
             getLock().unlock();
@@ -72,11 +68,20 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void leave(User user) {
-        getInside().remove(user);
-        if (user.hasCompanion()) {
+        try {
+            getLock().lock();
+            getInside().remove(user);
+            if (user.hasCompanion()) {
+                getActFull().signal();
+                addCurCapacity(-2);
+            } else
+                addCurCapacity(-1);
+            
             getActFull().signal();
+        } catch (Exception e) {
+        } finally {
+            getLock().unlock();
         }
-        getActFull().signal();
     }
 
 }//end ChangingRoom
