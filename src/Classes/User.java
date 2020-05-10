@@ -77,11 +77,11 @@ public class User extends Thread {
      * sets a flag to check if the user can use the activity.
      * @param bool 
      */
-    public void setAppropiatedAge(boolean bool) {
+    public void setAppropiateAge(boolean bool) {
         this.appropiateAge = bool;
     }
     
-    public boolean getAppropiatedAge(){
+    public boolean hasAppropiateAge(){
         return this.appropiateAge;
     }
 

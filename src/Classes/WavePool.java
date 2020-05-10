@@ -39,7 +39,7 @@ public class WavePool extends Activity {
                 actFull.await();
                 barrier.await();
             }
-            if (!user.getAppropiatedAge()) {
+            if (!user.hasAppropiateAge()) {
                 return;
             }
             
@@ -65,7 +65,7 @@ public class WavePool extends Activity {
 
     @Override
     public void use(User user) {
-        if (!user.getAppropiatedAge()) {
+        if (!user.hasAppropiateAge()) {
             return;
         }
         customSleep(2000, 5000);
@@ -79,7 +79,7 @@ public class WavePool extends Activity {
 
     @Override
     public boolean supervisorSaidYes(User user) {
-        return (user.getAppropiatedAge());
+        return (user.hasAppropiateAge());
     }
 
     public boolean coupleReady() {
