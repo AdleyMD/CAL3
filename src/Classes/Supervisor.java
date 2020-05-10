@@ -145,6 +145,7 @@ public class Supervisor implements Runnable {
     }
 
     public void childrenPool() {
+        System.out.println(" ehecutando children pul ");
         customSleep(1000, 1500); // time to check the age
 
         if (userToCheck.getAge() < 6) {

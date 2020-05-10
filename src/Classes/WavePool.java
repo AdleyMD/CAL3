@@ -27,8 +27,12 @@ public class WavePool extends Activity {
 
     @Override
     public void enter(User user) {
+        
+        
         getLock().lock();
+        
         getSupervisor().setUserToCheck(user);
+        
         getExecutor().execute(getSupervisor());
         getQueue().enqueue(user);
         try {
