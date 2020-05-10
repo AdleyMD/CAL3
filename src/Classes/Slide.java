@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.concurrent.Semaphore;
 import javax.swing.JTextField;
 
 /**
@@ -9,8 +10,11 @@ import javax.swing.JTextField;
  */
 public class Slide extends Activity {
 
+    private Semaphore semaphore;
+    
     public Slide(String name, JTextField queueText, JTextField insideText) {
         super(1, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+        semaphore = new Semaphore(maxUsers, true);
     }
 
     @Override
@@ -20,8 +24,13 @@ public class Slide extends Activity {
     
     @Override
     public void enter(User user) {
-        
-
+        queue.enqueue(user);
+        try {
+            semaphore.acquire();
+        } catch(InterruptedException e){}
+        executor.execute(user);
+        queue.dequeue();
+        inside.enqueue(user);
     }
 
     @Override
