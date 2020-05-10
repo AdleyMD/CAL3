@@ -3,7 +3,6 @@ package Classes;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import javax.swing.JTextField;
 
 public class WaterPark extends Thread {
 
@@ -39,7 +38,7 @@ public class WaterPark extends Thread {
         this.addActivity(new Slide("Slide B", bigPool, window.getSbQueueTF(), window.getSbInsideTF()), 6);
         this.addActivity(new Slide("Slide C", bigPool, window.getScQueueTF(), window.getScInsideTF()), 7);
         
-        int usersToCreate = 20;
+        int usersToCreate = 500;
         User user;
         for (int i = 1; i <= usersToCreate; i++) {
             if (i == usersToCreate)
@@ -83,6 +82,7 @@ public class WaterPark extends Thread {
                 curCapacity++;
 
             inside.enqueue(user);
+            activities[0].enter(user); // Enters the changing room
         } catch (Exception e) {
 
         } finally {
@@ -102,6 +102,7 @@ public class WaterPark extends Thread {
     public void leave(User user) {
         try {
             lock.lock();
+            activities[0].enter(user);
             inside.dequeue();
             
             if (user.hasCompanion())

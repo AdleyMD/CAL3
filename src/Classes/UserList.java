@@ -58,7 +58,7 @@ public class UserList {
             return u;
         }
         
-        public boolean twoInQueue(){
+        public boolean twoInQueue() {
             return (list.size() > 1);
         }
         
