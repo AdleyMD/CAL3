@@ -20,7 +20,7 @@ public class WavePool extends Activity {
     // http://chuwiki.chuidiang.org/index.php?title=Ejemplo_simple_con_CyclicBarrier
 
     public WavePool(String name, JTextField queueText, JTextField insideText) {
-        super(20, "Wave Pool", new Supervisor(), new UserList(queueText), new UserList(insideText));
+        super(20, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
         curCapacity = 0;
         supervisor.setActivity(this);
     }
