@@ -46,7 +46,7 @@ public abstract class Activity {
     
     public abstract void leave(User user);
 
-
+    public abstract boolean supervisorSaidYes(User user);
     
     public String getName() {
         return name;

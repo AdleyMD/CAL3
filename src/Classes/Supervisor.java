@@ -68,11 +68,16 @@ public class Supervisor implements Runnable {
     }
 
     public void slide() {
-        
+
     }
 
     public void sunBeds() {
-
+        User user = ((SunBeds) activity).firstUser();
+        user.setFlag(true);
+        if (user.getAge() < 14) {
+            user.setAppropiatedAge(false);
+        }
+        customSleep(500, 900);
     }
 
     public void wavePool() {
@@ -83,7 +88,7 @@ public class Supervisor implements Runnable {
             user.setAppropiatedAge(true);
             customSleep(1000);
         }
-        if (((WavePool) activity).coupleReady()) {           
+        if (((WavePool) activity).coupleReady()) {
         }
     }
 
@@ -94,7 +99,7 @@ public class Supervisor implements Runnable {
     public void childrenPool() {
         User user = activity.queue.peek();
         customSleep(1000, 1500); // time to check the age
-        
+
         if (user.getAge() < 6) {
             user.setAppropiatedAge(true);
             user.getCompanion().setAppropiatedAge(true);
@@ -120,4 +125,5 @@ public class Supervisor implements Runnable {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }//end Supervisor

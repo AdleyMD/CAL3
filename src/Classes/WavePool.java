@@ -39,6 +39,10 @@ public class WavePool extends Activity {
                 actFull.await();
                 barrier.await();
             }
+            if (!user.getAppropiatedAge()) {
+                return;
+            }
+            
 
             if (user.hasCompanion()) {
                 inside.enqueue(user);
@@ -61,6 +65,9 @@ public class WavePool extends Activity {
 
     @Override
     public void use(User user) {
+        if (!user.getAppropiatedAge()) {
+            return;
+        }
         customSleep(2000, 5000);
     }
 
@@ -68,6 +75,11 @@ public class WavePool extends Activity {
     public void leave(User user) {
         inside.remove(user);
         actFull.signal();
+    }
+
+    @Override
+    public boolean supervisorSaidYes(User user) {
+        return (user.getAppropiatedAge());
     }
 
     public boolean coupleReady() {

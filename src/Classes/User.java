@@ -12,7 +12,7 @@ public class User extends Thread {
     private int id;
     private User companion;
     private boolean appropiateAge;
-
+    private boolean flag;
 
     public User(int id, int minAge, int maxAge, WaterPark park) {
         this.id = id;
@@ -40,8 +40,6 @@ public class User extends Thread {
 
     @Override
     public void run() {
-        
-        
         
         if (appropiateAge){
             // go to activity
@@ -87,7 +85,13 @@ public class User extends Thread {
         return this.appropiateAge;
     }
 
-
+    public void setFlag(boolean flag){
+        this.flag = flag;
+    }
+    
+    public boolean getFlag(){
+        return this.flag;
+    }
     
     @Override
     public String toString() {
