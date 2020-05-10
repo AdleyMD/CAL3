@@ -30,8 +30,7 @@ public class Slide extends Activity {
         getQueue().enqueue(user);
         try {
             semaphore.acquire();
-        } catch (InterruptedException e) {
-        }
+        } catch (InterruptedException e) {}
         getSupervisor().setUserToCheck(user);
         getExecutor().execute(getSupervisor());
         
@@ -48,8 +47,10 @@ public class Slide extends Activity {
 
     @Override
     public void leave(User user) {
-        getInside().remove(user);
-        semaphore.release();
+        if (user.hasAppropiateAge()) {
+            getInside().remove(user);
+            semaphore.release();
+        }
     }
 
     
