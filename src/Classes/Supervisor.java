@@ -83,12 +83,7 @@ public class Supervisor implements Runnable {
             user.setAppropiatedAge(true);
             customSleep(1000);
         }
-        if (((WavePool) activity).coupleReady()) {
-            user.setPass(true);
-            
-            ((WavePool)activity).getPairs().signal();
-            // necesito el setpass? o simplemente que se esperen...? 
-            // voy a hacer otra a aclararme.
+        if (((WavePool) activity).coupleReady()) {           
         }
     }
 
