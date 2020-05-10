@@ -88,6 +88,10 @@ public abstract class Activity {
     public void setCurCapacity(int curCapacity) {
         this.curCapacity = curCapacity;
     }
+    
+    public void addCurCapacity(int add) {
+        this.curCapacity += add;
+    }
 
     public Supervisor getSupervisor() {
         return supervisor;

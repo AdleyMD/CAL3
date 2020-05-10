@@ -11,10 +11,12 @@ import javax.swing.JTextField;
 public class Slide extends Activity {
 
     private final Semaphore semaphore;
+    private BigPool bigPool;
     
-    public Slide(String name, JTextField queueText, JTextField insideText) {
+    public Slide(String name, BigPool bigPool, JTextField queueText, JTextField insideText) {
         super(1, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
-        semaphore = new Semaphore(maxUsers, true);
+        semaphore = new Semaphore(getMaxUsers(), true);
+        this.bigPool = bigPool;
     }
 
     @Override
@@ -24,15 +26,15 @@ public class Slide extends Activity {
 
     @Override
     public void enter(User user) {
-        queue.enqueue(user);
+        getQueue().enqueue(user);
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
         }
-        executor.execute(supervisor);
+        getExecutor().execute(getSupervisor());
         
-        queue.dequeue();
-        inside.enqueue(user);
+        getQueue().dequeue();
+        getInside().enqueue(user);
     }
 
     @Override
