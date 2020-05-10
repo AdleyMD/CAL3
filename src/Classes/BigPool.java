@@ -58,7 +58,7 @@ public class BigPool extends Activity {
         try {
             Thread.sleep((long) (3000 + (2000 * Math.random())));
         } catch (InterruptedException e) {
-            leave(user);
+            return;
         }
     }
 

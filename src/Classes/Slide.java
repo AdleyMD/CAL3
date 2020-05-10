@@ -10,8 +10,34 @@ import javax.swing.JTextField;
  */
 public class Slide extends Activity {
 
-    private Semaphore semaphore;
-    private BigPool bigPool;
+    private final Semaphore semaphore;
+    
+    public Slide(String name, JTextField queueText, JTextField insideText) {
+        super(1, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
+        semaphore = new Semaphore(maxUsers, true);
+    }
+
+    @Override
+    public void enter(User user) {
+        queue.enqueue(user);
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+        }
+        executor.execute(supervisor);
+        
+        queue.dequeue();
+        inside.enqueue(user);
+    }
+
+    @Override
+    public void use(User user) {
+        customSleep(2000, 3000);
+    }
+
+    @Override
+    public void leave(User user) {
+    }
     
     public Slide(String name, BigPool bigPool, JTextField queueText, JTextField insideText) {
         super(1, name, new Supervisor(), new UserList(queueText), new UserList(insideText));

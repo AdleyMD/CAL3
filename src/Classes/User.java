@@ -41,15 +41,23 @@ public class User extends Thread {
     @Override
     public void run() {
         
+        park.enter(this);
+        park.use(this);
+        park.leave(this);
+        /*
         if (appropiateAge){
             // go to activity
         } else{
             // get a new activity or terminate the other one.
         }
         //if tiene que irse a la wavepool, que pasen por el barrier.
-
+        */
     }
 
+    public int getActsCounter() {
+        return actsCounter;
+    }
+    
     public void subActsCounter() {
         actsCounter--;
     }

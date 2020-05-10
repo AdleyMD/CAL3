@@ -19,15 +19,19 @@ public class UserList {
 	}
 
 	public User dequeue() {
-            return list.remove(0);
+            User u = list.remove(0);
+            setText();
+            return u;
 	}
 
 	public void enqueue(User user) {
             list.add(user);
+            setText();
 	}
 
         public void remove(User user) {
             list.remove(user);
+            setText();
         }
         
         public User extractRandom() {

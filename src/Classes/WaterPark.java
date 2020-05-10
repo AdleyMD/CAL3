@@ -33,12 +33,8 @@ public class WaterPark {
         int actIndex = (int) (1 + 6 * Math.random());
         return activities[actIndex];
     }
-
-    public void enqueue(User user) {
-        if (canEnter(user)) {
-            return;
-        }
-
+    
+    public void enter(User user) {
         try {
             lock.lock();
             queue.enqueue(user);
@@ -47,27 +43,47 @@ public class WaterPark {
             }
 
             queue.dequeue();
+            
+            if (user.hasCompanion())
+                curCapacity += 2;
+            else
+                curCapacity++;
 
+            inside.enqueue(user);
+            
         } catch (Exception e) {
 
         } finally {
             lock.unlock();
         }
     }
-
-    public void enter(User user) {
-        if (user.hasCompanion()) {
-            curCapacity += 2;
-        } else {
-            curCapacity++;
+    
+    public void use(User user) {
+        for (int i = 0; i < user.getActsCounter(); i++) {
+            Activity nextActivity = getRandomActivity();
+            nextActivity.enter(user);
+            nextActivity.use(user);
+            nextActivity.leave(user);
         }
-
-        inside.enqueue(user);
-
     }
 
     public void leave(User user) {
-
+        try {
+            lock.lock();
+            inside.dequeue();
+            
+            if (user.hasCompanion())
+                curCapacity -= 2;
+            else
+                curCapacity--;
+            
+            isFullCondition.signal();
+            
+        } catch (Exception e) {
+            
+        } finally {
+            lock.unlock();
+        }
     }
 
     public boolean canEnter(User user) {
