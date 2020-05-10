@@ -38,18 +38,16 @@ public class WavePool extends Activity {
             while (!user.getFlag()) {
                 barrier.await();
             }
-            
+
             if (user.hasCompanion()) {
                 getInside().enqueue(user);
                 getInside().enqueue(user.getCompanion());
                 addCurCapacity(2);
-            } else if (!getQueue().checkPos(2).hasCompanion()) {
+            } else if (!user.hasCompanion()) {
                 getInside().enqueue(user);
-                addCurCapacity(2);
+                addCurCapacity(1);
             }
-            getQueue().dequeue();
-            getQueue().dequeue();
-
+            getQueue().remove(user);
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         } catch (BrokenBarrierException ex) {
