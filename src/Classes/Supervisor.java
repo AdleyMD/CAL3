@@ -9,10 +9,10 @@ import java.util.logging.Logger;
  * @created 08-may.-2020 12:16:09
  */
 public class Supervisor implements Runnable {
-    
+
     // counter Counts how many supervisors have been created. Only used to set
     // the id for each new supervisor.
-    private static int counter = 0; 
+    private static int counter = 0;
     private final int id;
     private User userToCheck;
     private Activity activity;
@@ -47,16 +47,17 @@ public class Supervisor implements Runnable {
                 break;
         }
     }
-    
+
     public void setUserToCheck(User user) {
         userToCheck = user;
     }
-    
+
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
-    
+
     public void bigPool() {
+
         while (activity.isFull()) {
             customSleep(500);
             if (activity.isFull()) {
@@ -65,27 +66,50 @@ public class Supervisor implements Runnable {
             }
         }
     }
-    
+
     public void slide() {
-        
+
     }
-    
+
     public void sunBeds() {
-        
+
     }
-    
+
     public void wavePool() {
-        
+        User user = activity.queue.peek();
+        // comprobamos con if su edad.
+        user.setAppropiatedAge(false);
+        if (user.getAge() > 6) {
+            user.setAppropiatedAge(true);
+            customSleep(1000);
+        }
+        if (((WavePool) activity).coupleReady()) {
+            user.setPass(true);
+            
+            ((WavePool)activity).getPairs().signal();
+            // necesito el setpass? o simplemente que se esperen...? 
+            // voy a hacer otra a aclararme.
+        }
     }
-    
+
     public void changingRoom() {
-        
+        customSleep(1000); // checking age
     }
-    
+
     public void childrenPool() {
+        User user = activity.queue.peek();
+        customSleep(1000, 1500); // time to check the age
         
+        if (user.getAge() < 6) {
+            user.setAppropiatedAge(true);
+            user.getCompanion().setAppropiatedAge(true);
+        } else if (user.getAge() < 11) {
+            user.setAppropiatedAge(true);
+        } else if (user.getAge() > 10 && !user.getAppropiatedAge()) {
+            user.setAppropiatedAge(false);
+        }
     }
-    
+
     public void customSleep(int time) {
         try {
             Thread.sleep(time);

@@ -1,19 +1,46 @@
 package Classes;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author andro
  */
 public class Main extends javax.swing.JFrame {
-    private WaterPark park;
     
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        park = new WaterPark();
-        park.startSimulation();
+        WaterPark park = new WaterPark(entrQueueTF);
+        park.addActivity(new ChangingRoom(), 0);
+        park.addActivity(new ChildrenPool(), 1);
+        park.addActivity(new WavePool("Wave Pool", wpQueueTF, wpInsideTF), 2);
+        park.addActivity(new BigPool("Big Pool", bpQueueTF, bpInsideTF), 3);
+        park.addActivity(new SunBeds("Sun Beds", sbsQueueTF, sbsInsideTF), 4);
+        park.addActivity(new Slide("Slide A", saQueueTF, saInsideTF), 5);
+        park.addActivity(new Slide("Slide B", sbQueueTF, sbInsideTF), 6);
+        park.addActivity(new Slide("Slide C", scQueueTF, scInsideTF), 7);
+        
+        int usersToCreate = 5000;
+        User user;
+        for (int i = 1; i <= usersToCreate; i++) {
+            if (i == usersToCreate)
+                user = new User(i, 11, 50, park);
+            else
+                user = new User(i, 1, 50, park);
+            
+            if (user.hasCompanion())
+                i++;
+            
+            user.start();
+            
+            try {
+                Thread.sleep((long) (400 + 300 * Math.random()));
+            } catch (InterruptedException ex) {}
+        }
     }
 
     /**
@@ -25,21 +52,880 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        titleLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        entranceQueueLabel = new javax.swing.JLabel();
+        entrQueueTF = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        crTitleLabel = new javax.swing.JLabel();
+        crQueueTF = new javax.swing.JTextField();
+        crQueueLabel = new javax.swing.JLabel();
+        crSupervisorTF = new javax.swing.JTextField();
+        crSupervisorLabel = new javax.swing.JLabel();
+        crInsideTF = new javax.swing.JTextField();
+        crInsideLabel = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        crTitleLabel1 = new javax.swing.JLabel();
+        cpQueueTF = new javax.swing.JTextField();
+        JLabel = new javax.swing.JLabel();
+        cpSupervisorTF = new javax.swing.JTextField();
+        JLabel1 = new javax.swing.JLabel();
+        cpInsideTF = new javax.swing.JTextField();
+        JLabel2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        crTitleLabel2 = new javax.swing.JLabel();
+        wpQueueTF = new javax.swing.JTextField();
+        JLabel3 = new javax.swing.JLabel();
+        wpSupervisorTF = new javax.swing.JTextField();
+        JLabel4 = new javax.swing.JLabel();
+        wpInsideTF = new javax.swing.JTextField();
+        JLabel5 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        crTitleLabel3 = new javax.swing.JLabel();
+        sbsQueueTF = new javax.swing.JTextField();
+        JLabel6 = new javax.swing.JLabel();
+        sbsSupervisorTF = new javax.swing.JTextField();
+        JLabel7 = new javax.swing.JLabel();
+        sbsInsideTF = new javax.swing.JTextField();
+        JLabel8 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        crTitleLabel4 = new javax.swing.JLabel();
+        bpQueueTF = new javax.swing.JTextField();
+        JLabel9 = new javax.swing.JLabel();
+        bpSupervisorTF = new javax.swing.JTextField();
+        JLabel10 = new javax.swing.JLabel();
+        bpInsideTF = new javax.swing.JTextField();
+        JLabel11 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        crTitleLabel5 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        JLabel13 = new javax.swing.JLabel();
+        JLabel14 = new javax.swing.JLabel();
+        saQueueTF = new javax.swing.JTextField();
+        saSupervisorTF = new javax.swing.JTextField();
+        saInsideTF = new javax.swing.JTextField();
+        JLabel12 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        sbInsideTF = new javax.swing.JTextField();
+        sbSupervisorTF = new javax.swing.JTextField();
+        JLabel16 = new javax.swing.JLabel();
+        JLabel17 = new javax.swing.JLabel();
+        sbQueueTF = new javax.swing.JTextField();
+        JLabel15 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        scSupervisorTF = new javax.swing.JTextField();
+        scQueueTF = new javax.swing.JTextField();
+        JLabel18 = new javax.swing.JLabel();
+        JLabel20 = new javax.swing.JLabel();
+        JLabel19 = new javax.swing.JLabel();
+        scInsideTF = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        titleLabel.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        titleLabel.setText("AQUATIC PARK");
+
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+
+        entranceQueueLabel.setText("Waiting Queue");
+
+        entrQueueTF.setToolTipText("");
+        entrQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entrQueueTFActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(entranceQueueLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(entrQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, 976, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(entranceQueueLabel)
+                    .addComponent(entrQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+
+        crTitleLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        crTitleLabel.setText("Changing Room");
+
+        crQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crQueueTFActionPerformed(evt);
+            }
+        });
+
+        crQueueLabel.setText("Waiting Queue");
+
+        crSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crSupervisorTFActionPerformed(evt);
+            }
+        });
+
+        crSupervisorLabel.setText("Supervisor");
+
+        crInsideTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crInsideTFActionPerformed(evt);
+            }
+        });
+
+        crInsideLabel.setText("Changing Room");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(482, 482, 482)
+                        .addComponent(crTitleLabel))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(crQueueLabel)
+                            .addComponent(crSupervisorLabel)
+                            .addComponent(crInsideLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(crQueueTF, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
+                            .addComponent(crSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(crInsideTF))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crTitleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crQueueLabel)
+                    .addComponent(crQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crSupervisorLabel)
+                    .addComponent(crSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crInsideLabel)
+                    .addComponent(crInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
+
+        crTitleLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        crTitleLabel1.setText("Children's Pool");
+
+        cpQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpQueueTFActionPerformed(evt);
+            }
+        });
+
+        JLabel.setText("Waiting Queue");
+
+        cpSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpSupervisorTFActionPerformed(evt);
+            }
+        });
+
+        JLabel1.setText("Supervisor");
+
+        cpInsideTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpInsideTFActionPerformed(evt);
+            }
+        });
+
+        JLabel2.setText("Children's Pool");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JLabel)
+                            .addComponent(JLabel1)
+                            .addComponent(JLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cpSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cpInsideTF, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                            .addComponent(cpQueueTF)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(crTitleLabel1)))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crTitleLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel)
+                    .addComponent(cpQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel1)
+                    .addComponent(cpSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel2)
+                    .addComponent(cpInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+
+        crTitleLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        crTitleLabel2.setText("Wave Pool");
+
+        wpQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wpQueueTFActionPerformed(evt);
+            }
+        });
+
+        JLabel3.setText("Waiting Queue");
+
+        wpSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wpSupervisorTFActionPerformed(evt);
+            }
+        });
+
+        JLabel4.setText("Supervisor");
+
+        wpInsideTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                wpInsideTFActionPerformed(evt);
+            }
+        });
+
+        JLabel5.setText("Wave Pool");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JLabel3)
+                            .addComponent(JLabel4)
+                            .addComponent(JLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(wpSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(wpInsideTF, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                            .addComponent(wpQueueTF)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(crTitleLabel2)))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crTitleLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel3)
+                    .addComponent(wpQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel4)
+                    .addComponent(wpSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel5)
+                    .addComponent(wpInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
+
+        crTitleLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        crTitleLabel3.setText("Sun Beds");
+
+        sbsQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sbsQueueTFActionPerformed(evt);
+            }
+        });
+
+        JLabel6.setText("Waiting Queue");
+
+        sbsSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sbsSupervisorTFActionPerformed(evt);
+            }
+        });
+
+        JLabel7.setText("Supervisor");
+
+        sbsInsideTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sbsInsideTFActionPerformed(evt);
+            }
+        });
+
+        JLabel8.setText("Sun Beds");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JLabel6)
+                            .addComponent(JLabel7)
+                            .addComponent(JLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sbsSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sbsInsideTF, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                            .addComponent(sbsQueueTF)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(crTitleLabel3)))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crTitleLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel6)
+                    .addComponent(sbsQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel7)
+                    .addComponent(sbsSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel8)
+                    .addComponent(sbsInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBackground(new java.awt.Color(51, 51, 51));
+
+        crTitleLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        crTitleLabel4.setText("Big Pool");
+
+        bpQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bpQueueTFActionPerformed(evt);
+            }
+        });
+
+        JLabel9.setText("Waiting Queue");
+
+        bpSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bpSupervisorTFActionPerformed(evt);
+            }
+        });
+
+        JLabel10.setText("Supervisor");
+
+        bpInsideTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bpInsideTFActionPerformed(evt);
+            }
+        });
+
+        JLabel11.setText("Big Pool");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JLabel9)
+                            .addComponent(JLabel10)
+                            .addComponent(JLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bpSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bpInsideTF, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                            .addComponent(bpQueueTF)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(crTitleLabel4)))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crTitleLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel9)
+                    .addComponent(bpQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel10)
+                    .addComponent(bpSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel11)
+                    .addComponent(bpInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        crTitleLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        crTitleLabel5.setText("Slides");
+
+        jPanel8.setBackground(new java.awt.Color(51, 51, 51));
+
+        JLabel13.setText("Supervisor");
+
+        JLabel14.setText("Slide A");
+
+        saQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saQueueTFActionPerformed(evt);
+            }
+        });
+
+        saSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saSupervisorTFActionPerformed(evt);
+            }
+        });
+
+        saInsideTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saInsideTFActionPerformed(evt);
+            }
+        });
+
+        JLabel12.setText("Waiting Queue");
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setText("Slide A");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JLabel12)
+                            .addComponent(JLabel13)
+                            .addComponent(JLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(saQueueTF)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(saSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(saInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 92, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel12)
+                    .addComponent(saQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel13)
+                    .addComponent(saSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel14)
+                    .addComponent(saInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+        );
+
+        jPanel9.setBackground(new java.awt.Color(51, 51, 51));
+
+        sbInsideTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sbInsideTFActionPerformed(evt);
+            }
+        });
+
+        sbSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sbSupervisorTFActionPerformed(evt);
+            }
+        });
+
+        JLabel16.setText("Supervisor");
+
+        JLabel17.setText("Waiting Queue");
+
+        sbQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sbQueueTFActionPerformed(evt);
+            }
+        });
+
+        JLabel15.setText("Slide B");
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setText("Slide B");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JLabel17)
+                            .addComponent(JLabel16)
+                            .addComponent(JLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sbQueueTF)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sbSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sbInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 122, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel17)
+                    .addComponent(sbQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel16)
+                    .addComponent(sbSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel15)
+                    .addComponent(sbInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
+        );
+
+        jPanel10.setBackground(new java.awt.Color(51, 51, 51));
+
+        scSupervisorTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scSupervisorTFActionPerformed(evt);
+            }
+        });
+
+        scQueueTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scQueueTFActionPerformed(evt);
+            }
+        });
+
+        JLabel18.setText("Slide C");
+
+        JLabel20.setText("Waiting Queue");
+
+        JLabel19.setText("Supervisor");
+
+        scInsideTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scInsideTFActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setText("Slide C");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(139, 139, 139)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JLabel20)
+                            .addComponent(JLabel19)
+                            .addComponent(JLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scQueueTF)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(scSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(scInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel20)
+                    .addComponent(scQueueTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel19)
+                    .addComponent(scSupervisorTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JLabel18)
+                    .addComponent(scInsideTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
+        );
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(523, 523, 523)
+                        .addComponent(crTitleLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(crTitleLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1009, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(463, 463, 463)
+                                .addComponent(titleLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 1, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(titleLabel)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void entrQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entrQueueTFActionPerformed
+
+    private void crQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crQueueTFActionPerformed
+
+    private void crSupervisorTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crSupervisorTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crSupervisorTFActionPerformed
+
+    private void crInsideTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crInsideTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_crInsideTFActionPerformed
+
+    private void cpQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cpQueueTFActionPerformed
+
+    private void cpSupervisorTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpSupervisorTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cpSupervisorTFActionPerformed
+
+    private void cpInsideTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpInsideTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cpInsideTFActionPerformed
+
+    private void wpQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wpQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wpQueueTFActionPerformed
+
+    private void wpSupervisorTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wpSupervisorTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wpSupervisorTFActionPerformed
+
+    private void wpInsideTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wpInsideTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_wpInsideTFActionPerformed
+
+    private void sbsQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbsQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sbsQueueTFActionPerformed
+
+    private void sbsSupervisorTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbsSupervisorTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sbsSupervisorTFActionPerformed
+
+    private void sbsInsideTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbsInsideTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sbsInsideTFActionPerformed
+
+    private void bpQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bpQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bpQueueTFActionPerformed
+
+    private void bpSupervisorTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bpSupervisorTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bpSupervisorTFActionPerformed
+
+    private void bpInsideTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bpInsideTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bpInsideTFActionPerformed
+
+    private void saQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saQueueTFActionPerformed
+
+    private void saSupervisorTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saSupervisorTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saSupervisorTFActionPerformed
+
+    private void saInsideTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saInsideTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saInsideTFActionPerformed
+
+    private void sbInsideTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbInsideTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sbInsideTFActionPerformed
+
+    private void sbSupervisorTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbSupervisorTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sbSupervisorTFActionPerformed
+
+    private void sbQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sbQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sbQueueTFActionPerformed
+
+    private void scInsideTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scInsideTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scInsideTFActionPerformed
+
+    private void scSupervisorTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scSupervisorTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scSupervisorTFActionPerformed
+
+    private void scQueueTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scQueueTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scQueueTFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,5 +963,75 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JLabel;
+    private javax.swing.JLabel JLabel1;
+    private javax.swing.JLabel JLabel10;
+    private javax.swing.JLabel JLabel11;
+    private javax.swing.JLabel JLabel12;
+    private javax.swing.JLabel JLabel13;
+    private javax.swing.JLabel JLabel14;
+    private javax.swing.JLabel JLabel15;
+    private javax.swing.JLabel JLabel16;
+    private javax.swing.JLabel JLabel17;
+    private javax.swing.JLabel JLabel18;
+    private javax.swing.JLabel JLabel19;
+    private javax.swing.JLabel JLabel2;
+    private javax.swing.JLabel JLabel20;
+    private javax.swing.JLabel JLabel3;
+    private javax.swing.JLabel JLabel4;
+    private javax.swing.JLabel JLabel5;
+    private javax.swing.JLabel JLabel6;
+    private javax.swing.JLabel JLabel7;
+    private javax.swing.JLabel JLabel8;
+    private javax.swing.JLabel JLabel9;
+    private javax.swing.JTextField bpInsideTF;
+    private javax.swing.JTextField bpQueueTF;
+    private javax.swing.JTextField bpSupervisorTF;
+    private javax.swing.JTextField cpInsideTF;
+    private javax.swing.JTextField cpQueueTF;
+    private javax.swing.JTextField cpSupervisorTF;
+    private javax.swing.JLabel crInsideLabel;
+    private javax.swing.JTextField crInsideTF;
+    private javax.swing.JLabel crQueueLabel;
+    private javax.swing.JTextField crQueueTF;
+    private javax.swing.JLabel crSupervisorLabel;
+    private javax.swing.JTextField crSupervisorTF;
+    private javax.swing.JLabel crTitleLabel;
+    private javax.swing.JLabel crTitleLabel1;
+    private javax.swing.JLabel crTitleLabel2;
+    private javax.swing.JLabel crTitleLabel3;
+    private javax.swing.JLabel crTitleLabel4;
+    private javax.swing.JLabel crTitleLabel5;
+    private javax.swing.JTextField entrQueueTF;
+    private javax.swing.JLabel entranceQueueLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JTextField saInsideTF;
+    private javax.swing.JTextField saQueueTF;
+    private javax.swing.JTextField saSupervisorTF;
+    private javax.swing.JTextField sbInsideTF;
+    private javax.swing.JTextField sbQueueTF;
+    private javax.swing.JTextField sbSupervisorTF;
+    private javax.swing.JTextField sbsInsideTF;
+    private javax.swing.JTextField sbsQueueTF;
+    private javax.swing.JTextField sbsSupervisorTF;
+    private javax.swing.JTextField scInsideTF;
+    private javax.swing.JTextField scQueueTF;
+    private javax.swing.JTextField scSupervisorTF;
+    private javax.swing.JLabel titleLabel;
+    private javax.swing.JTextField wpInsideTF;
+    private javax.swing.JTextField wpQueueTF;
+    private javax.swing.JTextField wpSupervisorTF;
     // End of variables declaration//GEN-END:variables
 }

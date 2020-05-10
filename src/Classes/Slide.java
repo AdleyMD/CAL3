@@ -1,17 +1,16 @@
 package Classes;
 
+import javax.swing.JTextField;
+
 /**
  * @author andro
  * @version 1.0
  * @created 08-may.-2020 12:16:08
  */
 public class Slide extends Activity {
-    
-    private User user;
 
-    public Slide() {
-        super(1, "Slide A", new Supervisor(), new UserList(), null);
-        user = null;
+    public Slide(String name, JTextField queueText, JTextField insideText) {
+        super(1, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
     }
 
     @Override

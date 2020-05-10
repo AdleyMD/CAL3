@@ -10,21 +10,28 @@ import java.util.logging.Logger;
  */
 public class ChildrenPool extends Activity {
 
-    private boolean needsCompanion;
-
     public ChildrenPool() {
-        super(15, "Children Pool",new Supervisor(), new UserList(),new UserList());
+        super(15, "Children Pool", new Supervisor(), new UserList(), new UserList());
         curCapacity = 0;
         supervisor.setActivity(this);
     }
 
     @Override
-    public void enter(User user) {
-        queue.enqueue(user);
+    public boolean canEnter(User user) {
+        return ((curCapacity < maxUsers - 1 && user.getAge() < 5) || (curCapacity < maxUsers) && user.hasCompanion());
+    }
+
+    @Override
+    public void enqueue(User user) {
+        if (canEnter(user)) {
+            return;
+        }
+
+        lock.lock();
         executor.execute(supervisor);
+        queue.enqueue(user);
         try {
-            lock.lock();
-            while (curCapacity == maxUsers) {
+            while (!canEnter(user)) {
                 actFull.await();
             }
         } catch (InterruptedException ex) {
@@ -32,11 +39,15 @@ public class ChildrenPool extends Activity {
         } finally {
             lock.unlock();
         }
+    }
 
-        if (needsCompanion) {
+    @Override
+    public void enter(User user) {
+        if (user.hasCompanion()) {
             curCapacity += 1;
         }
         curCapacity += 1;
+        customSleep(1000, 3000);
     }
 
     @Override
@@ -47,11 +58,6 @@ public class ChildrenPool extends Activity {
         }
         curCapacity--;
         actFull.signal();
-    }
-
-    @Override
-    public void use(User user) {
-        customSleep(1000, 3000);
     }
 
 }//end ChildrenPool

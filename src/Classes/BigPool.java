@@ -2,6 +2,7 @@ package Classes;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  * @author andro
@@ -14,8 +15,8 @@ public class BigPool extends Activity {
     private Slide slideB;
     private Slide slideC;
     
-    public BigPool(){
-        super(50, "Big Pool", new Supervisor(), new UserList(), new UserList());
+    public BigPool(String name, JTextField queueText, JTextField insideText){
+        super(50, name, new Supervisor(), new UserList(queueText), new UserList(insideText));
         supervisor.setActivity(this);
     }
 

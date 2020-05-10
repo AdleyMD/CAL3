@@ -49,6 +49,10 @@ public class UserList {
             return list.get(n);
         }
         
+        public boolean twoInQueue(){
+            return (list.size() > 1);
+        }
+        
         public void setText() {
             String text = "";
             String comp = "";
