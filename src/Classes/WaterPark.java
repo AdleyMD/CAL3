@@ -9,17 +9,16 @@ public class WaterPark extends Thread {
     private final int maxUsers;
     private int curCapacity;
     private final UserList queue;
-    private final UserList inside;
     private final Activity[] activities;
     private final Lock lock;
     private final Condition isFullCondition;
+    private User[] usersArray;
     private Main window;
 
     public WaterPark(Main window) {
         maxUsers = 100;
         curCapacity = 0;
         queue = new UserList(window.getEntrQueueTF());
-        inside = new UserList(null);
         activities = new Activity[8];
         lock = new ReentrantLock();
         isFullCondition = lock.newCondition();
@@ -28,17 +27,18 @@ public class WaterPark extends Thread {
     
     @Override
     public void run() {
-        BigPool bigPool = new BigPool("Big Pool", window.getBpQueueTF(), window.getBpInsideTF(), window.getBpSupervisorTF());
-        this.addActivity(new ChangingRoom("Changing Room", window.getCrQueueTF(), window.getCrInsideTF(), window.getCrSupervisorTF()), 0);
-        this.addActivity(new ChildrenPool("Children Pool", window.getCpQueueTF(), window.getCpInsideTF(), window.getCpSupervisorTF()), 1);
-        this.addActivity(new WavePool("Wave Pool", window.getWpQueueTF(), window.getWpInsideTF(), window.getWpSupervisorTF()), 2);
+        BigPool bigPool = new BigPool("BigPool", window.getBpQueueTF(), window.getBpInsideTF(), window.getBpSupervisorTF());
+        this.addActivity(new ChangingRoom("ChangingRoom", window.getCrQueueTF(), window.getCrInsideTF(), window.getCrSupervisorTF()), 0);
+        this.addActivity(new ChildrenPool("ChildrenPool", window.getCpQueueTF(), window.getCpInsideTF(), window.getCpSupervisorTF()), 1);
+        this.addActivity(new WavePool("WavePool", window.getWpQueueTF(), window.getWpInsideTF(), window.getWpSupervisorTF()), 2);
         this.addActivity(bigPool, 3);
-        this.addActivity(new SunBeds("Sun Beds", window.getSbsInsideTF(), window.getSbsSupervisorTF()), 4);
-        this.addActivity(new Slide("Slide A", bigPool, window.getSaQueueTF(), window.getSaInsideTF(), window.getSaSupervisorTF()), 5);
-        this.addActivity(new Slide("Slide B", bigPool, window.getSbQueueTF(), window.getSbInsideTF(), window.getSbSupervisorTF()), 6);
-        this.addActivity(new Slide("Slide C", bigPool, window.getScQueueTF(), window.getScInsideTF(), window.getScSupervisorTF()), 7);
+        this.addActivity(new SunBeds("SunBeds", window.getSbsInsideTF(), window.getSbsSupervisorTF()), 4);
+        this.addActivity(new Slide("SlideA", bigPool, window.getSaQueueTF(), window.getSaInsideTF(), window.getSaSupervisorTF()), 5);
+        this.addActivity(new Slide("SlideB", bigPool, window.getSbQueueTF(), window.getSbInsideTF(), window.getSbSupervisorTF()), 6);
+        this.addActivity(new Slide("SlideC", bigPool, window.getScQueueTF(), window.getScInsideTF(), window.getScSupervisorTF()), 7);
         
         int usersToCreate = 5000;
+        usersArray = new User[usersToCreate];
         User user;
         for (int i = 1; i <= usersToCreate; i++) {
             if (i == usersToCreate)
@@ -49,6 +49,7 @@ public class WaterPark extends Thread {
             if (user.hasCompanion())
                 i++;
             
+            usersArray[i-1] = user;
             user.start();
             
             try {
@@ -79,7 +80,6 @@ public class WaterPark extends Thread {
                 curCapacity += 2;
             else
                 curCapacity++;
-            inside.enqueue(user);
         } catch (Exception e) {
         } finally {
             lock.unlock();
@@ -88,24 +88,30 @@ public class WaterPark extends Thread {
     
     public void use(User user) {
         activities[0].enter(user); // Enters the changing room
+        user.setLocation(activities[0].getName());
         activities[0].use(user);
+        user.setLocation(activities[0].getName());
         activities[0].leave(user);
         
-        for (int i = 0; i < user.getActsCounter(); i++) {
+        for (int i = 0; i < user.getActsToDo(); i++) {
             Activity nextActivity = getRandomActivity();
             nextActivity.enter(user);
+            user.setLocation(nextActivity.getName());
             nextActivity.use(user);
+            user.setLocation(nextActivity.getName());
             nextActivity.leave(user);
+            user.addActsCounter();
         }
         activities[0].enter(user); // Enters the changing room
+        user.setLocation(activities[0].getName());
         activities[0].use(user);
+        user.setLocation("OutOfPark");
         activities[0].leave(user);
     }
 
     public void leave(User user) {
         try {
             lock.lock();
-            inside.remove(user);
             if (user.hasCompanion()) {
                 curCapacity -= 2;
                 isFullCondition.signal();
@@ -114,7 +120,6 @@ public class WaterPark extends Thread {
                 curCapacity--;
             
             isFullCondition.signal();
-            
         } catch (Exception e) {
         } finally {
             lock.unlock();
@@ -123,5 +128,16 @@ public class WaterPark extends Thread {
 
     public boolean canEnter(User user) {
         return user.hasCompanion() && curCapacity < maxUsers - 1 || !user.hasCompanion() && curCapacity < maxUsers;
+    }
+    
+    public String getUserInfo(String userId) {
+        String info = "";
+        int id = Integer.parseInt(userId);
+        if (id <= usersArray.length) {
+            User user = usersArray[id-1];
+            info += user.getUserId() + " " + user.getLocation() + user.getActsCounter();
+        } else
+            info = "Null";
+        return info;
     }
 }

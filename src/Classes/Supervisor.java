@@ -32,24 +32,24 @@ public class Supervisor implements Runnable {
     public void run() {
         setText();
         switch (activity.getName()) {
-            case ("Changing Room"):
+            case ("ChangingRoom"):
                 changingRoom();
                 break;
-            case ("Wave Pool"):
+            case ("WavePool"):
                 wavePool();
                 break;
-            case ("Children Pool"):
+            case ("ChildrenPool"):
                 childrenPool();
                 break;
-            case ("Sun Beds"):
+            case ("SunBeds"):
                 sunBeds();
                 break;
-            case ("Big Pool"):
+            case ("BigPool"):
                 bigPool();
                 break;
-            case ("Slide A"):
-            case ("Slide B"):
-            case ("Slide C"):
+            case ("SlideA"):
+            case ("SlideB"):
+            case ("SlideC"):
                 slide();
                 break;
         }
@@ -132,15 +132,15 @@ public class Supervisor implements Runnable {
         }
         User first;
         User second;
-        
+
         //guaranteing that the queue has 2 elements so we can initialize them.
         if (queue.hasNElements(2)) {
             first = queue.peek();
             second = queue.checkPos(1);
-            if (first.hasCompanion()){
+            if (first.hasCompanion()) {
                 first.setFlag(true);
                 first.getCompanion().setFlag(true);
-            }            
+            }
             if (!first.hasCompanion() && second.hasCompanion()) {
                 first.setFlag(false);
                 second.setFlag(true);
@@ -158,7 +158,7 @@ public class Supervisor implements Runnable {
             } else {
                 first.setFlag(false);
             }
-            
+
             System.out.println("FLAG PUESTA A :  " + first.getName() + " - age - " + first.getAge() + " tiene flag = " + first.getFlag());
         }
         countdown.countDown();
@@ -166,12 +166,12 @@ public class Supervisor implements Runnable {
 
     public void changingRoom() {
         customSleep(1000); // checking age
-        
+
     }
 
     public void childrenPool() {
         User kid = userToCheck;
-        
+
         if (kid.getAge() < 6) {
             kid.setAppropiateAge(true);
             kid.getCompanion().setAppropiateAge(true);

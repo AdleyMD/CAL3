@@ -1,6 +1,5 @@
 package Classes;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -38,7 +37,6 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void enter(User user) {
-        //CountDownLatch doneSignal = new CountDownLatch(1);
         try {
             getLock().lock();
             getQueue().enqueue(user);
@@ -46,7 +44,6 @@ public class ChangingRoom extends Activity {
                 getActFull().await();
             }
             getSupervisor().setUserToCheck(user);
-            //getSupervisor().setCountdown(doneSignal);
             getExecutor().execute(getSupervisor());
             customSleep(3000);
             if (!user.hasCompanion() && user.getAge() < 18) {
@@ -77,11 +74,14 @@ public class ChangingRoom extends Activity {
             getInside().remove(user);
             if (user.hasCompanion()) {
                 getActFull().signal();
+                getActFull().signal();
                 addCurCapacity(-2);
-            } else
-                companion.signal();
-            addCurCapacity(-1);
-            //getActFull().signal();
+
+            } else {
+                getActFull().signal();
+                addCurCapacity(-1);
+            }
+
         } catch (Exception e) {
         } finally {
             changingLock.unlock();

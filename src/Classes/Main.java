@@ -1,10 +1,5 @@
 package Classes;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import javax.swing.JTextField;
 
 /**
@@ -13,12 +8,13 @@ import javax.swing.JTextField;
  */
 public class Main extends javax.swing.JFrame {
     
+    private static WaterPark park; 
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        WaterPark park = new WaterPark(this);
+        park = new WaterPark(this);
         park.start();
     }
 
@@ -1037,25 +1033,14 @@ public class Main extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Main().setVisible(true);
             }
         });
         
-        try {
-            ServerSocket server = new ServerSocket(25565);
-            Socket connection;
-            
-            while (true) {
-                connection = server.accept();
-                DataOutputStream output = new DataOutputStream(connection.getOutputStream());
-                DataInputStream input = new DataInputStream(connection.getInputStream());
-                
-                input.readInt();
-                output.writeInt(0);
-            }
-            
-        } catch (IOException e) {}
+        Server server = new Server(park);
+        server.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

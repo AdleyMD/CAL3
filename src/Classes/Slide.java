@@ -36,7 +36,6 @@ public class Slide extends Activity {
             getExecutor().execute(getSupervisor());
             doneSignal.await();
             getQueue().remove(user);
-            //System.out.println(getName() + " en " + user.toString());
         if (user.hasAppropiateAge()) {
             getInside().enqueue(user);
             bigPool.addCurCapacity(1);
@@ -48,14 +47,13 @@ public class Slide extends Activity {
             getLock().unlock();
         }
     }
-
     @Override
     public void use(User user) {
         if (user.hasAppropiateAge())
-            //System.out.println(user.getUserId() + " i sleep " + user.hasAppropiateAge());
-            customSleep(2000, 3000); // PONER BIEN
-    }
 
+            customSleep(2000, 3000); 
+    }
+    
     @Override
     public void leave(User user) {
         try {
@@ -64,7 +62,6 @@ public class Slide extends Activity {
                 getInside().remove(user);
                 bigPool.addCurCapacity(-1);
                 addCurCapacity(-1);
-                //System.out.println(user.getUserId() + " i leave");
             }
             getActFull().signal();
         } catch (Exception e) {
