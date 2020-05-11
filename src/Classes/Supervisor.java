@@ -88,23 +88,23 @@ public class Supervisor implements Runnable {
         switch (activity.getName()) {
             case ("Slide A"):
                 if (!hasCompanion && userAge >= 11 && userAge <= 14) {
-                    userToCheck.setAppropiateAge(true);
+                    userToCheck.setAppropriateAge(true);
                 } else {
-                    userToCheck.setAppropiateAge(false);
+                    userToCheck.setAppropriateAge(false);
                 }
                 break;
             case ("Slide B"):
                 if (!hasCompanion && userAge >= 15 && userAge <= 17) {
-                    userToCheck.setAppropiateAge(true);
+                    userToCheck.setAppropriateAge(true);
                 } else {
-                    userToCheck.setAppropiateAge(false);
+                    userToCheck.setAppropriateAge(false);
                 }
                 break;
             case ("Slide C"):
                 if (userAge >= 18) {
-                    userToCheck.setAppropiateAge(true);
+                    userToCheck.setAppropriateAge(true);
                 } else {
-                    userToCheck.setAppropiateAge(false);
+                    userToCheck.setAppropriateAge(false);
                 }
                 break;
         }
@@ -113,22 +113,22 @@ public class Supervisor implements Runnable {
 
     public void sunBeds() {
         if (userToCheck.getAge() < 14) {
-            userToCheck.setAppropiateAge(false);
+            userToCheck.setAppropriateAge(false);
         } else {
-            userToCheck.setAppropiateAge(true);
+            userToCheck.setAppropriateAge(true);
         }
         customSleep(500, 900);
     }
 
     public void wavePool() {
         // hay que asegurar ahora la seguritat.
-        userToCheck.setAppropiateAge(false);
+        userToCheck.setAppropriateAge(false);
         UserList queue = activity.getQueue();
 
         customSleep(1000);
 
         if (userToCheck.getAge() > 6) {
-            userToCheck.setAppropiateAge(true);
+            userToCheck.setAppropriateAge(true);
         }
         User first;
         User second;
@@ -173,12 +173,12 @@ public class Supervisor implements Runnable {
         User kid = userToCheck;
 
         if (kid.getAge() < 6) {
-            kid.setAppropiateAge(true);
-            kid.getCompanion().setAppropiateAge(true);
+            kid.setAppropriateAge(true);
+            kid.getCompanion().setAppropriateAge(true);
         } else if (kid.getAge() < 11) {
-            kid.setAppropiateAge(true);
-        } else if (kid.getAge() > 10 && !kid.hasAppropiateAge()) {
-            kid.setAppropiateAge(false);
+            kid.setAppropriateAge(true);
+        } else if (kid.getAge() > 10 && !kid.hasAppropriateAge()) {
+            kid.setAppropriateAge(false);
         }
         customSleep(1000, 1500);
         countdown.countDown();

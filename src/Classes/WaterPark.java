@@ -37,7 +37,7 @@ public class WaterPark extends Thread {
         this.addActivity(new Slide("SlideB", bigPool, window.getSbQueueTF(), window.getSbInsideTF(), window.getSbSupervisorTF()), 6);
         this.addActivity(new Slide("SlideC", bigPool, window.getScQueueTF(), window.getScInsideTF(), window.getScSupervisorTF()), 7);
         
-        int usersToCreate = 5000;
+        int usersToCreate = 1;
         usersArray = new User[usersToCreate];
         User user;
         for (int i = 1; i <= usersToCreate; i++) {
@@ -93,6 +93,14 @@ public class WaterPark extends Thread {
         user.setLocation(activities[0].getName());
         activities[0].leave(user);
         
+        for (int i = 0; i < 3; i++) {
+            activities[4].enter(user); // Enters the changing room
+            user.setLocation(activities[4].getName());
+            activities[4].use(user);
+            user.setLocation(activities[4].getName());
+            activities[4].leave(user);
+        }
+        /*
         for (int i = 0; i < user.getActsToDo(); i++) {
             Activity nextActivity = getRandomActivity();
             nextActivity.enter(user);
@@ -101,7 +109,7 @@ public class WaterPark extends Thread {
             user.setLocation(nextActivity.getName());
             nextActivity.leave(user);
             user.addActsCounter();
-        }
+        }*/
         activities[0].enter(user); // Enters the changing room
         user.setLocation(activities[0].getName());
         activities[0].use(user);

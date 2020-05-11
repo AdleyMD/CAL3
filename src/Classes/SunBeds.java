@@ -27,7 +27,7 @@ public class SunBeds extends Activity {
         getExecutor().execute(getSupervisor());
         while (!canEnter(user)) {
         }
-        if (!user.hasAppropiateAge()) {
+        if (!user.hasAppropriateAge()) {
             return;
         }
         getInside().enqueue(user);
@@ -35,8 +35,7 @@ public class SunBeds extends Activity {
 
     @Override
     public void use(User user) {
-
-        if (!user.hasAppropiateAge()) {
+        if (!user.hasAppropriateAge()) {
             return;
         }
         customSleep(2000, 4000);
@@ -49,7 +48,7 @@ public class SunBeds extends Activity {
     }
 
     // not quite yet.....
-    public User firstUser() {
+    public User getFirstUser() {
         return this.first;
     }
 

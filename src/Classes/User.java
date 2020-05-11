@@ -13,13 +13,13 @@ public class User extends Thread {
     private int id;
     private String location;
     private User companion;
-    private boolean appropiateAge;
+    private boolean appropriateAge;
     private boolean flag;
 
     public User(int id, int minAge, int maxAge, WaterPark park) {
         this.id = id;
         this.park = park;
-        appropiateAge = false;
+        appropriateAge = false;
         actsToDo = (int) (5 + (10 * Math.random()));
         actsCounter = 0;
         age = (int) (minAge + ((maxAge - minAge) * Math.random()));
@@ -94,12 +94,12 @@ public class User extends Thread {
      * sets a flag to check if the user can use the activity.
      * @param bool 
      */
-    public synchronized void setAppropiateAge(boolean bool) {
-        this.appropiateAge = bool;
+    public synchronized void setAppropriateAge(boolean bool) {
+        this.appropriateAge = bool;
     }
     
-    public synchronized boolean hasAppropiateAge() {
-        return this.appropiateAge;
+    public synchronized boolean hasAppropriateAge() {
+        return this.appropriateAge;
     }
 
     public void setFlag(boolean flag){

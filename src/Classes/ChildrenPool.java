@@ -40,10 +40,10 @@ public class ChildrenPool extends Activity {
             }
             getQueue().dequeue();
 
-            if (user.hasAppropiateAge()) {
+            if (user.hasAppropriateAge()) {
                 getInside().enqueue(user);
 
-                if (user.hasAppropiateAge() && user.getAge() <= 5) {
+                if (user.hasAppropriateAge() && user.getAge() <= 5) {
                     getInside().enqueue(user.getCompanion());
                     addCurCapacity(2);
                 } else {
@@ -62,7 +62,7 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void use(User user) {
-        if (user.hasAppropiateAge()) {
+        if (user.hasAppropriateAge()) {
 
             customSleep(1000, 3000);
         }

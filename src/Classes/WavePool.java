@@ -67,7 +67,7 @@ public class WavePool extends Activity {
 
     @Override
     public void use(User user) {
-        if (user.hasAppropiateAge())
+        if (user.hasAppropriateAge())
             customSleep(2000, 5000);
     }
 
