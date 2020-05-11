@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -17,6 +18,7 @@ public class Supervisor implements Runnable {
     private final int id;
     private User userToCheck;
     private Activity activity;
+    private CountDownLatch countdown;
     private JTextField textField;
 
     public Supervisor(JTextField textField) {
@@ -61,6 +63,10 @@ public class Supervisor implements Runnable {
         return userToCheck;
     }
     
+    public void setCountdown(CountDownLatch countdown) {
+        this.countdown = countdown;
+    }
+    
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
@@ -98,14 +104,14 @@ public class Supervisor implements Runnable {
                 break;
             case ("Slide C"):
                 System.out.println("A " + (userAge > 18));
-                if (userAge > 18) {
+                if (userAge >= 18) {
                     userToCheck.setAppropiateAge(true);
                 } else {
                     userToCheck.setAppropiateAge(false);
                 }
                 break;
         }
-        userToCheck = null;
+        countdown.countDown();
     }
 
     public void sunBeds() {
@@ -168,6 +174,7 @@ public class Supervisor implements Runnable {
 
     public void changingRoom() {
         customSleep(1000); // checking age
+        countdown.countDown();
     }
 
     public void childrenPool() {

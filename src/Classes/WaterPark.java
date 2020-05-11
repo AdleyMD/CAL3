@@ -38,7 +38,7 @@ public class WaterPark extends Thread {
         this.addActivity(new Slide("Slide B", bigPool, window.getSbQueueTF(), window.getSbInsideTF(), window.getSbSupervisorTF()), 6);
         this.addActivity(new Slide("Slide C", bigPool, window.getScQueueTF(), window.getScInsideTF(), window.getScSupervisorTF()), 7);
         
-        int usersToCreate = 500;
+        int usersToCreate = 5000;
         User user;
         for (int i = 1; i <= usersToCreate; i++) {
             if (i == usersToCreate)
@@ -52,7 +52,7 @@ public class WaterPark extends Thread {
             user.start();
             
             try {
-                Thread.sleep((long) (400 + 300 * Math.random()));
+                Thread.sleep((int) (400 + 300 * Math.random()));
             } catch (InterruptedException ex) {}
         }
     }
@@ -80,18 +80,17 @@ public class WaterPark extends Thread {
             else
                 curCapacity++;
 
-            //inside.enqueue(user);
-            activities[0].enter(user); // Enters the changing room
-            activities[0].use(user);
-            activities[0].leave(user);
         } catch (Exception e) {
-
         } finally {
             lock.unlock();
         }
     }
     
     public void use(User user) {
+        activities[0].enter(user); // Enters the changing room
+        activities[0].use(user);
+        activities[0].leave(user);
+        
         for (int i = 0; i < user.getActsCounter(); i++) {
             Activity nextActivity = getRandomActivity();
             nextActivity.enter(user);

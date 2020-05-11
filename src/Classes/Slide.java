@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.concurrent.CountDownLatch;
 import javax.swing.JTextField;
 
 /**
@@ -24,13 +25,17 @@ public class Slide extends Activity {
 
     @Override
     public void enter(User user) {
+        CountDownLatch doneSignal = new CountDownLatch(1);
+        
         try {
             getLock().lock();
             getQueue().enqueue(user);
             while (!canEnter(user))
                 getActFull().await();
+            getSupervisor().setCountdown(doneSignal);
             getSupervisor().setUserToCheck(user);
             getExecutor().execute(getSupervisor());
+            doneSignal.await();
             getQueue().remove(user);
             System.out.println(getName() + " en " + user.toString());
         if (user.hasAppropiateAge()) {
@@ -48,8 +53,8 @@ public class Slide extends Activity {
     @Override
     public void use(User user) {
         if (user.hasAppropiateAge())
-            System.out.println(user.getUserId() + " i sleep" + user.hasAppropiateAge());
-            customSleep(2000, 3000);
+            System.out.println(user.getUserId() + " i sleep " + user.hasAppropiateAge());
+            customSleep(20, 30); // PONER BIEN
     }
 
     @Override

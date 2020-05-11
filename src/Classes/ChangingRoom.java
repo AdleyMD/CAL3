@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -32,19 +33,18 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void enter(User user) {
+        CountDownLatch doneSignal = new CountDownLatch(1);
         try {
             getLock().lock();
             getQueue().enqueue(user);
+            while (!canEnter(user)) {
+                    getActFull().await();
+            }
             getSupervisor().setUserToCheck(user);
+            getSupervisor().setCountdown(doneSignal);
             getExecutor().execute(getSupervisor());
             customSleep(3000);
-            while (!canEnter(user)) {
-                try {
-                    getActFull().await();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            doneSignal.await();
             if (!user.hasCompanion() && user.getAge() < 18) {
                 childrenCapacity++;
             } else if (user.hasCompanion()) {
@@ -55,6 +55,7 @@ public class ChangingRoom extends Activity {
             }
             getQueue().remove(user);
             getInside().enqueue(user);
+        } catch (Exception e) {
         } finally {
             getLock().unlock();
         }
