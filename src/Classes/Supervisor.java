@@ -23,6 +23,7 @@ public class Supervisor implements Runnable {
         id = counter + 5001;
         counter++;
         this.textField = textField;
+        userToCheck = null;
     }
 
     @Override
@@ -52,10 +53,14 @@ public class Supervisor implements Runnable {
         }
     }
 
-    public void setUserToCheck(User user) {
+    public synchronized void setUserToCheck(User user) {
         userToCheck = user;
     }
-
+    
+    public User getUserToCheck() {
+        return userToCheck;
+    }
+    
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
@@ -100,6 +105,7 @@ public class Supervisor implements Runnable {
                 }
                 break;
         }
+        userToCheck = null;
     }
 
     public void sunBeds() {

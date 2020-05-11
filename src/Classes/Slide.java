@@ -48,7 +48,7 @@ public class Slide extends Activity {
     @Override
     public void use(User user) {
         if (user.hasAppropiateAge())
-            System.out.println(user.getUserId() + " i sleep");
+            System.out.println(user.getUserId() + " i sleep" + user.hasAppropiateAge());
             customSleep(2000, 3000);
     }
 

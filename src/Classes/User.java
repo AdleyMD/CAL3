@@ -17,6 +17,7 @@ public class User extends Thread {
     public User(int id, int minAge, int maxAge, WaterPark park) {
         this.id = id;
         this.park = park;
+        appropiateAge = false;
         actsCounter = (int) (5 + (10 * Math.random()));
         age = (int) (minAge + ((maxAge - minAge) * Math.random()));
 
