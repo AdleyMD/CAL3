@@ -5,8 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Client {
+public class Client extends Thread {
     
     private static Socket client;
     private DataOutputStream output;
@@ -15,18 +17,8 @@ public class Client {
     public Client() {
     }
     
-    public String getIdUser() throws IOException {
-        output.writeInt(0);
-        return input.readUTF();
-    }
-    
-    public String getLocation() throws IOException {
-        output.writeInt(1);
-        return input.readUTF();
-    }
-    
-    public String getActivities() throws IOException {
-        output.writeInt(2);
+    public String getUserInfo(String id) throws IOException {
+        output.writeUTF("0 " + id);
         return input.readUTF();
     }
     
@@ -80,7 +72,7 @@ public class Client {
         return input.readUTF();
     }
     
-    public void createConection() throws IOException {
+    public void createConnection() throws IOException {
         client = new Socket(InetAddress.getLocalHost(), 25565);
         output = new DataOutputStream(client.getOutputStream());
         input = new DataInputStream(client.getInputStream());
@@ -88,5 +80,15 @@ public class Client {
     
     public void closeConnection() throws IOException {
         client.close();
+    }
+    
+    @Override
+    public void run() {
+        try {
+            createConnection();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }

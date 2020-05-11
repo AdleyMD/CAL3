@@ -5,6 +5,10 @@
  */
 package Classes;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author andro
@@ -15,6 +19,8 @@ public class ClientWindow extends javax.swing.JFrame {
     
     public ClientWindow() {
         initComponents();
+        socketInterface = new Client();
+        socketInterface.start();
     }
 
     /**
@@ -393,7 +399,13 @@ public class ClientWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void locationBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locationBActionPerformed
-        // TODO add your handling code here:
+        String id = userTF.getText();
+        try {
+            String info = socketInterface.getUserInfo(id);
+            userTF.setText(info.split(" ")[0]);
+        } catch (IOException ex) {
+            Logger.getLogger(ClientWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_locationBActionPerformed
 
     /**

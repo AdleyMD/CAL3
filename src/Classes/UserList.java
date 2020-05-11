@@ -24,17 +24,17 @@ public class UserList {
             return u;
 	}
 
-	public void enqueue(User user) {
+	public synchronized void enqueue(User user) {
             list.add(user);
             setText();
 	}
 
-        public void remove(User user) {
+        public synchronized void remove(User user) {
             list.remove(user);
             setText();
         }
         
-        public User extractRandom() {
+        public synchronized User extractRandom() {
             int randIndex = (int) (list.size() * Math.random()); // Puede dar error index out of bounds?
             User user = list.get(randIndex);
             list.remove(randIndex);

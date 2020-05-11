@@ -7,9 +7,11 @@ package Classes;
 public class User extends Thread {
 
     private WaterPark park;
+    private final int actsToDo;
     private int actsCounter;
     private int age;
     private int id;
+    private String location;
     private User companion;
     private boolean appropiateAge;
     private boolean flag;
@@ -18,7 +20,8 @@ public class User extends Thread {
         this.id = id;
         this.park = park;
         appropiateAge = false;
-        actsCounter = (int) (5 + (10 * Math.random()));
+        actsToDo = (int) (5 + (10 * Math.random()));
+        actsCounter = 0;
         age = (int) (minAge + ((maxAge - minAge) * Math.random()));
 
         if (age <= 10) {
@@ -37,6 +40,7 @@ public class User extends Thread {
         this.id = id;
         this.age = age;
         this.companion = companion;
+        actsToDo = 0;
     }
 
     @Override
@@ -50,8 +54,8 @@ public class User extends Thread {
         return actsCounter;
     }
     
-    public void subActsCounter() {
-        actsCounter--;
+    public void addActsCounter() {
+        actsCounter++;
     }
 
     public int getAge() {
@@ -73,6 +77,15 @@ public class User extends Thread {
     public boolean hasCompanion() {
         return age <= 10;
     }
+
+    public String getLocation() {
+        return location;
+    }
+    
+    public void setLocation(String location) {
+        this.location = location;
+    }
+    
     /**
      * sets a flag to check if the user can use the activity.
      * @param bool 

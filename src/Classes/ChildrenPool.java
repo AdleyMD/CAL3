@@ -63,7 +63,6 @@ public class ChildrenPool extends Activity {
     public void use(User user) {
 
         if (user.hasAppropiateAge()) {
-        //    System.out.println("user, age: "+ user.getAge() +" using the system");
             customSleep(10000, 30000);
         }
     }

@@ -32,24 +32,24 @@ public class Supervisor implements Runnable {
     public void run() {
         setText();
         switch (activity.getName()) {
-            case ("Changing Room"):
+            case ("ChangingRoom"):
                 changingRoom();
                 break;
-            case ("Wave Pool"):
+            case ("WavePool"):
                 wavePool();
                 break;
-            case ("Children Pool"):
+            case ("ChildrenPool"):
                 childrenPool();
                 break;
-            case ("Sun Beds"):
+            case ("SunBeds"):
                 sunBeds();
                 break;
-            case ("Big Pool"):
+            case ("BigPool"):
                 bigPool();
                 break;
-            case ("Slide A"):
-            case ("Slide B"):
-            case ("Slide C"):
+            case ("SlideA"):
+            case ("SlideB"):
+            case ("SlideC"):
                 slide();
                 break;
         }
@@ -87,7 +87,6 @@ public class Supervisor implements Runnable {
         customSleep(400, 500);
         switch (activity.getName()) {
             case ("Slide A"):
-                System.out.println("A " + (!hasCompanion && userAge >= 11 && userAge <= 14));
                 if (!hasCompanion && userAge >= 11 && userAge <= 14) {
                     userToCheck.setAppropiateAge(true);
                 } else {
@@ -95,7 +94,6 @@ public class Supervisor implements Runnable {
                 }
                 break;
             case ("Slide B"):
-                System.out.println("B " + (!hasCompanion && userAge >= 15 && userAge <= 17));
                 if (!hasCompanion && userAge >= 15 && userAge <= 17) {
                     userToCheck.setAppropiateAge(true);
                 } else {
@@ -103,7 +101,6 @@ public class Supervisor implements Runnable {
                 }
                 break;
             case ("Slide C"):
-                System.out.println("A " + (userAge > 18));
                 if (userAge >= 18) {
                     userToCheck.setAppropiateAge(true);
                 } else {
@@ -163,8 +160,6 @@ public class Supervisor implements Runnable {
                 second.setFlag(true);
                 //consigue esa wea y dale off we go. ? el cyclic barrier.
             }
-            System.out.println("comprobe flags");
-
         } else {
 
         }
