@@ -26,19 +26,30 @@ public class ChildrenPool extends Activity {
     public void enter(User user) {
         try {
             getLock().lock();
-            getSupervisor().setUserToCheck(user);
             getExecutor().execute(getSupervisor());
+            getSupervisor().setUserToCheck(user);
             getQueue().enqueue(user);
             // compruebo la edad aqui blabla...
             while (!canEnter(user)) {
                 getActFull().await();
             }
             getQueue().dequeue();
-
-            if (user.hasCompanion() && user.getAge() <= 5) {
-                addCurCapacity(2);
-            } else
-                addCurCapacity(1);
+            if (user.hasAppropiateAge()) {
+                getInside().enqueue(user);
+            //    System.out.println("user" + user.getId() + " appropiate Age");
+                if (user.hasCompanion() && user.getAge() <= 5) {
+                    getInside().enqueue(user.getCompanion());
+                    addCurCapacity(2);
+                //    System.out.println(" user has companion");
+                } else {
+                    addCurCapacity(1);
+                //    System.out.println("user doesnt have a companion");
+                }
+            } else {
+                // el usuario no ha tenido la edad apropiada
+            //    System.out.println("user: " + user.getId() + " not an appropiate Age, age: " + user.getAge());
+                return;
+            }
 
         } catch (InterruptedException ex) {
             Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,25 +61,29 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void use(User user) {
-        if (!supervisorSaidNo(user)) {
-            customSleep(1000, 3000);
+
+        if (user.hasAppropiateAge()) {
+        //    System.out.println("user, age: "+ user.getAge() +" using the system");
+            customSleep(10000, 30000);
         }
-        return;
     }
 
     @Override
     public void leave(User user) {
         try {
             getLock().lock();
+        //    System.out.println("user leaving");
             getInside().remove(user);
             if (user.hasCompanion() && user.getAge() <= 5) {
                 addCurCapacity(-2);
                 getActFull().signal();
-            } else
+            } else {
                 addCurCapacity(-1);
+            }
 
             getActFull().signal();
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             getLock().unlock();
         }
