@@ -27,7 +27,7 @@ public class SunBeds extends Activity {
         getExecutor().execute(getSupervisor());
         while (!canEnter(user)) {
         }
-        if (supervisorSaidNo(user)) {
+        if (!user.hasAppropiateAge()) {
             return;
         }
         getInside().enqueue(user);
@@ -36,7 +36,7 @@ public class SunBeds extends Activity {
     @Override
     public void use(User user) {
 
-        if (supervisorSaidNo(user)) {
+        if (!user.hasAppropiateAge()) {
             return;
         }
         customSleep(2000, 4000);

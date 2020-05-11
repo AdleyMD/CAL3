@@ -1,6 +1,5 @@
 package Classes;
 
-import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import javax.swing.JTextField;
 import java.util.logging.Level;
@@ -34,22 +33,33 @@ public class WavePool extends Activity {
 
         getExecutor().execute(getSupervisor());
         getQueue().enqueue(user);
-        
+
         // pegarle un repaso a esto, comprobar porq entran dentro directamente y no en cola.
         // getinside en use??
-        
         try {
+            
             while (!canEnter(user)) {
+                //System.out.println("No pude entrar.");
                 getActFull().await();
             }
-            if (user.hasCompanion()) {
+            if (user.getFlag()){
+                getInside().enqueue(getQueue().dequeue());
+                getInside().enqueue(getQueue().dequeue());
+            }
+            /*if (user.hasCompanion()) {
+                //System.out.println("hey, tengo compañero!");
                 getInside().enqueue(user);
                 getInside().enqueue(user.getCompanion());
                 addCurCapacity(2);
-            } else if (!user.hasCompanion()) {
-                getInside().enqueue(user);
-                addCurCapacity(1);
-            }
+            }*/ else if (!user.hasCompanion()) {
+                //System.out.println("estoy solito :v");
+                //a esperar chaval lmao...
+                System.out.println("estoy esperando lmao ");
+                //getInside().enqueue(user);
+                //addCurCapacity(1);
+            }// else if (user.getFlag()){
+                //getInside
+            //}
             getQueue().remove(user);
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,10 +70,9 @@ public class WavePool extends Activity {
 
     @Override
     public void use(User user) {
-        if (!supervisorSaidNo(user)) {
+        if (user.hasAppropiateAge()) {
             customSleep(2000, 5000);
         }
-        return;
     }
 
     @Override
@@ -83,7 +92,5 @@ public class WavePool extends Activity {
         } finally {
             getLock().unlock();
         }
-
     }
-
 }//end WavePool
