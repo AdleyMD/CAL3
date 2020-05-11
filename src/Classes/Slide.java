@@ -1,6 +1,5 @@
 package Classes;
 
-import java.util.concurrent.Semaphore;
 import javax.swing.JTextField;
 
 /**
@@ -20,7 +19,7 @@ public class Slide extends Activity {
 
     @Override
     public boolean canEnter(User user) {
-        return !user.hasCompanion() && getCurCapacity() == 0 && !bigPool.isFull();
+        return getCurCapacity() == 0 && !bigPool.isFull();
     }
 
     @Override
@@ -32,23 +31,24 @@ public class Slide extends Activity {
                 getActFull().await();
             getSupervisor().setUserToCheck(user);
             getExecutor().execute(getSupervisor());
-            System.out.println(getName() + " en " + user.toString());
             getQueue().remove(user);
             System.out.println(getName() + " en " + user.toString());
         if (user.hasAppropiateAge()) {
             getInside().enqueue(user);
             bigPool.addCurCapacity(1);
+            addCurCapacity(1);
         }
         
         } catch (InterruptedException e) {
         } finally {
-            getLock().lock();
+            getLock().unlock();
         }
     }
 
     @Override
     public void use(User user) {
         if (user.hasAppropiateAge())
+            System.out.println(user.getUserId() + " i sleep");
             customSleep(2000, 3000);
     }
 
@@ -59,6 +59,8 @@ public class Slide extends Activity {
             if (user.hasAppropiateAge()) {
                 getInside().remove(user);
                 bigPool.addCurCapacity(-1);
+                addCurCapacity(-1);
+                System.out.println(user.getUserId() + " i leave");
             }
             getActFull().signal();
         } catch (Exception e) {
@@ -67,4 +69,4 @@ public class Slide extends Activity {
         }
         
     }
-}//end Slide
+}

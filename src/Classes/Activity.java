@@ -53,7 +53,7 @@ public abstract class Activity {
         return name;
     }
 
-    public synchronized boolean isFull() {
+    public boolean isFull() {
         return curCapacity == maxUsers;
     }
 
@@ -67,7 +67,7 @@ public abstract class Activity {
 
     public void customSleep(int min, int max) {
         try {
-            Thread.sleep((long) (min + (max - min) * Math.random()));
+            Thread.sleep((int) (min + (max - min) * Math.random()));
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
