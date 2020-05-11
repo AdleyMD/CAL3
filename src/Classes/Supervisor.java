@@ -110,26 +110,36 @@ public class Supervisor implements Runnable {
     }
 
     public void wavePool() {
-        /*
+
         userToCheck.setAppropiateAge(false);
         UserList queue = activity.getQueue();
 
         customSleep(1000);
+
         if (userToCheck.getAge() > 6) {
             userToCheck.setAppropiateAge(true);
         }
-        User first = queue.peek();
+        User first;
         User second;
 
-        if (queue.checkPos(2) == null) {
+        //omg toca limpiar esto....
+        //ensuring there exists position X;
+        if (queue.hasNElements(1)) {
+            first = queue.peek();
             if (first.hasCompanion()) {
                 first.setFlag(true);
                 first.getCompanion().setFlag(true);
             } else {
                 first.setFlag(false);
             }
-        } else {
+
+        } else if (queue.hasNElements(2)) {
+            first = queue.peek();
             second = queue.checkPos(2);
+
+            
+            // comprobar de nuevo que haga lo que quiero...
+            // no hace lo q quiero, puede entrar 1 solo, lmao
             if (!first.hasCompanion() && second.hasCompanion()) {
                 second.setFlag(true);
                 second.getCompanion().setFlag(true);
@@ -137,10 +147,12 @@ public class Supervisor implements Runnable {
                 first.setFlag(true);
                 second.setFlag(true);
                 //consigue esa wea y dale off we go. ? el cyclic barrier.
-            } else {
-
             }
-        }*/
+            System.out.println("comprobe flags");
+
+        } else {
+
+        }
 
     }
 
@@ -149,9 +161,7 @@ public class Supervisor implements Runnable {
     }
 
     public void childrenPool() {
-        System.out.println(" ehecutando children pul ");
         customSleep(1000, 1500); // time to check the age
-
         if (userToCheck.getAge() < 6) {
             userToCheck.setAppropiateAge(true);
             userToCheck.getCompanion().setAppropiateAge(true);
@@ -165,16 +175,20 @@ public class Supervisor implements Runnable {
     public void customSleep(int time) {
         try {
             Thread.sleep(time);
+
         } catch (InterruptedException ex) {
-            Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChangingRoom.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void customSleep(int min, int max) {
         try {
             Thread.sleep((long) (min + (max - min) * Math.random()));
+
         } catch (InterruptedException ex) {
-            Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChangingRoom.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

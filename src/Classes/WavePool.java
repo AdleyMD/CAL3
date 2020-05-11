@@ -27,23 +27,21 @@ public class WavePool extends Activity {
 
     @Override
     public void enter(User user) {
-        
-        
+
         getLock().lock();
-        
+
         getSupervisor().setUserToCheck(user);
-        
+
         getExecutor().execute(getSupervisor());
         getQueue().enqueue(user);
+        
+        // pegarle un repaso a esto, comprobar porq entran dentro directamente y no en cola.
+        // getinside en use??
+        
         try {
             while (!canEnter(user)) {
                 getActFull().await();
             }
-            
-            while (!user.getFlag()) {
-                barrier.await();
-            } // not implemented in the other side yet.
-
             if (user.hasCompanion()) {
                 getInside().enqueue(user);
                 getInside().enqueue(user.getCompanion());
@@ -55,8 +53,6 @@ public class WavePool extends Activity {
             getQueue().remove(user);
         } catch (InterruptedException ex) {
             Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (BrokenBarrierException ex) {
-            Logger.getLogger(WavePool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             getLock().unlock();
         }

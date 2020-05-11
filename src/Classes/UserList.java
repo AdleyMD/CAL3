@@ -62,6 +62,11 @@ public class UserList {
             return (list.size() > 1);
         }
         
+        public boolean hasNElements(int n){
+            return list.size() > n;
+        }
+        
+        
         public void setText() {
             String text = "";
             String comp = "";
