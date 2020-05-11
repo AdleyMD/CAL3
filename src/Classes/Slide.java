@@ -20,7 +20,7 @@ public class Slide extends Activity {
 
     @Override
     public boolean canEnter(User user) {
-        return !user.hasCompanion() && getCurCapacity() == 0;
+        return !user.hasCompanion() && getCurCapacity() == 0 && !bigPool.isFull();
     }
 
     @Override
