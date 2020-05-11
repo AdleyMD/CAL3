@@ -35,8 +35,10 @@ public class Slide extends Activity {
             System.out.println(getName() + " en " + user.toString());
             getQueue().remove(user);
             System.out.println(getName() + " en " + user.toString());
-        if (user.hasAppropiateAge())
+        if (user.hasAppropiateAge()) {
             getInside().enqueue(user);
+            bigPool.addCurCapacity(1);
+        }
         
         } catch (InterruptedException e) {
         } finally {
@@ -52,10 +54,17 @@ public class Slide extends Activity {
 
     @Override
     public void leave(User user) {
-        if (user.hasAppropiateAge()) {
-            getInside().remove(user);
+        try {
+            getLock().lock();
+            if (user.hasAppropiateAge()) {
+                getInside().remove(user);
+                bigPool.addCurCapacity(-1);
+            }
+            getActFull().signal();
+        } catch (Exception e) {
+        } finally {
+            getLock().unlock();
         }
-        
         
     }
 }//end Slide

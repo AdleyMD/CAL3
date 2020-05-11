@@ -80,7 +80,7 @@ public class User extends Thread {
         this.appropiateAge = bool;
     }
     
-    public boolean hasAppropiateAge(){
+    public boolean hasAppropiateAge() {
         return this.appropiateAge;
     }
 
