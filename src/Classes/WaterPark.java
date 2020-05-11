@@ -73,7 +73,6 @@ public class WaterPark extends Thread {
             while (!canEnter(user)) {
                 isFullCondition.await();
             }
-
             queue.dequeue();
             
             if (user.hasCompanion())
@@ -81,7 +80,7 @@ public class WaterPark extends Thread {
             else
                 curCapacity++;
 
-            inside.enqueue(user);
+            //inside.enqueue(user);
             activities[0].enter(user); // Enters the changing room
             activities[0].use(user);
             activities[0].leave(user);

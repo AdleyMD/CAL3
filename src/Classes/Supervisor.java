@@ -75,21 +75,21 @@ public class Supervisor implements Runnable {
         customSleep(400, 500);
         switch (activity.getName()) {
             case ("Slide A"):
-                if (userAge >= 11 && userAge <= 14) {
+                if (userAge >= 11 && userAge <= 14 && !activity.isFull()) {
                     userToCheck.setAppropiateAge(true);
                 } else {
                     userToCheck.setAppropiateAge(false);
                 }
                 break;
             case ("Slide B"):
-                if (userAge >= 15 && userAge <= 17) {
+                if (userAge >= 15 && userAge <= 17 && !activity.isFull()) {
                     userToCheck.setAppropiateAge(true);
                 } else {
                     userToCheck.setAppropiateAge(false);
                 }
                 break;
             case ("Slide C"):
-                if (userAge > 18) {
+                if (userAge > 18 && !activity.isFull()) {
                     userToCheck.setAppropiateAge(true);
                 } else {
                     userToCheck.setAppropiateAge(false);
@@ -149,9 +149,7 @@ public class Supervisor implements Runnable {
     }
 
     public void childrenPool() {
-        System.out.println(" ehecutando children pul ");
         customSleep(1000, 1500); // time to check the age
-
         if (userToCheck.getAge() < 6) {
             userToCheck.setAppropiateAge(true);
             userToCheck.getCompanion().setAppropiateAge(true);

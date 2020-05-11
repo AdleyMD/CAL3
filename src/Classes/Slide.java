@@ -33,8 +33,9 @@ public class Slide extends Activity {
         } catch (InterruptedException e) {}
         getSupervisor().setUserToCheck(user);
         getExecutor().execute(getSupervisor());
-        
+        System.out.println("He atendido a " + user.toString());
         getQueue().remove(user);
+        System.out.println("He borrado a " + user.toString());
         if (user.hasAppropiateAge())
             getInside().enqueue(user);
         else
