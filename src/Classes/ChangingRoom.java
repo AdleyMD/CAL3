@@ -1,6 +1,9 @@
 package Classes;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JTextField;
 
 /**
@@ -14,12 +17,16 @@ public class ChangingRoom extends Activity {
     private int currentAdult;
     private int childrenCapacity;
     private int currentChild;
+    private Lock pollas;
+    private Condition nabo;
 
     public ChangingRoom(String name, JTextField queueText, JTextField insideText, JTextField supervisorText) {
         super(0, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         adultCapacity = 20;
         childrenCapacity = 10;
         getSupervisor().setActivity(this);
+        pollas = new ReentrantLock();
+        nabo = pollas.newCondition();
     }
 
     @Override
@@ -31,18 +38,17 @@ public class ChangingRoom extends Activity {
 
     @Override
     public void enter(User user) {
-        CountDownLatch doneSignal = new CountDownLatch(1);
+        //CountDownLatch doneSignal = new CountDownLatch(1);
         try {
             getLock().lock();
             getQueue().enqueue(user);
             while (!canEnter(user)) {
-                    getActFull().await();
+                getActFull().await();
             }
             getSupervisor().setUserToCheck(user);
-            getSupervisor().setCountdown(doneSignal);
+            //getSupervisor().setCountdown(doneSignal);
             getExecutor().execute(getSupervisor());
             customSleep(3000);
-            doneSignal.await();
             if (!user.hasCompanion() && user.getAge() < 18) {
                 childrenCapacity++;
             } else if (user.hasCompanion()) {
@@ -67,19 +73,18 @@ public class ChangingRoom extends Activity {
     @Override
     public void leave(User user) {
         try {
-            getLock().lock();
+            pollas.lock();
             getInside().remove(user);
             if (user.hasCompanion()) {
                 getActFull().signal();
                 addCurCapacity(-2);
-            } else {
-                addCurCapacity(-1);
-            }
-
-            getActFull().signal();
+            } else
+                nabo.signal();
+            addCurCapacity(-1);
+            //getActFull().signal();
         } catch (Exception e) {
         } finally {
-            getLock().unlock();
+            pollas.unlock();
         }
     }
 

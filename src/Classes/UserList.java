@@ -18,23 +18,23 @@ public class UserList {
             this.textField = textField;
 	}
 
-	public synchronized User dequeue() {
+	public User dequeue() {
             User u = list.remove(0);
             setText();
             return u;
 	}
 
-	public synchronized void enqueue(User user) {
+	public void enqueue(User user) {
             list.add(user);
             setText();
 	}
 
-        public synchronized void remove(User user) {
+        public void remove(User user) {
             list.remove(user);
             setText();
         }
         
-        public synchronized User extractRandom() {
+        public User extractRandom() {
             int randIndex = (int) (list.size() * Math.random()); // Puede dar error index out of bounds?
             User user = list.get(randIndex);
             list.remove(randIndex);

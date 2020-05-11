@@ -97,16 +97,15 @@ public class WaterPark extends Thread {
             nextActivity.use(user);
             nextActivity.leave(user);
         }
+        activities[0].enter(user); // Enters the changing room
+        activities[0].use(user);
+        activities[0].leave(user);
     }
 
     public void leave(User user) {
         try {
             lock.lock();
-            activities[0].enter(user); // Enters the changing room
-            activities[0].use(user);
-            activities[0].leave(user);
             inside.remove(user);
-            
             if (user.hasCompanion()) {
                 curCapacity -= 2;
                 isFullCondition.signal();
@@ -117,7 +116,6 @@ public class WaterPark extends Thread {
             isFullCondition.signal();
             
         } catch (Exception e) {
-            
         } finally {
             lock.unlock();
         }

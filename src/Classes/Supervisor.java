@@ -122,7 +122,6 @@ public class Supervisor implements Runnable {
             userToCheck.setAppropiateAge(true);
         }
         customSleep(500, 900);
-
     }
 
     public void wavePool() {
@@ -174,7 +173,7 @@ public class Supervisor implements Runnable {
 
     public void changingRoom() {
         customSleep(1000); // checking age
-        countdown.countDown();
+        //countdown.countDown();
     }
 
     public void childrenPool() {
