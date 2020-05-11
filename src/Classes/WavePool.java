@@ -35,19 +35,15 @@ public class WavePool extends Activity {
     public void enter(User user) {
         try {
             waveLock.lock();
-            //getLock().lock();
             waveSignal = new CountDownLatch(1);
             getSupervisor().setCountdown(waveSignal);
             getSupervisor().setUserToCheck(user);
             getExecutor().execute(getSupervisor());
 
             getQueue().enqueue(user);
-            //System.out.println("user " + user.getName() + " - age - " + user.getAge() + " tiene flag = " + user.getFlag());
 
             while (!user.getFlag()) {
-                // se espera
                 waiting.await();
-
             }
 
             if (user.getFlag()) {

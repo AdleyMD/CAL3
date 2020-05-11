@@ -47,7 +47,6 @@ public class SunBeds extends Activity {
         getInside().remove(user);
     }
 
-    // not quite yet.....
     public User getFirstUser() {
         return this.first;
     }

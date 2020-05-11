@@ -140,10 +140,4 @@ public abstract class Activity {
     public void setActFull(Condition actFull) {
         this.actFull = actFull;
     }
-    
-    
-    
-    
-    
-
 }//end Activity

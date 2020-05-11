@@ -34,7 +34,6 @@ public class ChildrenPool extends Activity {
             getExecutor().execute(getSupervisor());
             getSupervisor().setUserToCheck(user);
             getQueue().enqueue(user);
-            System.out.println("user " + user.getName() + " with age: " + user.getAge() + " trying to access: ");
             while (!canEnter(user)) {
                 getActFull().await();
             }
@@ -63,7 +62,6 @@ public class ChildrenPool extends Activity {
     @Override
     public void use(User user) {
         if (user.hasAppropriateAge()) {
-
             customSleep(1000, 3000);
         }
     }

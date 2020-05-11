@@ -35,7 +35,7 @@ public class UserList {
         }
         
         public synchronized User extractRandom() {
-            int randIndex = (int) (list.size() * Math.random()); // Puede dar error index out of bounds?
+            int randIndex = (int) (list.size() * Math.random());
             User user = list.get(randIndex);
             list.remove(randIndex);
             return user;
@@ -65,7 +65,6 @@ public class UserList {
         public boolean hasNElements(int n){
             return (list.size() >= n);
         }
-        
         
         public void setText() {
             String text = "";

@@ -121,7 +121,6 @@ public class Supervisor implements Runnable {
     }
 
     public void wavePool() {
-        // hay que asegurar ahora la seguritat.
         userToCheck.setAppropriateAge(false);
         UserList queue = activity.getQueue();
 
@@ -158,8 +157,6 @@ public class Supervisor implements Runnable {
             } else {
                 first.setFlag(false);
             }
-
-            System.out.println("FLAG PUESTA A :  " + first.getName() + " - age - " + first.getAge() + " tiene flag = " + first.getFlag());
         }
         countdown.countDown();
     }
