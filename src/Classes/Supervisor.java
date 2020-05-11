@@ -58,15 +58,15 @@ public class Supervisor implements Runnable {
     public synchronized void setUserToCheck(User user) {
         userToCheck = user;
     }
-    
+
     public User getUserToCheck() {
         return userToCheck;
     }
-    
+
     public void setCountdown(CountDownLatch countdown) {
         this.countdown = countdown;
     }
-    
+
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
@@ -112,7 +112,6 @@ public class Supervisor implements Runnable {
     }
 
     public void sunBeds() {
-
         if (userToCheck.getAge() < 14) {
             userToCheck.setAppropiateAge(false);
         } else {
@@ -122,7 +121,7 @@ public class Supervisor implements Runnable {
     }
 
     public void wavePool() {
-
+        // hay que asegurar ahora la seguritat.
         userToCheck.setAppropiateAge(false);
         UserList queue = activity.getQueue();
 
@@ -134,9 +133,24 @@ public class Supervisor implements Runnable {
         User first;
         User second;
 
-        //omg toca limpiar esto....
-        //ensuring there exists position X;
-        if (queue.hasNElements(1)) {
+        //guaranteing that the queue has 2 elements so we can initialize them.
+        if (queue.hasNElements(2)) {
+            first = queue.peek();
+            second = queue.checkPos(1);
+            if (first.hasCompanion()) {
+                first.setFlag(true);
+                first.getCompanion().setFlag(true);
+            }
+            if (!first.hasCompanion() && second.hasCompanion()) {
+                first.setFlag(false);
+                second.setFlag(true);
+                second.getCompanion().setFlag(true);
+            } else if (!first.hasCompanion() && !second.hasCompanion()) {
+                first.setFlag(true);
+                second.setFlag(true);
+            }
+
+        } else if (queue.hasNElements(1)) {
             first = queue.peek();
             if (first.hasCompanion()) {
                 first.setFlag(true);
@@ -145,42 +159,29 @@ public class Supervisor implements Runnable {
                 first.setFlag(false);
             }
 
-        } else if (queue.hasNElements(2)) {
-            first = queue.peek();
-            second = queue.checkPos(2);
-
-            
-            // comprobar de nuevo que haga lo que quiero...
-            // no hace lo q quiero, puede entrar 1 solo, lmao
-            if (!first.hasCompanion() && second.hasCompanion()) {
-                second.setFlag(true);
-                second.getCompanion().setFlag(true);
-            } else if (!first.hasCompanion() && !second.hasCompanion()) {
-                first.setFlag(true);
-                second.setFlag(true);
-                //consigue esa wea y dale off we go. ? el cyclic barrier.
-            }
-        } else {
-
+            System.out.println("FLAG PUESTA A :  " + first.getName() + " - age - " + first.getAge() + " tiene flag = " + first.getFlag());
         }
-
+        countdown.countDown();
     }
 
     public void changingRoom() {
         customSleep(1000); // checking age
-        //countdown.countDown();
+
     }
 
     public void childrenPool() {
-        customSleep(1000, 1500); // time to check the age
-        if (userToCheck.getAge() < 6) {
-            userToCheck.setAppropiateAge(true);
-            userToCheck.getCompanion().setAppropiateAge(true);
-        } else if (userToCheck.getAge() < 11) {
-            userToCheck.setAppropiateAge(true);
-        } else if (userToCheck.getAge() > 10 && !userToCheck.hasAppropiateAge()) {
-            userToCheck.setAppropiateAge(false);
+        User kid = userToCheck;
+
+        if (kid.getAge() < 6) {
+            kid.setAppropiateAge(true);
+            kid.getCompanion().setAppropiateAge(true);
+        } else if (kid.getAge() < 11) {
+            kid.setAppropiateAge(true);
+        } else if (kid.getAge() > 10 && !kid.hasAppropiateAge()) {
+            kid.setAppropiateAge(false);
         }
+        customSleep(1000, 1500);
+        countdown.countDown();
     }
 
     public void customSleep(int time) {

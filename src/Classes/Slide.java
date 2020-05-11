@@ -26,7 +26,6 @@ public class Slide extends Activity {
     @Override
     public void enter(User user) {
         CountDownLatch doneSignal = new CountDownLatch(1);
-        
         try {
             getLock().lock();
             getQueue().enqueue(user);
@@ -48,13 +47,13 @@ public class Slide extends Activity {
             getLock().unlock();
         }
     }
-
     @Override
     public void use(User user) {
         if (user.hasAppropiateAge())
-            customSleep(2000, 3000); // PONER BIEN
-    }
 
+            customSleep(2000, 3000); 
+    }
+    
     @Override
     public void leave(User user) {
         try {

@@ -58,12 +58,12 @@ public class UserList {
             return u;
         }
         
-        public boolean twoInQueue() {
+        public boolean moreThan1Wait() {
             return (list.size() > 1);
         }
         
         public boolean hasNElements(int n){
-            return list.size() > n;
+            return (list.size() >= n);
         }
         
         

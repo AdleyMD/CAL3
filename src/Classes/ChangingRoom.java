@@ -16,16 +16,16 @@ public class ChangingRoom extends Activity {
     private int currentAdult;
     private int childrenCapacity;
     private int currentChild;
-    private Lock pollas;
-    private Condition nabo;
+    private Lock changingLock;
+    private Condition companion;
 
     public ChangingRoom(String name, JTextField queueText, JTextField insideText, JTextField supervisorText) {
         super(0, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         adultCapacity = 20;
         childrenCapacity = 10;
         getSupervisor().setActivity(this);
-        pollas = new ReentrantLock();
-        nabo = pollas.newCondition();
+        changingLock = new ReentrantLock();
+        companion = changingLock.newCondition();
     }
 
     @Override
@@ -70,19 +70,21 @@ public class ChangingRoom extends Activity {
     @Override
     public void leave(User user) {
         try {
-            pollas.lock();
+            changingLock.lock();
             getInside().remove(user);
             if (user.hasCompanion()) {
                 getActFull().signal();
                 getActFull().signal();
                 addCurCapacity(-2);
+
             } else {
                 getActFull().signal();
                 addCurCapacity(-1);
             }
+
         } catch (Exception e) {
         } finally {
-            pollas.unlock();
+            changingLock.unlock();
         }
     }
 
