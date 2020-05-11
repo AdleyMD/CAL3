@@ -37,9 +37,8 @@ public class ChangingRoom extends Activity {
             getQueue().enqueue(user);
             getSupervisor().setUserToCheck(user);
             getExecutor().execute(getSupervisor());
-            System.out.println("HE ENTRADO CABRONAZO");
             customSleep(3000);
-            while (!(canEnter(user))) {
+            while (!canEnter(user)) {
                 try {
                     getActFull().await();
                 } catch (InterruptedException ex) {
