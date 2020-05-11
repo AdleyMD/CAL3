@@ -24,26 +24,21 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void enter(User user) {
-
-        getLock().lock();
-        getExecutor().execute(getSupervisor());
-        getSupervisor().setUserToCheck(user);
-        getQueue().enqueue(user);
-
         try {
+            getLock().lock();
+            getSupervisor().setUserToCheck(user);
+            getExecutor().execute(getSupervisor());
+            getQueue().enqueue(user);
             // compruebo la edad aqui blabla...
             while (!canEnter(user)) {
                 getActFull().await();
             }
             getQueue().dequeue();
-            if (supervisorSaidNo(user)) {
-                return;
-            }
 
             if (user.hasCompanion() && user.getAge() <= 5) {
+                addCurCapacity(2);
+            } else
                 addCurCapacity(1);
-            }
-            addCurCapacity(1);
 
         } catch (InterruptedException ex) {
             Logger.getLogger(ChildrenPool.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,18 +58,14 @@ public class ChildrenPool extends Activity {
 
     @Override
     public void leave(User user) {
-        if (supervisorSaidNo(user)) {
-            return;
-        }
         try {
             getLock().lock();
             getInside().remove(user);
             if (user.hasCompanion() && user.getAge() <= 5) {
                 addCurCapacity(-2);
                 getActFull().signal();
-            } else {
+            } else
                 addCurCapacity(-1);
-            }
 
             getActFull().signal();
         } catch (Exception e) {

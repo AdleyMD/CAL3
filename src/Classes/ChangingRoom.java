@@ -62,10 +62,7 @@ public class ChangingRoom extends Activity {
     
     @Override
     public void use(User user) {
-        if (!supervisorSaidNo(user)) {
-            customSleep(3000);
-        }
-        return;
+        customSleep(3000);
     }
 
     @Override

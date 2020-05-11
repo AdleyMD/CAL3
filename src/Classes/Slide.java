@@ -10,36 +10,38 @@ import javax.swing.JTextField;
  */
 public class Slide extends Activity {
 
-    private final Semaphore semaphore;
     private BigPool bigPool;
     
     public Slide(String name, BigPool bigPool, JTextField queueText, JTextField insideText, JTextField supervisorText) {
         super(1, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         getSupervisor().setActivity(this);
-        semaphore = new Semaphore(getMaxUsers(), true);
         this.bigPool = bigPool;
     }
 
     @Override
     public boolean canEnter(User user) {
-        return true;
+        return !user.hasCompanion() && getCurCapacity() == 0;
     }
 
     @Override
     public void enter(User user) {
-        getQueue().enqueue(user);
         try {
-            semaphore.acquire();
-        } catch (InterruptedException e) {}
-        getSupervisor().setUserToCheck(user);
-        getExecutor().execute(getSupervisor());
-        System.out.println("He atendido a " + user.toString());
-        getQueue().remove(user);
-        System.out.println("He borrado a " + user.toString());
+            getLock().lock();
+            getQueue().enqueue(user);
+            while (!canEnter(user))
+                getActFull().await();
+            getSupervisor().setUserToCheck(user);
+            getExecutor().execute(getSupervisor());
+            System.out.println(getName() + " en " + user.toString());
+            getQueue().remove(user);
+            System.out.println(getName() + " en " + user.toString());
         if (user.hasAppropiateAge())
             getInside().enqueue(user);
-        else
-            semaphore.release();
+        
+        } catch (InterruptedException e) {
+        } finally {
+            getLock().lock();
+        }
     }
 
     @Override
@@ -52,10 +54,8 @@ public class Slide extends Activity {
     public void leave(User user) {
         if (user.hasAppropiateAge()) {
             getInside().remove(user);
-            semaphore.release();
         }
+        
+        
     }
-
-    
-
 }//end Slide
