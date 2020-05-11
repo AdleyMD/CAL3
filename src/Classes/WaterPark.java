@@ -79,7 +79,7 @@ public class WaterPark extends Thread {
                 curCapacity += 2;
             else
                 curCapacity++;
-
+            inside.enqueue(user);
         } catch (Exception e) {
         } finally {
             lock.unlock();
@@ -105,7 +105,7 @@ public class WaterPark extends Thread {
             activities[0].enter(user); // Enters the changing room
             activities[0].use(user);
             activities[0].leave(user);
-            inside.dequeue();
+            inside.remove(user);
             
             if (user.hasCompanion()) {
                 curCapacity -= 2;
