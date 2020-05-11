@@ -57,6 +57,10 @@ public class User extends Thread {
     public void addActsCounter() {
         actsCounter++;
     }
+    
+    public int getActsToDo() {
+        return actsToDo;
+    }
 
     public int getAge() {
         return age;

@@ -7,12 +7,14 @@ import javax.swing.JTextField;
  * @author andro
  */
 public class Main extends javax.swing.JFrame {
+    
+    private static WaterPark park; 
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        WaterPark park = new WaterPark(this);
+        park = new WaterPark(this);
         park.start();
     }
 
@@ -1037,8 +1039,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
         
-        //Server server = new Server(park);
-        //server.start();
+        Server server = new Server(park);
+        server.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

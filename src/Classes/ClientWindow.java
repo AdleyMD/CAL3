@@ -14,13 +14,9 @@ import java.util.logging.Logger;
  * @author andro
  */
 public class ClientWindow extends javax.swing.JFrame {
-
-    private Client socketInterface;
     
     public ClientWindow() {
         initComponents();
-        socketInterface = new Client();
-        socketInterface.start();
     }
 
     /**
@@ -399,10 +395,16 @@ public class ClientWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void locationBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locationBActionPerformed
+        Client socketInterface = new Client();
         String id = userTF.getText();
         try {
             String info = socketInterface.getUserInfo(id);
             userTF.setText(info.split(" ")[0]);
+        } catch (IOException ex) {
+            Logger.getLogger(ClientWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            socketInterface.closeConnection();
         } catch (IOException ex) {
             Logger.getLogger(ClientWindow.class.getName()).log(Level.SEVERE, null, ex);
         }

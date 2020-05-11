@@ -88,24 +88,24 @@ public class WaterPark extends Thread {
     
     public void use(User user) {
         activities[0].enter(user); // Enters the changing room
-        //user.setLocation(activities[0].getName());
+        user.setLocation(activities[0].getName());
         activities[0].use(user);
-        //user.setLocation(activities[0].getName());
+        user.setLocation(activities[0].getName());
         activities[0].leave(user);
         
-        for (int i = 0; i < user.getActsCounter(); i++) {
+        for (int i = 0; i < user.getActsToDo(); i++) {
             Activity nextActivity = getRandomActivity();
             nextActivity.enter(user);
-            //user.setLocation(activities[i].getName());
+            user.setLocation(nextActivity.getName());
             nextActivity.use(user);
-            //user.setLocation(activities[i].getName());
+            user.setLocation(nextActivity.getName());
             nextActivity.leave(user);
-            //user.addActsCounter();
+            user.addActsCounter();
         }
         activities[0].enter(user); // Enters the changing room
-        //user.setLocation(activities[0].getName());
+        user.setLocation(activities[0].getName());
         activities[0].use(user);
-        //user.setLocation("OutOfPark");
+        user.setLocation("OutOfPark");
         activities[0].leave(user);
     }
 

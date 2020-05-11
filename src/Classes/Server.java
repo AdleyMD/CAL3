@@ -33,18 +33,22 @@ public class Server extends Thread {
                 connection = server.accept();
                 DataOutputStream output = new DataOutputStream(connection.getOutputStream());
                 DataInputStream input = new DataInputStream(connection.getInputStream());
-                
+
                 String response = "";
                 String request = input.readUTF();
                 switch (request.charAt(0)) {
-                    case ('0'):
-                        response = park.getUserInfo(response.substring(2));
+                    case '0':
+                        String temp = request.substring(2);
+                        System.out.println(temp);
+                        response = park.getUserInfo(temp);
+                        break;
+                    default:
                         break;
                 }
-                
+
                 output.writeUTF(response);
+                connection.close();
             }
-            
         } catch (IOException e) {}
     }
 }
