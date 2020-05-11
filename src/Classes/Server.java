@@ -38,9 +38,7 @@ public class Server extends Thread {
                 String request = input.readUTF();
                 switch (request.charAt(0)) {
                     case '0':
-                        String temp = request.substring(2);
-                        System.out.println(temp);
-                        response = park.getUserInfo(temp);
+                        response = park.getUserInfo(request.substring(2));
                         break;
                     default:
                         break;
