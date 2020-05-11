@@ -1,6 +1,9 @@
 package Classes;
 
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JTextField;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,11 +15,15 @@ import java.util.logging.Logger;
  */
 public class WavePool extends Activity {
 
-    private CyclicBarrier barrier = new CyclicBarrier(2);
+    private CountDownLatch waveSignal;
+    private Lock waveLock;
+    private Condition waiting;
 
     public WavePool(String name, JTextField queueText, JTextField insideText, JTextField supervisorText) {
         super(20, name, new Supervisor(supervisorText), new UserList(queueText), new UserList(insideText));
         getSupervisor().setActivity(this);
+        waveLock = new ReentrantLock();
+        waiting = waveLock.newCondition();
     }
 
     @Override
@@ -26,45 +33,35 @@ public class WavePool extends Activity {
 
     @Override
     public void enter(User user) {
-
-        getLock().lock();
-
-        getSupervisor().setUserToCheck(user);
-
-        getExecutor().execute(getSupervisor());
-        getQueue().enqueue(user);
-
-        // pegarle un repaso a esto, comprobar porq entran dentro directamente y no en cola.
-        // getinside en use??
         try {
-            
-            while (!canEnter(user)) {
-                //System.out.println("No pude entrar.");
-                getActFull().await();
+            waveLock.lock();
+            //getLock().lock();
+            waveSignal = new CountDownLatch(1);
+            getSupervisor().setCountdown(waveSignal);
+            getSupervisor().setUserToCheck(user);
+            getExecutor().execute(getSupervisor());
+
+            getQueue().enqueue(user);
+            //System.out.println("user " + user.getName() + " - age - " + user.getAge() + " tiene flag = " + user.getFlag());
+
+            while (!user.getFlag()) {
+                // se espera
+                waiting.await();
+
             }
-            if (user.getFlag()){
+
+            if (user.getFlag()) {
+                waiting.signal();
                 getInside().enqueue(getQueue().dequeue());
                 getInside().enqueue(getQueue().dequeue());
             }
-            /*if (user.hasCompanion()) {
-                //System.out.println("hey, tengo compañero!");
-                getInside().enqueue(user);
-                getInside().enqueue(user.getCompanion());
-                addCurCapacity(2);
-            }*/ else if (!user.hasCompanion()) {
-                //System.out.println("estoy solito :v");
-                //a esperar chaval lmao...
-                System.out.println("estoy esperando lmao ");
-                //getInside().enqueue(user);
-                //addCurCapacity(1);
-            }// else if (user.getFlag()){
-                //getInside
-            //}
+
             getQueue().remove(user);
+
         } catch (InterruptedException ex) {
-            Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WavePool.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            getLock().unlock();
+            waveLock.unlock();
         }
     }
 
