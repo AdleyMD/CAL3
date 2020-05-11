@@ -25,7 +25,9 @@ public class ChangingRoom extends Activity {
 
     @Override
     public boolean canEnter(User user) {
-        return (adultCapacity > currentAdult && childrenCapacity > currentChild);
+        return (user.hasCompanion() && currentAdult < adultCapacity && currentChild < childrenCapacity
+                || !user.hasCompanion() && user.getAge() <=17 && currentChild < childrenCapacity
+                || !user.hasCompanion() && currentAdult < adultCapacity);
     }
 
     @Override
@@ -35,6 +37,8 @@ public class ChangingRoom extends Activity {
             getQueue().enqueue(user);
             getSupervisor().setUserToCheck(user);
             getExecutor().execute(getSupervisor());
+            System.out.println("HE ENTRADO CABRONAZO");
+            customSleep(3000);
             while (!(canEnter(user))) {
                 try {
                     getActFull().await();
@@ -42,7 +46,6 @@ public class ChangingRoom extends Activity {
                     Logger.getLogger(ChangingRoom.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            customSleep(3000);
             if (!user.hasCompanion() && user.getAge() < 18) {
                 childrenCapacity++;
             } else if (user.hasCompanion()) {

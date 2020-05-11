@@ -18,12 +18,8 @@ public class ChildrenPool extends Activity {
 
     @Override
     public boolean canEnter(User user) {
-        System.out.println("current capacity : " + getCurCapacity());
-        System.out.println("maxUsers : " + getMaxUsers());
-
         return ((getCurCapacity() < getMaxUsers() - 1 && user.hasCompanion())
                 || (getCurCapacity() < getMaxUsers()));
-
     }
 
     @Override
@@ -37,18 +33,14 @@ public class ChildrenPool extends Activity {
         try {
             // compruebo la edad aqui blabla...
             while (!canEnter(user)) {
-                System.out.println("waiting lmao");
                 getActFull().await();
             }
             getQueue().dequeue();
-            System.out.println("supervisorsaidno: " + supervisorSaidNo(user));
             if (supervisorSaidNo(user)) {
-                System.out.println("supervisor said no");
                 return;
             }
 
             if (user.hasCompanion() && user.getAge() <= 5) {
-                System.out.println("i have a companion lmao im smol");
                 addCurCapacity(1);
             }
             addCurCapacity(1);

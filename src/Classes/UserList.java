@@ -24,12 +24,12 @@ public class UserList {
             return u;
 	}
 
-	public synchronized void enqueue(User user) {
+	public void enqueue(User user) {
             list.add(user);
             setText();
 	}
 
-        public synchronized void remove(User user) {
+        public void remove(User user) {
             list.remove(user);
             setText();
         }
@@ -62,7 +62,7 @@ public class UserList {
             return (list.size() > 1);
         }
         
-        public synchronized void setText() {
+        public void setText() {
             String text = "";
             String comp = "";
             for (User u : list) {

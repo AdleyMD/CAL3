@@ -62,7 +62,7 @@ public class WaterPark extends Thread {
     }
 
     public Activity getRandomActivity() {
-        int actIndex = (int) (1 + 6 * Math.random());
+        int actIndex = (int) (1 + (7 * Math.random()));
         return activities[actIndex];
     }
     
@@ -83,6 +83,8 @@ public class WaterPark extends Thread {
 
             inside.enqueue(user);
             activities[0].enter(user); // Enters the changing room
+            activities[0].use(user);
+            activities[0].leave(user);
         } catch (Exception e) {
 
         } finally {
@@ -102,7 +104,9 @@ public class WaterPark extends Thread {
     public void leave(User user) {
         try {
             lock.lock();
-            activities[0].enter(user);
+            activities[0].enter(user); // Enters the changing room
+            activities[0].use(user);
+            activities[0].leave(user);
             inside.dequeue();
             
             if (user.hasCompanion()) {
